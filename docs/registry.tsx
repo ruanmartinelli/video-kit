@@ -9,6 +9,7 @@ import {
   focusSchema,
   graphSpecSchema,
   hubSpecSchema,
+  lanesSchema,
   manifestItemSchema,
   manifestSchema,
   labelSchema,
@@ -23,6 +24,8 @@ import {
   scheduleSchema,
   linkSchema,
   shotSchema,
+  storyboardPanelSchema,
+  storyboardSchema,
   tableSchema,
   tablesSchema,
 } from "../src/kit";
@@ -36,6 +39,7 @@ import {
   GraphDemo,
   HubDemo,
   LabelDemo,
+  LanesDemo,
   ManifestDemo,
   NodeDemo,
   OutcomesDemo,
@@ -131,11 +135,34 @@ const t = createTimeline(narration, { fps: 30 });
 <Packet progress={ease(frame, t.at("route"), t.at("route") + 16)} />`,
   },
   {
+    id: "storyboard",
+    group: "Stage",
+    name: "Storyboard",
+    summary:
+      "A few frames of a finished video on one sheet, for presenting it yourself. The board is data: the video's composition id and a frame and a note per panel. Register `Storyboard` as a composition with the board as its props, then `pnpm storyboard <Id>` writes `out/storyboard/<Id>.png` and `<Id>-notes.png`: the same sheet, clean and with what to say under each panel.",
+    schemas: [
+      { title: "Storyboard", schema: storyboardSchema },
+      { title: "Panel", schema: storyboardPanelSchema },
+    ],
+    code: `// src/videos/load-balancer/board.ts
+export const loadBalancerBoard: StoryboardProps = {
+  video: loadBalancerMeta.id,
+  panels: [
+    { frame: t.at("problem", "falls") + 10, note: "One server takes every request. Past its limit, it falls over." },
+    { frame: t.at("route", "picks") + 12, note: "With a balancer in front, every request stops there first." },
+  ],
+};
+export const loadBalancerBoardMeta = storyboardMeta("LoadBalancerBoard", loadBalancerBoard);
+
+// src/Root.tsx
+<Composition component={Storyboard} {...loadBalancerBoardMeta} defaultProps={loadBalancerBoard} />`,
+  },
+  {
     id: "node",
     group: "Actors",
     name: "Node",
     summary:
-      "A service, process or machine. It can pop into the scene, light up, and turn to glass to show what is inside it. Children are the internals, in the node's local space.",
+      "A service, process or machine. It can pop into the scene, light up, carry a badge for the state it is in, and turn to glass to show what is inside it. Children are the internals, in the node's local space.",
     demo: {
       component: NodeDemo,
       durationInFrames: 220,
@@ -143,6 +170,7 @@ const t = createTimeline(narration, { fps: 30 });
         { key: "label", kind: "text", initial: "Service" },
         { key: "shape", kind: "select", options: nodeShapeSchema.options, initial: "service" },
         { key: "tone", kind: "select", options: ["accent", "danger"], initial: "accent" },
+        { key: "badge", kind: "select", options: ["none", "locked", "syncing", "failed", "done"], initial: "none" },
       ],
     },
     schemas: [{ title: "Node", schema: nodeSchema }],
@@ -399,6 +427,31 @@ const hit = start + 51;
 <Packet from={graph.position("lb")} to={graph.position("a")} progress={ease(frame, 40, 56)} />`,
   },
   {
+    id: "lanes",
+    group: "Actors",
+    name: "layoutLanes",
+    summary:
+      "The same graph once per lane, one behind the other, so two versions of a system run side by side in one shot: before and after, v1 beside v2. Each lane is a Graph of its own, with node ids prefixed by the lane's name. Send the same packet down both at the same frame and let the viewer see where they part.",
+    demo: {
+      component: LanesDemo,
+      durationInFrames: 180,
+      controls: [{ key: "gap", kind: "range", min: 5, max: 10, step: 0.5, initial: 6.5 }],
+    },
+    schemas: [{ title: "layoutLanes(graph, options)", schema: lanesSchema }],
+    otherProps: [
+      { name: "graph", type: "Graph", description: "What layoutGraph() or layoutHub() returned." },
+      { name: "returns", type: "Record<lane, Graph & { labelAt }>", description: "One Graph per lane. `labelAt` is where a Label naming the lane goes; add it to the shot's targets." },
+    ],
+    code: `const { before, after } = layoutLanes(graph);
+
+<Label position={before.labelAt} size={0.5}>before</Label>
+<Label position={after.labelAt} size={0.5}>after</Label>
+<Graph3D graph={before} nodes={{ "before/jobs": { tone: "danger", active: failed, badge: "failed" } }} />
+<Graph3D graph={after} />
+<Packet from={before.position("before/api")} to={before.position("before/jobs")} progress={hop} tone="danger" />
+<Packet from={after.position("after/api")} to={after.position("after/jobs")} progress={hop} tone="accent" />`,
+  },
+  {
     id: "focus",
     group: "Actors",
     name: "Focus",
@@ -435,13 +488,14 @@ const hit = start + 51;
     group: "Overlay",
     name: "CodePanel",
     summary:
-      "Highlighted code on a flat card, because code at an angle is unreadable. Spotlight lines as they are spoken, and shift the camera so the 3D subject sits on the other side.",
+      "Highlighted code on a flat card, because code at an angle is unreadable. Spotlight lines as they are spoken, or mark the lines a change removed and added. Shift the camera so the 3D subject sits on the other side.",
     demo: {
       component: CodePanelDemo,
       durationInFrames: 150,
       controls: [
         { key: "side", kind: "select", options: ["right", "left"], initial: "right" },
         { key: "title", kind: "text", initial: "round robin" },
+        { key: "diff", kind: "select", options: ["off", "on"], initial: "off" },
       ],
     },
     schemas: [{ title: "CodePanel", schema: codePanelSchema }],

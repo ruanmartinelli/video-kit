@@ -10,6 +10,7 @@ import {
   Label,
   layoutGraph,
   layoutHub,
+  layoutLanes,
   Manifest,
   Node,
   NODE_HEIGHT,
@@ -69,7 +70,9 @@ export const CameraDemo = ({ view, azimuth, sway }: { view: "wide" | "close" | "
   </World>
 );
 
-export const NodeDemo = ({ label, shape, tone }: { label: string; shape: NodeShape; tone: "accent" | "danger" }) => {
+type BadgeChoice = "none" | "locked" | "syncing" | "failed" | "done";
+
+export const NodeDemo = ({ label, shape, tone, badge }: { label: string; shape: NodeShape; tone: "accent" | "danger"; badge: BadgeChoice }) => {
   const frame = useCurrentFrame();
   return (
     <World>
@@ -79,6 +82,7 @@ export const NodeDemo = ({ label, shape, tone }: { label: string; shape: NodeSha
         label={label}
         shape={shape}
         tone={tone}
+        badge={badge === "none" ? undefined : badge}
         appear={pop(frame, 8)}
         active={pulse(frame, 55, 30)}
         open={ease(frame, 105, 125) * (1 - ease(frame, 185, 200))}
@@ -131,10 +135,7 @@ export const GraphDemo = ({ columnGap, rowGap }: { columnGap: number; rowGap: nu
   return (
     <World>
       <CameraRig shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), azimuth: 14 }]} />
-      <Graph3D
-        graph={graph}
-        edges={Object.fromEntries(graph.edges.map((edge, index) => [edge.id, drawn(index)]))}
-      />
+      <Graph3D graph={graph} edges={Object.fromEntries(graph.edges.map((edge, index) => [edge.id, drawn(index)]))} />
     </World>
   );
 };
@@ -172,13 +173,24 @@ function pick() {
 }
 `;
 
-export const CodePanelDemo = ({ side, title }: { side: "left" | "right"; title: string }) => {
+const DIFF_CODE = `
+for (const job of batch) {
+  retry(job);
+  retry(job, { max: 3 });
+}
+`;
+
+export const CodePanelDemo = ({ side, title, diff }: { side: "left" | "right"; title: string; diff: "off" | "on" }) => {
   const frame = useCurrentFrame();
   const line = 2 + (Math.floor(frame / 40) % 3);
   return (
     <World
       overlay={
-        <CodePanel code={SAMPLE_CODE} title={title} side={side} highlight={frame < 30 ? [] : [line]} appear={ease(frame, 5, 20)} />
+        diff === "on" ? (
+          <CodePanel code={DIFF_CODE} title={title} side={side} removed={[2]} added={frame < 60 ? [] : [3]} appear={ease(frame, 5, 20)} />
+        ) : (
+          <CodePanel code={SAMPLE_CODE} title={title} side={side} highlight={frame < 30 ? [] : [line]} appear={ease(frame, 5, 20)} />
+        )
       }
     >
       <CameraRig shots={[{ at: 0, targets: [origin], view: "close", padding: 1.5, shift: [side === "right" ? -0.22 : 0.22, 0.04] }]} />
@@ -263,13 +275,7 @@ export const OutcomesDemo = ({ side }: { side: "left" | "right" }) => {
   const trip = (name: string, start: number, passes: boolean, wrong: boolean) => (
     <group key={start}>
       <Packet from={client} to={guard} progress={ease(frame, start, start + leg)} label={name} />
-      <Packet
-        from={guard}
-        to={passes ? api : client}
-        progress={ease(frame, start + leg, start + 2 * leg)}
-        label={name}
-        tone={wrong ? "danger" : "neutral"}
-      />
+      <Packet from={guard} to={passes ? api : client} progress={ease(frame, start + leg, start + 2 * leg)} label={name} tone={wrong ? "danger" : "neutral"} />
     </group>
   );
   const flipped = 145 + leg;
@@ -314,7 +320,11 @@ export const HubDemo = ({ callers }: { callers: number }) => {
       <Ripple at={graph.position("helper")} progress={progress} />
       <Graph3D
         graph={graph}
-        nodes={Object.fromEntries(names.slice(2, callers).map((name) => [name, { active: ease(frame, reached - 4, reached + 8), tone: frame >= reached - 4 ? ("danger" as const) : ("accent" as const) }]))}
+        nodes={Object.fromEntries(
+          names
+            .slice(2, callers)
+            .map((name) => [name, { active: ease(frame, reached - 4, reached + 8), tone: frame >= reached - 4 ? ("danger" as const) : ("accent" as const) }]),
+        )}
       />
     </World>
   );
@@ -391,9 +401,68 @@ export const ChangeDemo = () => {
     ],
   });
   return (
-    <World overlay={<Chip caption="new file" tone="added" appear={ease(frame, 20, 34)}>src/controllers/refunds.ts</Chip>}>
+    <World
+      overlay={
+        <Chip caption="new file" tone="added" appear={ease(frame, 20, 34)}>
+          src/controllers/refunds.ts
+        </Chip>
+      }
+    >
       <CameraRig shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), azimuth: 12 }]} />
       <Graph3D graph={graph} nodes={{ new: { active: pulse(frame, 30, 30) } }} />
+    </World>
+  );
+};
+
+export const LanesDemo = ({ gap }: { gap: number }) => {
+  const frame = useCurrentFrame();
+  const graph = layoutGraph({
+    nodes: [
+      { id: "client", label: "Client", shape: "phone" },
+      { id: "api", label: "API", shape: "server" },
+      { id: "jobs", label: "Jobs", shape: "worker" },
+    ],
+    edges: [
+      ["client", "api"],
+      ["api", "jobs"],
+    ],
+    columnGap: 5,
+  });
+  const { before, after } = layoutLanes(graph, { gap });
+  const leg = 16;
+  const start = 30;
+  // The same request in both lanes, at the same moment. Only the old one fails.
+  const failed = frame >= start + 2 * leg && frame < 150;
+  const hop = (lane: typeof before, name: string, from: string, to: string, at: number, tone: "accent" | "danger") => (
+    <Packet from={lane.position(`${name}/${from}`)} to={lane.position(`${name}/${to}`)} progress={ease(frame, at, at + leg)} tone={tone} />
+  );
+  return (
+    <World>
+      <CameraRig
+        shots={[
+          {
+            at: 0,
+            targets: [...before.nodes.map((node) => node.position), ...after.nodes.map((node) => node.position), before.labelAt],
+            azimuth: 10,
+            padding: 1.1,
+          },
+        ]}
+      />
+      <Label position={before.labelAt} size={0.5}>
+        before
+      </Label>
+      <Label position={after.labelAt} size={0.5}>
+        after
+      </Label>
+      <Graph3D graph={before} nodes={{ "before/jobs": { active: failed ? 1 : 0, tone: "danger", badge: failed ? "failed" : undefined } }} />
+      <Graph3D
+        graph={after}
+        nodes={{ "after/jobs": { active: pulse(frame, start + 2 * leg, 24), badge: frame >= start + 2 * leg && frame < 150 ? "done" : undefined } }}
+      />
+      {hop(before, "before", "client", "api", start, "accent")}
+      {hop(before, "before", "api", "jobs", start + leg, "danger")}
+      {hop(after, "after", "client", "api", start, "accent")}
+      {hop(after, "after", "api", "jobs", start + leg, "accent")}
     </World>
   );
 };
