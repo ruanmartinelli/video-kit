@@ -81,7 +81,7 @@ export const CodePanel = (props: CodePanelProps) => {
               boxShadow: mark ? `inset 4px 0 0 ${mark}` : "none",
             }}
           >
-            {isDiff ? <span style={{ display: "inline-block", width: "1.4em", color: mark ?? "transparent" }}>{change === "removed" ? "-" : "+"}</span> : null}
+            {isDiff ? <span style={{ display: "inline-block", width: "1.4em", color: change ? theme[change] : "transparent" }}>{change === "removed" ? "-" : "+"}</span> : null}
             <span style={change === "removed" ? { textDecoration: "line-through", textDecorationColor: theme.removed, opacity: 0.7 } : undefined}>
               {tokens.map((token) => (
                 <span key={token.offset} style={{ color: token.color }}>

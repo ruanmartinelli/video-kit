@@ -31,7 +31,7 @@ The kit is the repository this skill lives in. Find it once with `cd -P "<this s
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `layoutGraph(...)` gives positions for a flow; `layoutHub(...)` for one thing with many dependents. Give each node the `shape` that names what it is; `pieces/shapes.md` lists them. Packets, extra pipes and camera targets all read `graph.position(id)`.
    - One `<World>`, one `<CameraRig graph={graph}>`, actors as children; `Narration`, `Caption` and every flat panel in `overlay`.
-   - A shot with a docked panel on screen (`CodePanel`, `Outcomes`, `Tables`, `Meter`, ...) names the panel's side in `panel`. The rig fits the targets into the rest of the frame, so those shots take no `shift`.
+   - A shot with a docked panel on screen (`CodePanel`, `Outcomes`, `Tables`, `Meter`, ...) names the panel's side in `panel`, and the rig fits the targets into the rest of the frame. For a short panel over a wide path, the other way works too: leave `panel` out and `shift` the whole path down under it, as `pr-auth` does.
 
 5. **Check it.** `pnpm typecheck`, then `pnpm stills <Id> cues --sheet`. That renders three frames per beat and tiles them twelve to an image, each under its frame number. Read every sheet.
 
@@ -40,7 +40,9 @@ The kit is the repository this skill lives in. Find it once with `cd -P "<this s
    - every panel is whole inside the frame
    - each tile differs from the one before it
 
-   Open a full-size frame, `out/stills/<Id>/f<frame>.png`, for any tile that looks wrong, and for one frame of each panel that carries code or small text, to confirm it reads. After a fix, re-render only what changed: `pnpm stills <Id> 612,640 --sheet`.
+   For any tile that looks wrong, and for one frame of each panel that carries code or small text, render that frame full size and read it: `pnpm stills <Id> 612 1` writes `out/stills/<Id>/f0612.png`. Each run replaces what is in that folder. After a fix, re-render only the frames it touched: `pnpm stills <Id> 612,640 --sheet`.
+
+   A packet is on screen for half a second, so two tiles a second apart can look the same while the packet between them is fine. Check a packet by rendering a frame inside its trip.
 
    Done when every tile passes and every panel with code has been read at full size.
 
