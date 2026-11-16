@@ -80,6 +80,31 @@ A review video shows what the reviewer has to look at and leaves the rest of the
 - A job is a `worker` node. Draw everything that starts it: the `queue` it reads from, a `clock` for a schedule.
 - A changed interval is two rows in `Schedule`, old and new, over the same window.
 
+## Explaining a bug, a plan or a system
+
+Pick the piece by what the beat is about. Flat panels dock in the same place, so one is on screen at a time; `Chip`, `Term` and the `Chapter` rail sit in the corners and can stay.
+
+- **A rule that lets some things through** (a trigger condition, a filter, a guard): a `Gate` on the pipe, with the rule as its text. Send each case to `gatePoint()`, then on through in `accent` or back in `danger`, and pulse the gate in the same tone.
+- **A record changing state**: `Lifecycle` for the state it is in, `RecordCard` for the field that changed (flip it on the frame the write lands), a `badge` on the node that holds it (`locked`, `syncing`, `failed`, `done`).
+- **A number against a limit** (stock and its minimum, a transaction and its time cap): `Meter`, with `value` driven from the frame.
+- **What happened to one thing over a day**: `EventTimeline`. `Schedule` when the events are a fixed interval.
+- **One becomes many, or many become one** (fan-out, batching, dedupe): `Fan`.
+- **Old and new at the same time**: `layoutLanes(graph)` gives one copy of the graph per lane. Send the same packet down both on the same frame. Use lanes when the paths differ; when only the answer differs, run it twice with `Outcomes`.
+- **A rollout**: `Phases`, with `current` moving on as each step is spoken.
+- **A size or a share**: `Bars` for two to six values to scale, `Proportion` for a part of a whole.
+- **Someone asking an assistant**: `Chat`. The assistant is an `agent` node and the model it calls is a `model` node.
+- **A word the viewer may not know**: `Term`, on screen while the thing it names is.
+- **The one thing in the shot to look at**: `Callout`. One per shot.
+- **A line of code that changed**: `CodePanel` with `removed` and `added`, the old line above the new one.
+- **The app's own screen**: `Screenshot`, with `highlight` on what the narration names and `wipe` from the old screen to the new.
+- **A video over three minutes**: `Chapter`, with a title card at each chapter start.
+
+A bug video opens on what the user saw, follows the one record that went wrong to the line that explains it, and ends on the fix replayed with the same record.
+
+## Presenting it yourself
+
+A storyboard is a few frames of a finished video on one sheet. Write `src/videos/<name>/board.ts` (copy `src/videos/load-balancer/board.ts`): the video's composition id, and a frame and a note for each of three or four panels. Register `Storyboard` in `src/Root.tsx` with the board as `defaultProps`. `pnpm storyboard <Id>` writes `out/storyboard/<Id>.png` and `<Id>-notes.png`.
+
 ## How the kit works
 
 **One world.** A video is a single `World` the camera travels through. Change what the camera frames to move the story on; the scene itself stays.
@@ -97,7 +122,8 @@ A review video shows what the reviewer has to look at and leaves the rest of the
 ## Changing the kit
 
 - A new component exports its schema with a `.describe()` on each prop, parses its props with it, and is exported from `src/kit/index.ts`.
-- A new node shape is a component in `src/kit/shapes.tsx` that fits the 2 x 1.2 x 2 box and stands on its floor, built only from the four materials it is handed (`body`, `trim`, `inset`, `glow`), added to `nodeShapeSchema` and `shapes`. Look at it with `pnpm stills ShapeGallery 60,150 1`; the last argument renders full size.
+- A new node shape is a component in `src/kit/shapes.tsx` that fits the 2 x 1.2 x 2 box and stands on its floor, built only from the four materials it is handed (`body`, `trim`, `inset`, `glow`), added to `nodeShapeSchema` and `shapes`. Look at it with `pnpm stills ShapeGallery 150 1`; the last argument renders full size.
 - An actor that should dim takes an optional `id` and reads `useDim(id)`.
-- Every component has an entry in `docs/registry.tsx` with a demo in `docs/demos.tsx`.
+- Every component has an entry in `docs/registry.tsx` with a demo in `docs/demos*.tsx`.
+- Look at a piece you changed in its gallery, the way `ShapeGallery` shows shapes: `ActorGallery` (Gate, Fan, Callout), `PanelGallery` (Lifecycle, Meter, EventTimeline, RecordCard, Phases), `OverlayGallery` (Proportion, Bars, Chat, Term, Chapter, Screenshot), `CompareGallery` (lanes, badges, code diff).
 - A `<Player>` that plays narration needs `numberOfSharedAudioTags={0}`, or it crashes on the sixth beat.

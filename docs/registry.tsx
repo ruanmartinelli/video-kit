@@ -1,6 +1,15 @@
 import type { ComponentType } from "react";
 import type { z } from "zod";
 import {
+  barSchema,
+  barsSchema,
+  chapterSchema,
+  chatMessageSchema,
+  chatSchema,
+  highlightSchema,
+  proportionSchema,
+  screenshotSchema,
+  termSchema,
   eventTimelineSchema,
   lifecycleSchema,
   lifecycleStateSchema,
@@ -61,6 +70,7 @@ import {
   WorldDemo,
 } from "./demos";
 import { CalloutDemo, FanDemo, GateDemo } from "./demos-actors";
+import { BarsDemo, ChapterDemo, ChatDemo, ProportionDemo, ScreenshotDemo, TermDemo } from "./demos-overlays";
 import { EventTimelineDemo, LifecycleDemo, MeterDemo, PhasesDemo, RecordCardDemo } from "./demos-panels";
 import { ShapeGallery, shapeGalleryMeta } from "../src/gallery/ShapeGallery";
 
@@ -406,6 +416,133 @@ const hit = (start) => start + 14;
   steps={["shadow", "compare", "move one", "migrate"]}
   current={ease(frame, t.at("compare"), t.at("compare") + 12) + ease(frame, t.at("move"), t.at("move") + 12)}
   note="the old path keeps running"
+/>`,
+  },
+  {
+    id: "proportion",
+    group: "Overlay",
+    name: "Proportion",
+    summary:
+      "A share as a grid of dots: 33 of 100, 7 of 128. For the moment a number is the point and the viewer should feel its size. The filled dots come in one by one with `progress`.",
+    demo: {
+      component: ProportionDemo,
+      durationInFrames: 150,
+      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }, { key: "part", kind: "range", min: 0, max: 100, step: 1, initial: 33 }, { key: "tone", kind: "select", options: ["accent", "danger", "added"], initial: "accent" }],
+    },
+    schemas: [{ title: "Proportion", schema: proportionSchema }],
+    code: `<Proportion part={33} total={100} label="orders have a tracking number" progress={ease(frame, t.at("share"), t.at("share") + 40)} />`,
+  },
+  {
+    id: "bars",
+    group: "Overlay",
+    name: "Bars",
+    summary:
+      "A few values as bars drawn to scale from a shared zero: before and after, cold and warm. Two to six bars. More than that is a chart, and a chart is a still image.",
+    demo: {
+      component: BarsDemo,
+      durationInFrames: 150,
+      controls: [
+        { key: "side", kind: "select", options: ["left", "right"], initial: "left" },
+        { key: "after", kind: "range", min: 0, max: 80, step: 1, initial: 3 },
+      ],
+    },
+    schemas: [
+      { title: "Bars", schema: barsSchema },
+      { title: "Bar", schema: barSchema },
+    ],
+    code: `<Bars
+  title="lines in reserveStock()"
+  unit="lines"
+  bars={[{ label: "before", value: 40 }, { label: "after", value: 3, tone: "changed" }]}
+  progress={ease(frame, t.at("shorter"), t.at("shorter") + 50)}
+  side="left"
+/>`,
+  },
+  {
+    id: "chat",
+    group: "Overlay",
+    name: "Chat",
+    summary:
+      "Message bubbles that type, for anything where someone asks an assistant: a support bot, a coding agent, a prompt and its answer. Up to four messages. `pending` shows the assistant thinking before its text starts.",
+    demo: {
+      component: ChatDemo,
+      durationInFrames: 210,
+      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }, { key: "question", kind: "text", initial: "Why did order #1040 ship late?" }],
+    },
+    schemas: [
+      { title: "Chat", schema: chatSchema },
+      { title: "Message", schema: chatMessageSchema },
+    ],
+    code: `const answers = t.at("answer");
+
+<Chat
+  messages={[
+    { from: "user", text: "Why did order #1040 ship late?", typed: ease(frame, t.at("ask"), t.at("ask") + 30) },
+    // \`typed\` 0 hides a message, so keep it just above 0 once the dots are replaced by text.
+    { from: "assistant", text: "The stock job retried three times.", pending: frame < answers, typed: Math.max(0.01, ease(frame, answers, answers + 50)) },
+  ]}
+/>`,
+  },
+  {
+    id: "term",
+    group: "Overlay",
+    name: "Term",
+    summary:
+      "A word and its one-line meaning, pinned in a corner while the thing it names is on screen. For a viewer who is new to the codebase or the domain. One term at a time, and take it away when the narration moves on.",
+    demo: {
+      component: TermDemo,
+      durationInFrames: 120,
+      controls: [
+        { key: "corner", kind: "select", options: ["bottom-left", "bottom-right"], initial: "bottom-left" },
+        { key: "term", kind: "text", initial: "idempotent" },
+        { key: "meaning", kind: "text", initial: "safe to run twice, same result" },
+      ],
+    },
+    schemas: [{ title: "Term", schema: termSchema }],
+    code: `<Term term="idempotent" meaning="safe to run twice, same result" appear={between(t.at("retry", "idempotent"), t.at("next"))} />`,
+  },
+  {
+    id: "chapter",
+    group: "Overlay",
+    name: "Chapter",
+    summary:
+      "For a video longer than a few minutes: a title card when a chapter starts, and a thin rail along the bottom that shows how far in the viewer is. The rail stays on screen; pass `appear={0}` between cards.",
+    demo: { component: ChapterDemo, durationInFrames: 180, controls: [{ key: "chapters", kind: "range", min: 2, max: 8, step: 1, initial: 5 }] },
+    schemas: [{ title: "Chapter", schema: chapterSchema }],
+    code: `const starts = [t.at("orders"), t.at("stock"), t.at("cost")];
+const current = starts.findLastIndex((start) => start <= frame);
+
+<Chapter
+  titles={["Where orders come from", "Reserving stock", "What it costs"]}
+  current={current}
+  appear={ease(frame, starts[current], starts[current] + 10) * (1 - ease(frame, starts[current] + 50, starts[current] + 62))}
+/>`,
+  },
+  {
+    id: "screenshot",
+    group: "Overlay",
+    name: "Screenshot",
+    summary:
+      "An app screen in a browser frame, for the part of a story that happens in the UI. Outline what the narration is about with `highlight`, and sweep from the old screen to the new one with `wipe`. Images live under `public/`.",
+    demo: {
+      component: ScreenshotDemo,
+      durationInFrames: 210,
+      controls: [
+        { key: "side", kind: "select", options: ["center", "left", "right"], initial: "center" },
+        { key: "width", kind: "range", min: 400, max: 1100, step: 50, initial: 1100 },
+      ],
+    },
+    schemas: [
+      { title: "Screenshot", schema: screenshotSchema },
+      { title: "Highlight", schema: highlightSchema },
+    ],
+    code: `<Screenshot
+  src="demo/app-before.svg"
+  after="demo/app-after.svg"
+  url="admin.example.com/orders"
+  wipe={ease(frame, t.at("after"), t.at("after") + 45)}
+  highlight={{ x: 0.815, y: 0.285, width: 0.165, height: 0.086, appear: ease(frame, t.at("export"), t.at("export") + 14) }}
+  appear={ease(frame, 4, 16)}
 />`,
   },
   {

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="Helvetica, Arial, sans-serif">
+<rect width="1600" height="1000" fill="#f5f6f8"/>
+<rect width="260" height="1000" fill="#1f2430"/>
+<rect x="32" y="30" width="40" height="40" rx="10" fill="#4f8cff"/>
+<text x="88" y="60" font-size="26" font-weight="700" fill="#ffffff">Shop admin</text>
+<rect x="16" y="102" width="228" height="54" rx="10" fill="#343b4d"/>
+<rect x="36" y="118" width="22" height="22" rx="5" fill="#4f8cff"/>
+<text x="76" y="137" font-size="24" fill="#ffffff">Orders</text>
+<rect x="36" y="182" width="22" height="22" rx="5" fill="#5d6475"/>
+<text x="76" y="201" font-size="24" fill="#a8afbf">Stock</text>
+<rect x="36" y="246" width="22" height="22" rx="5" fill="#5d6475"/>
+<text x="76" y="265" font-size="24" fill="#a8afbf">Users</text>
+<rect x="36" y="310" width="22" height="22" rx="5" fill="#5d6475"/>
+<text x="76" y="329" font-size="24" fill="#a8afbf">Jobs</text>
+<rect x="36" y="374" width="22" height="22" rx="5" fill="#5d6475"/>
+<text x="76" y="393" font-size="24" fill="#a8afbf">Settings</text>
+<rect x="260" width="1340" height="88" fill="#ffffff"/><rect x="260" y="88" width="1340" height="2" fill="#e3e5ea"/>
+<text x="300" y="56" font-size="34" font-weight="700" fill="#1f2430">Orders</text>
+<circle cx="1540" cy="44" r="22" fill="#d5d9e2"/>
+<rect x="300" y="120" width="400" height="140" rx="14" fill="#ffffff" stroke="#e3e5ea" stroke-width="2"/>
+<text x="330" y="168" font-size="24" fill="#6b7280">Open</text>
+<text x="330" y="234" font-size="52" font-weight="700" fill="#1f2430">128</text>
+<rect x="730" y="120" width="400" height="140" rx="14" fill="#ffffff" stroke="#e3e5ea" stroke-width="2"/>
+<text x="760" y="168" font-size="24" fill="#6b7280">Shipped</text>
+<text x="760" y="234" font-size="52" font-weight="700" fill="#1f2430">342</text>
+<rect x="1160" y="120" width="400" height="140" rx="14" fill="#ffffff" stroke="#e3e5ea" stroke-width="2"/>
+<text x="1190" y="168" font-size="24" fill="#6b7280">Late</text>
+<text x="1190" y="234" font-size="52" font-weight="700" fill="#1f2430">7</text>
+<rect x="300" y="300" width="1260" height="660" rx="14" fill="#ffffff" stroke="#e3e5ea" stroke-width="2"/>
+<text x="340" y="350" font-size="22" font-weight="700" fill="#6b7280">Order</text>
+<text x="560" y="350" font-size="22" font-weight="700" fill="#6b7280">Customer</text>
+<text x="900" y="350" font-size="22" font-weight="700" fill="#6b7280">Items</text>
+<text x="1080" y="350" font-size="22" font-weight="700" fill="#6b7280">Total</text>
+<text x="1300" y="350" font-size="22" font-weight="700" fill="#6b7280">Status</text>
+<rect x="300" y="372" width="1260" height="2" fill="#e3e5ea"/>
+<text x="340" y="420" font-size="24" fill="#1f2430">#1042</text>
+<text x="560" y="420" font-size="24" fill="#1f2430">Customer 18</text>
+<text x="900" y="420" font-size="24" fill="#1f2430">3</text>
+<text x="1080" y="420" font-size="24" fill="#1f2430">84.00</text>
+<rect x="1294" y="392" width="130" height="38" rx="19" fill="#fff4d6"/><text x="1359" y="418" font-size="20" font-weight="700" fill="#a26b00" text-anchor="middle">Pending</text>
+<rect x="330" y="446" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="488" font-size="24" fill="#1f2430">#1041</text>
+<text x="560" y="488" font-size="24" fill="#1f2430">Customer 07</text>
+<text x="900" y="488" font-size="24" fill="#1f2430">1</text>
+<text x="1080" y="488" font-size="24" fill="#1f2430">12.50</text>
+<rect x="1294" y="460" width="130" height="38" rx="19" fill="#dcf5e3"/><text x="1359" y="486" font-size="20" font-weight="700" fill="#1d7a3c" text-anchor="middle">Shipped</text>
+<rect x="330" y="514" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="556" font-size="24" fill="#1f2430">#1040</text>
+<text x="560" y="556" font-size="24" fill="#1f2430">Customer 22</text>
+<text x="900" y="556" font-size="24" fill="#1f2430">5</text>
+<text x="1080" y="556" font-size="24" fill="#1f2430">230.00</text>
+<rect x="1294" y="528" width="130" height="38" rx="19" fill="#fde2e2"/><text x="1359" y="554" font-size="20" font-weight="700" fill="#b42323" text-anchor="middle">Late</text>
+<rect x="330" y="582" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="624" font-size="24" fill="#1f2430">#1039</text>
+<text x="560" y="624" font-size="24" fill="#1f2430">Customer 03</text>
+<text x="900" y="624" font-size="24" fill="#1f2430">2</text>
+<text x="1080" y="624" font-size="24" fill="#1f2430">41.00</text>
+<rect x="1294" y="596" width="130" height="38" rx="19" fill="#dcf5e3"/><text x="1359" y="622" font-size="20" font-weight="700" fill="#1d7a3c" text-anchor="middle">Shipped</text>
+<rect x="330" y="650" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="692" font-size="24" fill="#1f2430">#1038</text>
+<text x="560" y="692" font-size="24" fill="#1f2430">Customer 11</text>
+<text x="900" y="692" font-size="24" fill="#1f2430">4</text>
+<text x="1080" y="692" font-size="24" fill="#1f2430">96.20</text>
+<rect x="1294" y="664" width="130" height="38" rx="19" fill="#fff4d6"/><text x="1359" y="690" font-size="20" font-weight="700" fill="#a26b00" text-anchor="middle">Pending</text>
+<rect x="330" y="718" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="760" font-size="24" fill="#1f2430">#1037</text>
+<text x="560" y="760" font-size="24" fill="#1f2430">Customer 15</text>
+<text x="900" y="760" font-size="24" fill="#1f2430">1</text>
+<text x="1080" y="760" font-size="24" fill="#1f2430">19.90</text>
+<rect x="1294" y="732" width="130" height="38" rx="19" fill="#dcf5e3"/><text x="1359" y="758" font-size="20" font-weight="700" fill="#1d7a3c" text-anchor="middle">Shipped</text>
+<rect x="330" y="786" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="828" font-size="24" fill="#1f2430">#1036</text>
+<text x="560" y="828" font-size="24" fill="#1f2430">Customer 09</text>
+<text x="900" y="828" font-size="24" fill="#1f2430">2</text>
+<text x="1080" y="828" font-size="24" fill="#1f2430">58.00</text>
+<rect x="1294" y="800" width="130" height="38" rx="19" fill="#dcf5e3"/><text x="1359" y="826" font-size="20" font-weight="700" fill="#1d7a3c" text-anchor="middle">Shipped</text>
+<rect x="330" y="854" width="1200" height="1" fill="#eef0f3"/>
+<text x="340" y="896" font-size="24" fill="#1f2430">#1035</text>
+<text x="560" y="896" font-size="24" fill="#1f2430">Customer 30</text>
+<text x="900" y="896" font-size="24" fill="#1f2430">6</text>
+<text x="1080" y="896" font-size="24" fill="#1f2430">310.40</text>
+<rect x="1294" y="868" width="130" height="38" rx="19" fill="#fff4d6"/><text x="1359" y="894" font-size="20" font-weight="700" fill="#a26b00" text-anchor="middle">Pending</text>
+<rect x="330" y="922" width="1200" height="1" fill="#eef0f3"/>
+</svg>
