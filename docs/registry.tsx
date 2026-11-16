@@ -1,6 +1,9 @@
 import type { ComponentType } from "react";
 import type { z } from "zod";
 import {
+  calloutSchema,
+  fanSchema,
+  gateSchema,
   cameraRigSchema,
   captionSchema,
   chipSchema,
@@ -48,6 +51,7 @@ import {
   TablesDemo,
   WorldDemo,
 } from "./demos";
+import { CalloutDemo, FanDemo, GateDemo } from "./demos-actors";
 import { ShapeGallery, shapeGalleryMeta } from "../src/gallery/ShapeGallery";
 
 export type Control =
@@ -369,6 +373,77 @@ const hit = (start) => start + 14;
     ],
     code: `<Pipe from={a} to={b} progress={ease(frame, 5, 30)} label="POST /orders" />
 <Packet from={a} to={b} progress={ease(frame, 40, 85)} label="order 42" />`,
+  },
+  {
+    id: "gate",
+    group: "Actors",
+    name: "Gate",
+    summary:
+      "A condition drawn on the connection itself: a ring the pipe runs through, with its rule above it. A packet that matches goes on through; one that does not travels back to where it came from. Use it for a trigger condition, a filter or a guard that is one line of code and not worth a node. A packet stops at `gatePoint()`, then a second packet carries on or returns.",
+    demo: {
+      component: GateDemo,
+      durationInFrames: 150,
+      controls: [
+        { key: "rule", kind: "text", initial: "qty <= stock" },
+        { key: "at", kind: "range", min: 0.25, max: 0.75, step: 0.05, initial: 0.5 },
+      ],
+    },
+    schemas: [{ title: "Gate", schema: gateSchema }],
+    otherProps: [{ name: "gatePoint(from, to, at?)", type: "Vec3", description: "The ring's center. Send a Packet to it with `clear={[NODE_CLEAR, 0]}`, and on from it with `clear={[0, NODE_CLEAR]}`." }],
+    code: `const gate = gatePoint(api, stock);
+const reach = t.at("check", "stock"); // the frame the packet is at the ring
+
+<Pipe from={api} to={stock} />
+<Gate from={api} to={stock} rule="qty <= stock" active={pulse(frame, reach, 25)} tone={passes ? "accent" : "danger"} />
+<Packet from={api} to={gate} clear={[NODE_CLEAR, 0]} progress={ease(frame, reach - 25, reach)} label="qty 2" />
+{/* One frame early: a Packet is hidden at exactly 0 and 1. */}
+<Packet from={gate} to={passes ? stock : api} clear={[0, NODE_CLEAR]} progress={ease(frame, reach - 1, reach + 24)} tone={passes ? "accent" : "danger"} label="qty 2" />`,
+  },
+  {
+    id: "fan",
+    group: "Actors",
+    name: "Fan",
+    summary:
+      "One thing becomes many, or many collapse into one: a request fanned out to shards, a batch split into jobs, duplicates merged into one record. One small packet per target, all driven by a single `progress`.",
+    demo: {
+      component: FanDemo,
+      durationInFrames: 90,
+      controls: [
+        { key: "direction", kind: "select", options: ["split", "merge"], initial: "split" },
+        { key: "stagger", kind: "range", min: 0, max: 1, step: 0.1, initial: 0.3 },
+        { key: "count", kind: "range", min: 2, max: 4, step: 1, initial: 4 },
+      ],
+    },
+    schemas: [{ title: "Fan", schema: fanSchema }],
+    code: `<Fan
+  from={graph.position("search")}
+  to={shards.map((id) => graph.position(id))}
+  direction="split"
+  stagger={0.3}
+  progress={ease(frame, t.at("fanout"), t.at("fanout") + 60)}
+  tone="accent"
+/>`,
+  },
+  {
+    id: "callout",
+    group: "Actors",
+    name: "Callout",
+    summary:
+      "A note tied to a point in the world by a leader line, for the one thing in the shot the narration is about. It faces the camera and draws over whatever is behind it. One at a time: two callouts in a shot is a diagram.",
+    demo: {
+      component: CalloutDemo,
+      durationInFrames: 130,
+      controls: [
+        { key: "text", kind: "text", initial: "reads stale stock" },
+        { key: "tone", kind: "select", options: ["neutral", "accent", "danger"], initial: "danger" },
+        { key: "right", kind: "range", min: -3, max: 3, step: 0.2, initial: 2 },
+        { key: "up", kind: "range", min: -2.4, max: 2.4, step: 0.2, initial: 1.2 },
+      ],
+    },
+    schemas: [{ title: "Callout", schema: calloutSchema }],
+    code: `<Callout at={graph.position("cache")} offset={[2, 1.2]} tone="danger" appear={ease(frame, t.at("stale"), t.at("stale") + 30)}>
+  reads stale stock
+</Callout>`,
   },
   {
     id: "hub",

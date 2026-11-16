@@ -4,8 +4,23 @@ export { Caption, captionSchema } from "./Caption";
 export { Chip, chipSchema } from "./Chip";
 export { CodePanel, codePanelSchema } from "./CodePanel";
 export { Focus, focusSchema } from "./Focus";
-export { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
-export { edgeId, graphSpecSchema, hubSpecSchema, lanesSchema, layoutGraph, layoutHub, layoutLanes, type Graph, type GraphSpec, type HubSpec, type Lane } from "./graph";
+export { Callout, calloutSchema } from "./Callout";
+export { Fan, fanSchema } from "./Fan";
+export { Gate, gatePoint, gateSchema } from "./Gate";
+export { NODE_CLEAR, NODE_HEIGHT, NODE_WIDTH } from "./geometry";
+export {
+  edgeId,
+  graphSpecSchema,
+  hubSpecSchema,
+  lanesSchema,
+  layoutGraph,
+  layoutHub,
+  layoutLanes,
+  type Graph,
+  type GraphSpec,
+  type HubSpec,
+  type Lane,
+} from "./graph";
 export { Graph3D } from "./Graph3D";
 export { Label, labelSchema } from "./Label";
 export { Manifest, manifestItemSchema, manifestSchema } from "./Manifest";

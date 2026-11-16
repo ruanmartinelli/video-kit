@@ -12,7 +12,7 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 
 3. **Compose.** One file, `src/videos/<name>/<Name>.tsx`, registered in `src/Root.tsx`:
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
-   - `layoutGraph(...)` gives positions for a flow; `layoutHub(...)` for one thing with many dependents. Give each node the `shape` that names what it is (`database`, `server`, `queue`, `client`, `user`, `cloud`, `storage`, `clock` for systems; `router`, `controller`, `worker`, `file`, `shield` for code); `service` is the plain box. Packets, extra pipes and camera targets all read `graph.position(id)`.
+   - `layoutGraph(...)` gives positions for a flow; `layoutHub(...)` for one thing with many dependents. Give each node the `shape` that names what it is (`database`, `server`, `queue`, `client`, `phone`, `user`, `cloud`, `external`, `storage`, `log`, `clock`, `notification` for systems; `router`, `controller`, `worker`, `trigger`, `agent`, `model`, `file`, `shield`, `key` for code); `service` is the plain box. Packets, extra pipes and camera targets all read `graph.position(id)`.
    - One `<World>`, one `<CameraRig>`, actors as children; `Narration`, `Caption` and every flat panel (`CodePanel`, `Tables`, `Chip`, ...) in `overlay`.
 
 4. **Look at it.** `pnpm stills <CompositionId>` renders one frame per second to `out/stills/<CompositionId>/`; pass `120,340,515` to render chosen frames. Read the PNGs. Done when every still passes all of these:
