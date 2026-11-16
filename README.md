@@ -31,3 +31,25 @@ https://github.com/user-attachments/assets/40afe786-2bb5-4c05-8c60-c47ad86cd426
 **With video-kit**
 
 https://github.com/user-attachments/assets/b242ed7c-387b-4977-92eb-8368facd47e8
+
+## Numbers
+
+Measured on two jobs, each done once without the skill and once with it, by the same model.
+
+| | Without | With video-kit | |
+|---|---|---|---|
+| **A 28-file pull request, as a two-minute video** | | | |
+| Time | 77 min | 41 min | 46% less |
+| Tool calls | 199 | 122 | 39% fewer |
+| Tokens written | 113,875 | 71,507 | 37% fewer |
+| Frames looked at | 140 | 47 | 66% fewer |
+| Estimated cost | | | 35% less |
+| **How a load balancer works, in 30 seconds** (the videos above) | | | |
+| Time | 5.8 min | 8.3 min | 2.5 min more |
+| Tool calls | 32 | 37 | 5 more |
+| Tokens written | 29,283 | 18,440 | 37% fewer |
+| Estimated cost | | | about the same |
+
+The skill pays off on the larger job. On a 30-second video an agent working from scratch is just as cheap and a little faster; what the skill changes there is how the video looks.
+
+One run each, so read these as a signal. Cost is estimated from token counts at the usual price ratios (cache reads 0.1x, cache writes 1.25x and output 5x the input price). The two pull request runs did not share the speech service equally, so their times are rough.
