@@ -36,6 +36,9 @@ export const Type = ({ children, position, size, color = theme.text, opacity = 1
   // render until it lands, then draw the frame again. The hold starts in an
   // effect because the font load suspends, which throws away render-time state.
   const hold = useRef<number | null>(null);
+  // Effects also re-run when anything else in the scene suspends. Text that is
+  // already typeset never reports again, so a hold taken then would never release.
+  const typeset = useRef<string | null>(null);
   const release = () => {
     if (hold.current !== null) {
       continueRender(hold.current);
@@ -43,7 +46,9 @@ export const Type = ({ children, position, size, color = theme.text, opacity = 1
     }
   };
   useLayoutEffect(() => {
-    hold.current = delayRender(`Typesetting "${children}"`);
+    if (typeset.current !== children) {
+      hold.current = delayRender(`Typesetting "${children}"`);
+    }
     return release;
   }, [children]);
 
@@ -57,6 +62,7 @@ export const Type = ({ children, position, size, color = theme.text, opacity = 1
       anchorX={anchorX}
       anchorY={anchorY}
       onSync={() => {
+        typeset.current = children;
         advance(performance.now());
         release();
       }}

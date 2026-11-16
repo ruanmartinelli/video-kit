@@ -2,6 +2,7 @@ import { ThreeCanvas } from "@remotion/three";
 import type { ReactNode } from "react";
 import { AbsoluteFill, useVideoConfig } from "remotion";
 import "./fonts";
+import { Type } from "./Label";
 import { theme } from "./theme";
 
 export const CAMERA_FOV = 40;
@@ -30,6 +31,13 @@ export const World = ({ children, overlay }: WorldProps) => {
           <meshBasicMaterial color={theme.floor} toneMapped={false} />
         </mesh>
         <gridHelper args={[160, 160, theme.grid, theme.grid]} position={[0, 0.01, 0]} />
+        {/* Both fonts load on the first frame. A font first used mid-video suspends the whole scene. */}
+        <group visible={false}>
+          <Type size={0.1}>.</Type>
+          <Type size={0.1} font="mono">
+            .
+          </Type>
+        </group>
         {children}
       </ThreeCanvas>
       <AbsoluteFill>{overlay}</AbsoluteFill>
