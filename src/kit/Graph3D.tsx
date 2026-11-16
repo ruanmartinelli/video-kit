@@ -24,7 +24,7 @@ export const Graph3D = ({ graph, nodes = {}, edges = {} }: Graph3DProps) => (
       />
     ))}
     {graph.nodes.map((node) => (
-      <Node key={node.id} id={node.id} position={node.position} label={node.label} {...nodes[node.id]} />
+      <Node key={node.id} id={node.id} position={node.position} label={node.label} shape={node.shape} {...nodes[node.id]} />
     ))}
   </>
 );

@@ -33,11 +33,11 @@ export const loadBalancerMeta = {
 
 const graph = layoutGraph({
   nodes: [
-    { id: "client", label: "Client" },
+    { id: "client", label: "Client", shape: "client" },
     { id: "lb", label: "Load balancer" },
-    { id: "a", label: "Server A" },
-    { id: "b", label: "Server B" },
-    { id: "c", label: "Server C" },
+    { id: "a", label: "Server A", shape: "server" },
+    { id: "b", label: "Server B", shape: "server" },
+    { id: "c", label: "Server C", shape: "server" },
   ],
   edges: [
     ["client", "lb"],

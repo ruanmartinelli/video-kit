@@ -12,7 +12,7 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 
 3. **Compose.** One file, `src/videos/<name>/<Name>.tsx`, registered in `src/Root.tsx`:
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
-   - `layoutGraph(...)` gives positions. Packets, extra pipes and camera targets all read `graph.position(id)`.
+   - `layoutGraph(...)` gives positions. Give each node the `shape` that names what it is (`database`, `server`, `queue`, `client`, `user`, `cloud`, `storage`); `service` is the plain box. Packets, extra pipes and camera targets all read `graph.position(id)`.
    - One `<World>`, one `<CameraRig>`, actors as children; `Narration`, `Caption` and `CodePanel` in `overlay`.
 
 4. **Look at it.** `pnpm stills <CompositionId>` renders one frame per second to `out/stills/<CompositionId>/`; pass `120,340,515` to render chosen frames. Read the PNGs. Done when every still passes all of these:
@@ -40,6 +40,7 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 ## Changing the kit
 
 - A new component exports its schema with a `.describe()` on each prop, parses its props with it, and is exported from `src/kit/index.ts`.
+- A new node shape is a component in `src/kit/shapes.tsx` that fits the 2 x 1.2 x 2 box and stands on its floor, added to `nodeShapeSchema` and `shapes`.
 - An actor that should dim takes an optional `id` and reads `useDim(id)`.
 - Every component has an entry in `docs/registry.tsx` with a demo in `docs/demos.tsx`.
 - A `<Player>` that plays narration needs `numberOfSharedAudioTags={0}`, or it crashes on the sixth beat.

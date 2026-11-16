@@ -16,6 +16,7 @@ import {
   pulse,
   theme,
   World,
+  type NodeShape,
   type Vec3,
 } from "../src/kit";
 import { timeline } from "../src/videos/load-balancer/LoadBalancer";
@@ -30,8 +31,8 @@ const right: Vec3 = [3.5, Y, 0];
 const pipeline = layoutGraph({
   nodes: [
     { id: "api", label: "API" },
-    { id: "queue", label: "Queue" },
-    { id: "worker", label: "Worker" },
+    { id: "queue", label: "Queue", shape: "queue" },
+    { id: "worker", label: "Worker", shape: "server" },
   ],
   edges: [
     ["api", "queue"],
@@ -61,7 +62,7 @@ export const CameraDemo = ({ view, azimuth, sway }: { view: "wide" | "close" | "
   </World>
 );
 
-export const NodeDemo = ({ label, tone }: { label: string; tone: "accent" | "danger" }) => {
+export const NodeDemo = ({ label, shape, tone }: { label: string; shape: NodeShape; tone: "accent" | "danger" }) => {
   const frame = useCurrentFrame();
   return (
     <World>
@@ -69,6 +70,7 @@ export const NodeDemo = ({ label, tone }: { label: string; tone: "accent" | "dan
       <Node
         position={origin}
         label={label}
+        shape={shape}
         tone={tone}
         appear={pop(frame, 8)}
         active={pulse(frame, 55, 30)}
@@ -81,6 +83,29 @@ export const NodeDemo = ({ label, tone }: { label: string; tone: "accent" | "dan
           </mesh>
         ))}
       </Node>
+    </World>
+  );
+};
+
+const SHAPES: NodeShape[] = ["service", "database", "server", "queue", "client", "user", "cloud", "storage"];
+const shapePosition = (index: number): Vec3 => [((index % 4) - 1.5) * 4, Y, (Math.floor(index / 4) - 0.5) * 5];
+
+export const ShapesDemo = ({ tone }: { tone: "accent" | "danger" }) => {
+  const frame = useCurrentFrame();
+  return (
+    <World>
+      <CameraRig shots={[{ at: 0, targets: SHAPES.map((_, index) => shapePosition(index)), azimuth: 16 }]} />
+      {SHAPES.map((shape, index) => (
+        <Node
+          key={shape}
+          position={shapePosition(index)}
+          label={shape}
+          shape={shape}
+          tone={tone}
+          appear={pop(frame, 5 + index * 5)}
+          active={pulse(frame, 70 + index * 14, 24)}
+        />
+      ))}
     </World>
   );
 };
@@ -102,11 +127,11 @@ export const GraphDemo = ({ columnGap, rowGap }: { columnGap: number; rowGap: nu
   const frame = useCurrentFrame();
   const graph = layoutGraph({
     nodes: [
-      { id: "web", label: "Web" },
-      { id: "api", label: "API" },
+      { id: "web", label: "Web", shape: "client" },
+      { id: "api", label: "API", shape: "server" },
       { id: "cache", label: "Cache" },
-      { id: "db", label: "Database" },
-      { id: "replica", label: "Replica" },
+      { id: "db", label: "Database", shape: "database" },
+      { id: "replica", label: "Replica", shape: "database" },
     ],
     edges: [
       ["web", "api"],
