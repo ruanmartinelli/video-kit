@@ -56,11 +56,12 @@ export const Node = ({ children, ...props }: NodeProps) => {
         <Shape
           body={<meshStandardMaterial {...glass} color={dimmed(theme.surface)} emissive={theme[tone]} emissiveIntensity={0.45 * active * lit} />}
           trim={<meshStandardMaterial {...glass} color={dimmed(theme.pipe)} emissive={theme[tone]} emissiveIntensity={0.45 * active * lit} />}
-          glow={<meshStandardMaterial {...glass} color={dimmed(theme.surface)} emissive={theme[tone]} emissiveIntensity={0.35 * lit + 0.6 * active * lit} />}
+          inset={<meshStandardMaterial {...glass} color={theme.dimmed} emissive={theme[tone]} emissiveIntensity={0.2 * active * lit} />}
+          glow={<meshStandardMaterial {...glass} color={dimmed(theme[tone])} emissive={theme[tone]} emissiveIntensity={0.9 * lit} />}
         />
       </group>
       {open > 0 ? <group scale={open}>{children}</group> : null}
-      <Label position={[0, NODE_HEIGHT / 2 + 0.3, 0]} opacity={1 - 0.75 * dim}>
+      <Label position={[0, NODE_HEIGHT / 2 + 0.42, 0]} opacity={1 - 0.75 * dim}>
         {label}
       </Label>
     </group>

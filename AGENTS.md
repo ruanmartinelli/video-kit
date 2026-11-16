@@ -40,7 +40,7 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 ## Changing the kit
 
 - A new component exports its schema with a `.describe()` on each prop, parses its props with it, and is exported from `src/kit/index.ts`.
-- A new node shape is a component in `src/kit/shapes.tsx` that fits the 2 x 1.2 x 2 box and stands on its floor, added to `nodeShapeSchema` and `shapes`.
+- A new node shape is a component in `src/kit/shapes.tsx` that fits the 2 x 1.2 x 2 box and stands on its floor, built only from the four materials it is handed (`body`, `trim`, `inset`, `glow`), added to `nodeShapeSchema` and `shapes`. Look at it with `pnpm stills ShapeGallery 60,150 1`; the last argument renders full size.
 - An actor that should dim takes an optional `id` and reads `useDim(id)`.
 - Every component has an entry in `docs/registry.tsx` with a demo in `docs/demos.tsx`.
 - A `<Player>` that plays narration needs `numberOfSharedAudioTags={0}`, or it crashes on the sixth beat.

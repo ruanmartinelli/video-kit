@@ -87,29 +87,6 @@ export const NodeDemo = ({ label, shape, tone }: { label: string; shape: NodeSha
   );
 };
 
-const SHAPES: NodeShape[] = ["service", "database", "server", "queue", "client", "user", "cloud", "storage"];
-const shapePosition = (index: number): Vec3 => [((index % 4) - 1.5) * 4, Y, (Math.floor(index / 4) - 0.5) * 5];
-
-export const ShapesDemo = ({ tone }: { tone: "accent" | "danger" }) => {
-  const frame = useCurrentFrame();
-  return (
-    <World>
-      <CameraRig shots={[{ at: 0, targets: SHAPES.map((_, index) => shapePosition(index)), azimuth: 16 }]} />
-      {SHAPES.map((shape, index) => (
-        <Node
-          key={shape}
-          position={shapePosition(index)}
-          label={shape}
-          shape={shape}
-          tone={tone}
-          appear={pop(frame, 5 + index * 5)}
-          active={pulse(frame, 70 + index * 14, 24)}
-        />
-      ))}
-    </World>
-  );
-};
-
 export const PacketDemo = ({ tone }: { tone: "accent" | "danger" }) => {
   const frame = useCurrentFrame();
   return (

@@ -23,9 +23,9 @@ import {
   LabelDemo,
   NodeDemo,
   PacketDemo,
-  ShapesDemo,
   WorldDemo,
 } from "./demos";
+import { ShapeGallery, shapeGalleryMeta } from "../src/gallery/ShapeGallery";
 
 export type Control =
   | { key: string; kind: "select"; options: string[]; initial: string }
@@ -145,8 +145,8 @@ const t = createTimeline(narration, { fps: 30 });
     summary:
       "What a Node looks like. Pick the shape that names the thing, so the viewer reads it before the label. All of them fit the same 2 x 1.2 x 2 box, so pipes, packets, the camera and `open` work the same on each.",
     demo: {
-      component: ShapesDemo,
-      durationInFrames: 210,
+      component: ShapeGallery,
+      durationInFrames: shapeGalleryMeta.durationInFrames,
       controls: [{ key: "tone", kind: "select", options: ["accent", "danger"], initial: "accent" }],
     },
     code: `<Node position={p} label="Orders DB" shape="database" />
