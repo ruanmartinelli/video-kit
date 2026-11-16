@@ -20,6 +20,7 @@ export const nodeSchema = nodeStateSchema.extend({
   id: z.string().optional().describe("Name used by Focus to keep this node lit."),
   position: vec3Schema.describe("Center of the box. y = NODE_HEIGHT / 2 sits it on the floor."),
   label: z.string(),
+  change: z.enum(["added", "changed", "removed"]).optional().describe("What a PR did to this node. Colors its outline; leave it out for nodes the PR did not touch."),
   shape: nodeShapeSchema.default("service").describe("What it looks like. Pick the one that names what the node is; service is a plain box."),
 });
 
@@ -34,10 +35,11 @@ const GLASS_OPACITY = 0.16;
 const LIT_TINT = 0.3;
 /** In pixels of the rendered frame. */
 const OUTLINE_THICKNESS = 3;
+const CHANGE_OUTLINE_THICKNESS = 7;
 
 /** A service, process or machine. Can light up, enter the scene, and open to show what's inside. */
 export const Node = ({ children, ...props }: NodeProps) => {
-  const { id, position, label, shape, active, tone, appear, open } = nodeSchema.parse(props);
+  const { id, position, label, shape, change, active, tone, appear, open } = nodeSchema.parse(props);
   const dim = useDim(id);
 
   if (appear <= 0) {
@@ -59,8 +61,8 @@ export const Node = ({ children, ...props }: NodeProps) => {
   // Idle shapes are grey on black: the outline is what separates them. Lit, it takes the tone.
   const outline = (
     <Outlines
-      thickness={OUTLINE_THICKNESS}
-      color={dimmed(theme.edge).lerp(new Color(theme[tone]), active * lit)}
+      thickness={change ? CHANGE_OUTLINE_THICKNESS : OUTLINE_THICKNESS}
+      color={dimmed(change ? theme[change] : theme.edge).lerp(new Color(theme[tone]), active * lit)}
       transparent={open > 0}
       opacity={1 - 0.88 * open}
     />

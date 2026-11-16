@@ -19,6 +19,15 @@ const dark = {
   textDim: "#7d7d7d",
   panel: "rgba(10, 10, 10, 0.92)",
   panelBorder: "#2e2e2e",
+  /** What a PR did to something. */
+  added: "#3fb950",
+  changed: "#d29922",
+  removed: "#ff4d4d",
+  /** Flat cards: tables. */
+  card: "#141414",
+  cardLine: "#2a2a2a",
+  /** Text on a `surface`-colored part. */
+  onSurface: "#f4f4f4",
   /** Shiki theme for CodePanel. */
   code: "vesper",
   /** How hard lit things glow. Light backgrounds wash out a strong glow. */
@@ -44,8 +53,14 @@ const light: typeof dark = {
   textDim: "#8f8f8f",
   panel: "rgba(255, 255, 255, 0.94)",
   panelBorder: "#e2e2e2",
+  added: "#16a34a",
+  changed: "#d97706",
+  removed: "#e5484d",
+  card: "#ffffff",
+  cardLine: "#e6e6e6",
+  onSurface: "#f4f4f4",
   code: "github-light",
-  glow: 0.45,
+  glow: 0.15,
   ambient: 1.5,
   sun: 1.9,
 };

@@ -3,7 +3,7 @@ import { useThree } from "@react-three/fiber";
 import { useLayoutEffect, useRef } from "react";
 import { continueRender, delayRender } from "remotion";
 import { z } from "zod";
-import { unitSchema, vec3Schema } from "./motion";
+import { unitSchema, vec3Schema, type Vec3 } from "./motion";
 import { theme } from "./theme";
 
 export const labelSchema = z.object({
@@ -15,9 +15,22 @@ export const labelSchema = z.object({
 
 type LabelProps = z.input<typeof labelSchema>;
 
-/** Short text in the 3D world that always faces the camera. */
-export const Label = (props: LabelProps) => {
-  const { position, children, size, opacity } = labelSchema.parse(props);
+type TypeProps = {
+  children: string;
+  position?: Vec3;
+  size: number;
+  color?: string;
+  opacity?: number;
+  font?: "sans" | "mono";
+  anchorX?: "left" | "center" | "right";
+  anchorY?: "bottom" | "middle";
+};
+
+/**
+ * Text in the 3D world, lying in its parent's plane. Kit components build on
+ * this; videos use Label. It holds the render until the text is typeset.
+ */
+export const Type = ({ children, position, size, color = theme.text, opacity = 1, font = "sans", anchorX = "center", anchorY = "bottom" }: TypeProps) => {
   const advance = useThree((state) => state.advance);
   // Text is typeset off-thread, after the frame was already drawn. Hold the
   // render until it lands, then draw the frame again. The hold starts in an
@@ -30,26 +43,38 @@ export const Label = (props: LabelProps) => {
     }
   };
   useLayoutEffect(() => {
-    hold.current = delayRender(`Typesetting label "${children}"`);
+    hold.current = delayRender(`Typesetting "${children}"`);
     return release;
   }, [children]);
 
   return (
+    <Text
+      position={position}
+      font={font === "mono" ? theme.monoFile() : theme.sansFile()}
+      fontSize={size}
+      color={color}
+      fillOpacity={opacity}
+      anchorX={anchorX}
+      anchorY={anchorY}
+      onSync={() => {
+        advance(performance.now());
+        release();
+      }}
+    >
+      {children}
+    </Text>
+  );
+};
+
+/** Short text in the 3D world that always faces the camera. */
+export const Label = (props: LabelProps) => {
+  const { position, children, size, opacity } = labelSchema.parse(props);
+
+  return (
     <Billboard position={position}>
-      <Text
-        font={theme.sansFile()}
-        fontSize={size}
-        color={theme.text}
-        fillOpacity={opacity}
-        anchorX="center"
-        anchorY="bottom"
-        onSync={() => {
-          advance(performance.now());
-          release();
-        }}
-      >
+      <Type size={size} opacity={opacity}>
         {children}
-      </Text>
+      </Type>
     </Billboard>
   );
 };

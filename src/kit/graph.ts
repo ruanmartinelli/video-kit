@@ -4,7 +4,7 @@ import type { Vec3 } from "./motion";
 import { nodeShapeSchema, type NodeShape } from "./shapes";
 
 export const graphSpecSchema = z.object({
-  nodes: z.array(z.object({ id: z.string(), label: z.string(), shape: nodeShapeSchema.optional() })).describe("Order within a column follows this order."),
+  nodes: z.array(z.object({ id: z.string(), label: z.string(), shape: nodeShapeSchema.optional(), change: z.enum(["added", "changed", "removed"]).optional() })).describe("Order within a column follows this order."),
   edges: z.array(z.tuple([z.string(), z.string()])).describe("[from, to] pairs. Must not form a cycle."),
   columnGap: z.number().default(6).describe("Distance between columns, left to right."),
   rowGap: z.number().default(5).describe("Distance between nodes in the same column."),
@@ -13,7 +13,7 @@ export const graphSpecSchema = z.object({
 export type GraphSpec = z.input<typeof graphSpecSchema>;
 
 export type Graph = {
-  nodes: { id: string; label: string; shape?: NodeShape; position: Vec3 }[];
+  nodes: { id: string; label: string; shape?: NodeShape; change?: "added" | "changed" | "removed"; position: Vec3 }[];
   edges: { id: string; from: string; to: string }[];
   /** Center of a node. Use it for packets, extra pipes and camera targets. */
   position: (id: string) => Vec3;

@@ -3,6 +3,8 @@ import type { z } from "zod";
 import {
   cameraRigSchema,
   captionSchema,
+  chipSchema,
+  columnSchema,
   codePanelSchema,
   focusSchema,
   graphSpecSchema,
@@ -12,17 +14,20 @@ import {
   packetSchema,
   pipeSchema,
   shotSchema,
+  tableSchema,
 } from "../src/kit";
 import {
   CameraDemo,
   CAPTION_DEMO_FRAMES,
   CaptionDemo,
+  ChangeDemo,
   CodePanelDemo,
   FocusDemo,
   GraphDemo,
   LabelDemo,
   NodeDemo,
   PacketDemo,
+  TableDemo,
   WorldDemo,
 } from "./demos";
 import { ShapeGallery, shapeGalleryMeta } from "../src/gallery/ShapeGallery";
@@ -159,6 +164,53 @@ const graph = layoutGraph({
   ],
   edges: [["web", "api"], ["api", "db"]],
 });`,
+  },
+  {
+    id: "table",
+    group: "Actors",
+    name: "Table",
+    summary:
+      "A database table as a standing card: its name, then one row per column. Columns can slide in, carry what a PR did to them, and light up when a query touches them. `tableRow` gives a row's position, so pipes and packets can land on one column.",
+    demo: {
+      component: TableDemo,
+      durationInFrames: 200,
+      controls: [{ key: "change", kind: "select", options: ["added", "changed", "removed"], initial: "added" }],
+    },
+    schemas: [
+      { title: "Table", schema: tableSchema },
+      { title: "Column", schema: columnSchema },
+    ],
+    otherProps: [
+      { name: "tableRow(position, columns, name)", type: "Vec3", description: "Center of that column's row. Throws if there is no such column." },
+      { name: "tableFrame(position, columns)", type: "Vec3[]", description: "The four corners. Spread into a shot's targets to keep the whole table in frame." },
+      { name: "TABLE_CLEAR", type: "number", description: "Pass as `clear` on the end of a Pipe or Packet that reaches a row from the side." },
+    ],
+    code: `const columns = [
+  { name: "id", type: "bigint pk" },
+  { name: "refunded_at", type: "timestamptz", change: "added", appear: ease(frame, 40, 58) },
+];
+
+<Table position={at} name="orders" columns={columns} />
+<Packet from={db} to={tableRow(at, columns, "refunded_at")} clear={[1.1, 0.35]} progress={p} />
+<CameraRig shots={[{ at: 0, targets: tableFrame(at, columns), view: "close" }]} />`,
+  },
+  {
+    id: "change",
+    group: "Actors",
+    name: "Change marks",
+    summary:
+      "For reviewing a PR. `change` on a Node, a Table or a column says what the PR did to it: green is added, amber is changed, red is removed. Leave it off everything the PR did not touch, so color means this PR. Chip names the file or migration on screen so the viewer can go find it.",
+    demo: { component: ChangeDemo, durationInFrames: 120 },
+    schemas: [{ title: "Chip", schema: chipSchema }],
+    code: `const graph = layoutGraph({
+  nodes: [
+    { id: "router", label: "Router", change: "changed" },
+    { id: "new", label: "RefundsController", change: "added" },
+  ],
+  edges: [["router", "new"]],
+});
+
+<World overlay={<Chip caption="new file" tone="added">src/controllers/refunds.ts</Chip>}>`,
   },
   {
     id: "packet",

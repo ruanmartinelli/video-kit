@@ -2,6 +2,7 @@ import { useCurrentFrame } from "remotion";
 import {
   CameraRig,
   Caption,
+  Chip,
   CodePanel,
   ease,
   Focus,
@@ -14,6 +15,10 @@ import {
   Pipe,
   pop,
   pulse,
+  Table,
+  TABLE_CLEAR,
+  tableFrame,
+  tableRow,
   theme,
   World,
   type NodeShape,
@@ -188,3 +193,58 @@ export const CaptionDemo = ({ wordsPerLine }: { wordsPerLine: number }) => (
     <Node position={origin} label="Server" />
   </World>
 );
+
+const ordersAt: Vec3 = [-3.4, 0, 0];
+const refundsAt: Vec3 = [3.4, 0, 0];
+
+export const TableDemo = ({ change }: { change: "added" | "changed" | "removed" }) => {
+  const frame = useCurrentFrame();
+  const orders = [
+    { name: "id", type: "bigint pk" },
+    { name: "total_cents", type: "int not null" },
+    { name: "refunded_at", type: "timestamptz", change, appear: ease(frame, 40, 58), lit: pulse(frame, 150, 30) },
+  ];
+  const refunds = [
+    { name: "id", type: "bigint pk" },
+    { name: "order_id", type: "bigint → orders.id", lit: pulse(frame, 95, 30) },
+    { name: "reason", type: "text" },
+  ];
+  return (
+    <World>
+      <CameraRig shots={[{ at: 0, targets: [...tableFrame(ordersAt, orders), ...tableFrame(refundsAt, refunds)], view: "close", padding: 0.85, shift: [0, 0] }]} />
+      <Table position={ordersAt} name="orders" columns={orders} />
+      <Table position={refundsAt} name="refunds" change="added" columns={refunds} appear={pop(frame, 10)} />
+      <Pipe
+        from={tableRow(refundsAt, refunds, "order_id")}
+        to={tableRow(ordersAt, orders, "id")}
+        clear={[TABLE_CLEAR, TABLE_CLEAR]}
+        tone="added"
+        progress={ease(frame, 80, 100)}
+      />
+      <Packet from={[0, 0.6, 6]} to={tableRow(ordersAt, orders, "refunded_at")} clear={[0, 0.35]} progress={ease(frame, 125, 150)} tone="accent" />
+    </World>
+  );
+};
+
+export const ChangeDemo = () => {
+  const frame = useCurrentFrame();
+  const graph = layoutGraph({
+    nodes: [
+      { id: "router", label: "Router", change: "changed" },
+      { id: "new", label: "RefundsController", change: "added" },
+      { id: "old", label: "LegacyRefunds", change: "removed" },
+      { id: "db", label: "Postgres", shape: "database" },
+    ],
+    edges: [
+      ["router", "new"],
+      ["router", "old"],
+      ["new", "db"],
+    ],
+  });
+  return (
+    <World overlay={<Chip caption="new file" tone="added" appear={ease(frame, 20, 34)}>src/controllers/refunds.ts</Chip>}>
+      <CameraRig shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), azimuth: 12 }]} />
+      <Graph3D graph={graph} nodes={{ new: { active: pulse(frame, 30, 30) } }} />
+    </World>
+  );
+};

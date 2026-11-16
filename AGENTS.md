@@ -23,6 +23,16 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 
 5. **Render.** `pnpm typecheck`, then `pnpm render <CompositionId> out/<name>.mp4`.
 
+## Reviewing a PR
+
+`src/videos/pr-api-keys/` is the reference. Schema first, then one request followed from the client to the table rows it reads and writes, ending on the thing the reviewer should check.
+
+- Set `change` (`added`, `changed`, `removed`) on every node, table and column the PR touched, and on nothing else: color means this PR.
+- One beat per migration, with a `Chip` naming its file. Columns enter with `appear`.
+- A query is two packets, service to database and database to `tableRow(...)`, and the row's `lit` pulses when the second one lands.
+- Name the file on screen with a `Chip` for every hop whose code the narration talks about, so the viewer can check it against the diff.
+- Stand tables beside the request path, staggered in depth. Behind it, the path's nodes end up in front of them in every table shot.
+
 ## How the kit works
 
 **One world.** A video is a single `World` the camera travels through. Change what the camera frames to move the story on; the scene itself stays.

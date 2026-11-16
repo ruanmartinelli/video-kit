@@ -1,6 +1,7 @@
 export { cameraRigSchema, CameraRig } from "./CameraRig";
 export { shotSchema, views, type Shot } from "./camera";
 export { Caption, captionSchema } from "./Caption";
+export { Chip, chipSchema } from "./Chip";
 export { CodePanel, codePanelSchema } from "./CodePanel";
 export { Focus, focusSchema } from "./Focus";
 export { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
@@ -13,6 +14,7 @@ export { Node, nodeSchema, type NodeState } from "./Node";
 export { Packet, packetSchema } from "./Packet";
 export { Pipe, pipeSchema } from "./Pipe";
 export { nodeShapeSchema, type NodeShape } from "./shapes";
+export { columnSchema, Table, TABLE_CLEAR, TABLE_WIDTH, tableFrame, tableRow, tableSchema } from "./Table";
 export { theme } from "./theme";
 export { createTimeline, type Narration as NarrationData, type Timeline } from "./timeline";
 export { World } from "./World";
