@@ -1,0 +1,459 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    {
+      "id": "intro",
+      "text": "This pull request adds a background job, and changes a schedule.",
+      "hash": "82f6c28c9fa8",
+      "audio": "narration/pr-cron/intro.mp3",
+      "durationMs": 3825,
+      "words": [
+        {
+          "text": "This",
+          "startMs": 100,
+          "endMs": 300
+        },
+        {
+          "text": "pull",
+          "startMs": 312,
+          "endMs": 588
+        },
+        {
+          "text": "request",
+          "startMs": 600,
+          "endMs": 1150
+        },
+        {
+          "text": "adds",
+          "startMs": 1238,
+          "endMs": 1425
+        },
+        {
+          "text": "a",
+          "startMs": 1438,
+          "endMs": 1488
+        },
+        {
+          "text": "background",
+          "startMs": 1500,
+          "endMs": 2025
+        },
+        {
+          "text": "job",
+          "startMs": 2038,
+          "endMs": 2325
+        },
+        {
+          "text": "and",
+          "startMs": 2600,
+          "endMs": 2650
+        },
+        {
+          "text": "changes",
+          "startMs": 2662,
+          "endMs": 3012
+        },
+        {
+          "text": "a",
+          "startMs": 3025,
+          "endMs": 3075
+        },
+        {
+          "text": "schedule",
+          "startMs": 3088,
+          "endMs": 3575
+        }
+      ]
+    },
+    {
+      "id": "job",
+      "text": "The new job is expire keys. It deletes API keys that are past their date.",
+      "hash": "c2d4887f2f18",
+      "audio": "narration/pr-cron/job.mp3",
+      "durationMs": 4950,
+      "words": [
+        {
+          "text": "The",
+          "startMs": 100,
+          "endMs": 150
+        },
+        {
+          "text": "new",
+          "startMs": 162,
+          "endMs": 300
+        },
+        {
+          "text": "job",
+          "startMs": 312,
+          "endMs": 662
+        },
+        {
+          "text": "is",
+          "startMs": 675,
+          "endMs": 762
+        },
+        {
+          "text": "expire",
+          "startMs": 775,
+          "endMs": 1275
+        },
+        {
+          "text": "keys",
+          "startMs": 1288,
+          "endMs": 1750
+        },
+        {
+          "text": "It",
+          "startMs": 2162,
+          "endMs": 2250
+        },
+        {
+          "text": "deletes",
+          "startMs": 2262,
+          "endMs": 2650
+        },
+        {
+          "text": "API",
+          "startMs": 2800,
+          "endMs": 3288
+        },
+        {
+          "text": "keys",
+          "startMs": 3300,
+          "endMs": 3650
+        },
+        {
+          "text": "that",
+          "startMs": 3662,
+          "endMs": 3775
+        },
+        {
+          "text": "are",
+          "startMs": 3788,
+          "endMs": 3862
+        },
+        {
+          "text": "past",
+          "startMs": 3875,
+          "endMs": 4212
+        },
+        {
+          "text": "their",
+          "startMs": 4225,
+          "endMs": 4362
+        },
+        {
+          "text": "date",
+          "startMs": 4375,
+          "endMs": 4700
+        }
+      ]
+    },
+    {
+      "id": "trigger",
+      "text": "The service puts it on the queue whenever a key is revoked.",
+      "hash": "b08333ca2f56",
+      "audio": "narration/pr-cron/trigger.mp3",
+      "durationMs": 3425,
+      "words": [
+        {
+          "text": "The",
+          "startMs": 112,
+          "endMs": 162
+        },
+        {
+          "text": "service",
+          "startMs": 175,
+          "endMs": 575
+        },
+        {
+          "text": "puts",
+          "startMs": 588,
+          "endMs": 825
+        },
+        {
+          "text": "it",
+          "startMs": 838,
+          "endMs": 912
+        },
+        {
+          "text": "on",
+          "startMs": 925,
+          "endMs": 1025
+        },
+        {
+          "text": "the",
+          "startMs": 1038,
+          "endMs": 1125
+        },
+        {
+          "text": "queue",
+          "startMs": 1138,
+          "endMs": 1488
+        },
+        {
+          "text": "whenever",
+          "startMs": 1500,
+          "endMs": 1900
+        },
+        {
+          "text": "a",
+          "startMs": 1912,
+          "endMs": 1962
+        },
+        {
+          "text": "key",
+          "startMs": 1975,
+          "endMs": 2425
+        },
+        {
+          "text": "is",
+          "startMs": 2512,
+          "endMs": 2662
+        },
+        {
+          "text": "revoked",
+          "startMs": 2675,
+          "endMs": 3175
+        }
+      ]
+    },
+    {
+      "id": "clock",
+      "text": "Separately, the scheduler starts the usage sync on a timer.",
+      "hash": "68742d84818d",
+      "audio": "narration/pr-cron/clock.mp3",
+      "durationMs": 3750,
+      "words": [
+        {
+          "text": "Separately",
+          "startMs": 112,
+          "endMs": 638
+        },
+        {
+          "text": "the",
+          "startMs": 900,
+          "endMs": 975
+        },
+        {
+          "text": "scheduler",
+          "startMs": 988,
+          "endMs": 1475
+        },
+        {
+          "text": "starts",
+          "startMs": 1488,
+          "endMs": 1850
+        },
+        {
+          "text": "the",
+          "startMs": 1862,
+          "endMs": 1938
+        },
+        {
+          "text": "usage",
+          "startMs": 1950,
+          "endMs": 2475
+        },
+        {
+          "text": "sync",
+          "startMs": 2488,
+          "endMs": 2825
+        },
+        {
+          "text": "on",
+          "startMs": 2912,
+          "endMs": 3000
+        },
+        {
+          "text": "a",
+          "startMs": 3012,
+          "endMs": 3050
+        },
+        {
+          "text": "timer",
+          "startMs": 3062,
+          "endMs": 3500
+        }
+      ]
+    },
+    {
+      "id": "schedule",
+      "text": "That timer used to fire every hour. Now it fires every five minutes.",
+      "hash": "c8e9d9171de5",
+      "audio": "narration/pr-cron/schedule.mp3",
+      "durationMs": 4662,
+      "words": [
+        {
+          "text": "That",
+          "startMs": 112,
+          "endMs": 238
+        },
+        {
+          "text": "timer",
+          "startMs": 250,
+          "endMs": 625
+        },
+        {
+          "text": "used",
+          "startMs": 638,
+          "endMs": 862
+        },
+        {
+          "text": "to",
+          "startMs": 875,
+          "endMs": 938
+        },
+        {
+          "text": "fire",
+          "startMs": 950,
+          "endMs": 1375
+        },
+        {
+          "text": "every",
+          "startMs": 1512,
+          "endMs": 1738
+        },
+        {
+          "text": "hour",
+          "startMs": 1750,
+          "endMs": 2088
+        },
+        {
+          "text": "Now",
+          "startMs": 2500,
+          "endMs": 2650
+        },
+        {
+          "text": "it",
+          "startMs": 2662,
+          "endMs": 2738
+        },
+        {
+          "text": "fires",
+          "startMs": 2750,
+          "endMs": 3238
+        },
+        {
+          "text": "every",
+          "startMs": 3388,
+          "endMs": 3612
+        },
+        {
+          "text": "five",
+          "startMs": 3625,
+          "endMs": 3912
+        },
+        {
+          "text": "minutes",
+          "startMs": 3925,
+          "endMs": 4412
+        }
+      ]
+    },
+    {
+      "id": "risk",
+      "text": "One thing to check. Each run reads the whole usage table, and it now runs twelve times as often.",
+      "hash": "949803456113",
+      "audio": "narration/pr-cron/risk.mp3",
+      "durationMs": 5888,
+      "words": [
+        {
+          "text": "One",
+          "startMs": 100,
+          "endMs": 225
+        },
+        {
+          "text": "thing",
+          "startMs": 238,
+          "endMs": 375
+        },
+        {
+          "text": "to",
+          "startMs": 388,
+          "endMs": 438
+        },
+        {
+          "text": "check",
+          "startMs": 450,
+          "endMs": 838
+        },
+        {
+          "text": "Each",
+          "startMs": 1250,
+          "endMs": 1438
+        },
+        {
+          "text": "run",
+          "startMs": 1450,
+          "endMs": 1750
+        },
+        {
+          "text": "reads",
+          "startMs": 1762,
+          "endMs": 2025
+        },
+        {
+          "text": "the",
+          "startMs": 2038,
+          "endMs": 2125
+        },
+        {
+          "text": "whole",
+          "startMs": 2138,
+          "endMs": 2438
+        },
+        {
+          "text": "usage",
+          "startMs": 2450,
+          "endMs": 2912
+        },
+        {
+          "text": "table",
+          "startMs": 2925,
+          "endMs": 3275
+        },
+        {
+          "text": "and",
+          "startMs": 3650,
+          "endMs": 3700
+        },
+        {
+          "text": "it",
+          "startMs": 3712,
+          "endMs": 3812
+        },
+        {
+          "text": "now",
+          "startMs": 3825,
+          "endMs": 4112
+        },
+        {
+          "text": "runs",
+          "startMs": 4125,
+          "endMs": 4438
+        },
+        {
+          "text": "twelve",
+          "startMs": 4450,
+          "endMs": 4800
+        },
+        {
+          "text": "times",
+          "startMs": 4812,
+          "endMs": 5138
+        },
+        {
+          "text": "as",
+          "startMs": 5150,
+          "endMs": 5250
+        },
+        {
+          "text": "often",
+          "startMs": 5262,
+          "endMs": 5638
+        }
+      ]
+    }
+  ]
+}

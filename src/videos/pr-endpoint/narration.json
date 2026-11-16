@@ -1,0 +1,360 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    {
+      "id": "intro",
+      "text": "This pull request adds one new endpoint, invoice export.",
+      "hash": "d625ddc5bc82",
+      "audio": "narration/pr-endpoint/intro.mp3",
+      "durationMs": 3988,
+      "words": [
+        {
+          "text": "This",
+          "startMs": 100,
+          "endMs": 300
+        },
+        {
+          "text": "pull",
+          "startMs": 312,
+          "endMs": 575
+        },
+        {
+          "text": "request",
+          "startMs": 588,
+          "endMs": 1150
+        },
+        {
+          "text": "adds",
+          "startMs": 1162,
+          "endMs": 1388
+        },
+        {
+          "text": "one",
+          "startMs": 1400,
+          "endMs": 1662
+        },
+        {
+          "text": "new",
+          "startMs": 1675,
+          "endMs": 1912
+        },
+        {
+          "text": "endpoint",
+          "startMs": 1925,
+          "endMs": 2475
+        },
+        {
+          "text": "invoice",
+          "startMs": 2762,
+          "endMs": 3212
+        },
+        {
+          "text": "export",
+          "startMs": 3225,
+          "endMs": 3738
+        }
+      ]
+    },
+    {
+      "id": "existing",
+      "text": "Today, every route passes the auth check before it reaches a controller.",
+      "hash": "d809f827ecd0",
+      "audio": "narration/pr-endpoint/existing.mp3",
+      "durationMs": 4175,
+      "words": [
+        {
+          "text": "Today",
+          "startMs": 100,
+          "endMs": 425
+        },
+        {
+          "text": "every",
+          "startMs": 712,
+          "endMs": 975
+        },
+        {
+          "text": "route",
+          "startMs": 988,
+          "endMs": 1300
+        },
+        {
+          "text": "passes",
+          "startMs": 1312,
+          "endMs": 1762
+        },
+        {
+          "text": "the",
+          "startMs": 1775,
+          "endMs": 1900
+        },
+        {
+          "text": "auth",
+          "startMs": 1912,
+          "endMs": 2150
+        },
+        {
+          "text": "check",
+          "startMs": 2162,
+          "endMs": 2500
+        },
+        {
+          "text": "before",
+          "startMs": 2512,
+          "endMs": 2888
+        },
+        {
+          "text": "it",
+          "startMs": 2900,
+          "endMs": 3000
+        },
+        {
+          "text": "reaches",
+          "startMs": 3012,
+          "endMs": 3312
+        },
+        {
+          "text": "a",
+          "startMs": 3325,
+          "endMs": 3375
+        },
+        {
+          "text": "controller",
+          "startMs": 3388,
+          "endMs": 3925
+        }
+      ]
+    },
+    {
+      "id": "added",
+      "text": "The new route gets its own controller.",
+      "hash": "df28f64e4896",
+      "audio": "narration/pr-endpoint/added.mp3",
+      "durationMs": 2088,
+      "words": [
+        {
+          "text": "The",
+          "startMs": 100,
+          "endMs": 150
+        },
+        {
+          "text": "new",
+          "startMs": 162,
+          "endMs": 375
+        },
+        {
+          "text": "route",
+          "startMs": 388,
+          "endMs": 738
+        },
+        {
+          "text": "gets",
+          "startMs": 750,
+          "endMs": 950
+        },
+        {
+          "text": "its",
+          "startMs": 962,
+          "endMs": 1088
+        },
+        {
+          "text": "own",
+          "startMs": 1100,
+          "endMs": 1238
+        },
+        {
+          "text": "controller",
+          "startMs": 1250,
+          "endMs": 1838
+        }
+      ]
+    },
+    {
+      "id": "follow",
+      "text": "Follow one request. The router hands it straight to the new controller, which reads every invoice.",
+      "hash": "94de0488424a",
+      "audio": "narration/pr-endpoint/follow.mp3",
+      "durationMs": 6138,
+      "words": [
+        {
+          "text": "Follow",
+          "startMs": 150,
+          "endMs": 375
+        },
+        {
+          "text": "one",
+          "startMs": 388,
+          "endMs": 550
+        },
+        {
+          "text": "request",
+          "startMs": 562,
+          "endMs": 1125
+        },
+        {
+          "text": "The",
+          "startMs": 1538,
+          "endMs": 1600
+        },
+        {
+          "text": "router",
+          "startMs": 1612,
+          "endMs": 1938
+        },
+        {
+          "text": "hands",
+          "startMs": 1950,
+          "endMs": 2238
+        },
+        {
+          "text": "it",
+          "startMs": 2250,
+          "endMs": 2325
+        },
+        {
+          "text": "straight",
+          "startMs": 2338,
+          "endMs": 2738
+        },
+        {
+          "text": "to",
+          "startMs": 2750,
+          "endMs": 2838
+        },
+        {
+          "text": "the",
+          "startMs": 2850,
+          "endMs": 2938
+        },
+        {
+          "text": "new",
+          "startMs": 2950,
+          "endMs": 3238
+        },
+        {
+          "text": "controller",
+          "startMs": 3250,
+          "endMs": 3862
+        },
+        {
+          "text": "which",
+          "startMs": 4125,
+          "endMs": 4288
+        },
+        {
+          "text": "reads",
+          "startMs": 4300,
+          "endMs": 4750
+        },
+        {
+          "text": "every",
+          "startMs": 4925,
+          "endMs": 5200
+        },
+        {
+          "text": "invoice",
+          "startMs": 5212,
+          "endMs": 5888
+        }
+      ]
+    },
+    {
+      "id": "risk",
+      "text": "One thing to check. The new route is registered outside the auth check, so anyone can call it.",
+      "hash": "8e221b18eeb0",
+      "audio": "narration/pr-endpoint/risk.mp3",
+      "durationMs": 5225,
+      "words": [
+        {
+          "text": "One",
+          "startMs": 100,
+          "endMs": 225
+        },
+        {
+          "text": "thing",
+          "startMs": 238,
+          "endMs": 375
+        },
+        {
+          "text": "to",
+          "startMs": 388,
+          "endMs": 438
+        },
+        {
+          "text": "check",
+          "startMs": 450,
+          "endMs": 838
+        },
+        {
+          "text": "The",
+          "startMs": 1250,
+          "endMs": 1300
+        },
+        {
+          "text": "new",
+          "startMs": 1312,
+          "endMs": 1500
+        },
+        {
+          "text": "route",
+          "startMs": 1512,
+          "endMs": 1812
+        },
+        {
+          "text": "is",
+          "startMs": 1825,
+          "endMs": 1938
+        },
+        {
+          "text": "registered",
+          "startMs": 1950,
+          "endMs": 2400
+        },
+        {
+          "text": "outside",
+          "startMs": 2412,
+          "endMs": 2888
+        },
+        {
+          "text": "the",
+          "startMs": 2900,
+          "endMs": 3000
+        },
+        {
+          "text": "auth",
+          "startMs": 3012,
+          "endMs": 3250
+        },
+        {
+          "text": "check",
+          "startMs": 3262,
+          "endMs": 3662
+        },
+        {
+          "text": "so",
+          "startMs": 3925,
+          "endMs": 4112
+        },
+        {
+          "text": "anyone",
+          "startMs": 4125,
+          "endMs": 4425
+        },
+        {
+          "text": "can",
+          "startMs": 4438,
+          "endMs": 4550
+        },
+        {
+          "text": "call",
+          "startMs": 4562,
+          "endMs": 4825
+        },
+        {
+          "text": "it",
+          "startMs": 4838,
+          "endMs": 4975
+        }
+      ]
+    }
+  ]
+}

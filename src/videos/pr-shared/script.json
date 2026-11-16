@@ -1,0 +1,12 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    { "id": "intro", "text": "This pull request drops the cents from prices in the cart." },
+    { "id": "helper", "text": "It does that by changing one shared helper, format money." },
+    { "id": "change", "text": "The same amount now comes back as a different string." },
+    { "id": "callers", "text": "Eight files call this helper." },
+    { "id": "inside", "text": "Three of them are in this pull request, and were updated for it." },
+    { "id": "outside", "text": "The other five are not, and they get the new string too." },
+    { "id": "risk", "text": "One thing to check. Payout export writes this string into the file it sends to the bank." }
+  ]
+}
