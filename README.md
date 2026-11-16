@@ -1,15 +1,6 @@
 # video-kit
 
-A skill for coding agents. It makes narrated 3D explainer videos.
-
-Ask for one in plain words:
-
-- a pull request
-- a bug and its fix
-- a plan
-- how a system works
-
-The agent writes the script, narrates it, builds the scene and renders an MP4.
+A skill that lets coding agents make narrated 3D explainer videos. Ask in plain words for a video of a pull request, a bug and its fix, a plan, or how a system works. The agent writes the script, narrates it, builds the scene and renders an MP4.
 
 ## Install
 
