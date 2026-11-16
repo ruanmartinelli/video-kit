@@ -1,10 +1,9 @@
-import { Outlines } from "@react-three/drei";
+import { Billboard, Outlines } from "@react-three/drei";
 import type { ReactNode } from "react";
 import { Color } from "three";
 import { z } from "zod";
 import { useDim } from "./Focus";
-import { NODE_HEIGHT } from "./geometry";
-import { Label } from "./Label";
+import { Type } from "./Label";
 import { unitSchema, vec3Schema } from "./motion";
 import { nodeShapeSchema, shapes } from "./shapes";
 import { theme } from "./theme";
@@ -36,6 +35,8 @@ const LIT_TINT = 0.3;
 /** In pixels of the rendered frame. */
 const OUTLINE_THICKNESS = 3;
 const CHANGE_OUTLINE_THICKNESS = 7;
+/** From the node's center to the bottom of its label: clears the box's outline from any camera angle. */
+const LABEL_LIFT = 1.2;
 
 /** A service, process or machine. Can light up, enter the scene, and open to show what's inside. */
 export const Node = ({ children, ...props }: NodeProps) => {
@@ -89,9 +90,12 @@ export const Node = ({ children, ...props }: NodeProps) => {
         />
       </group>
       {open > 0 ? <group scale={open}>{children}</group> : null}
-      <Label position={[0, NODE_HEIGHT / 2 + 0.42, 0]} opacity={1 - 0.75 * dim}>
-        {label}
-      </Label>
+      {/* Lifted toward the top of the screen, not the top of the world: from above, a label over the box's roof would sit on the roof. */}
+      <Billboard>
+        <Type position={[0, LABEL_LIFT, 0]} size={0.36} opacity={1 - 0.75 * dim}>
+          {label}
+        </Type>
+      </Billboard>
     </group>
   );
 };

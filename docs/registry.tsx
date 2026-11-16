@@ -387,7 +387,7 @@ const progress = Math.min(1, Math.max(0, (frame - start) / 60));
     otherProps: [
       { name: "graph", type: "Graph", description: "What layoutGraph() returned." },
       { name: "nodes", type: "Record<id, NodeState>", description: "Per-node active, tone, appear, open, children." },
-      { name: "edges", type: "Record<\"from->to\", number>", description: "Per-edge draw progress, 0 to 1." },
+      { name: "edges", type: "Record<\"from->to\", number | { progress, tone, label }>", description: "Per-edge draw progress, 0 to 1, or the pipe's progress, tone and label." },
     ],
     code: `const graph = layoutGraph({
   nodes: [{ id: "lb", label: "Load balancer" }, { id: "a", label: "Server A" }],

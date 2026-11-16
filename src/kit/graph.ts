@@ -9,7 +9,7 @@ export const graphSpecSchema = z.object({
   nodes: z.array(nodeSpecSchema).describe("Order within a column follows this order."),
   edges: z.array(z.tuple([z.string(), z.string()])).describe("[from, to] pairs. Must not form a cycle."),
   columnGap: z.number().default(6).describe("Distance between columns, left to right."),
-  rowGap: z.number().default(5).describe("Distance between nodes in the same column."),
+  rowGap: z.number().default(5).describe("Distance between nodes in the same column. Under 5, a node's label reaches the node behind it."),
 });
 
 export type GraphSpec = z.input<typeof graphSpecSchema>;

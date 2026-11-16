@@ -21,6 +21,9 @@ export const pipeSchema = z.object({
 
 type PipeProps = z.input<typeof pipeSchema>;
 
+/** What a video sets on a pipe that Graph3D draws. */
+export type PipeState = Pick<PipeProps, "progress" | "tone" | "label">;
+
 const LABEL_DROP = 0.52;
 
 /** A connection between two nodes. */
@@ -34,6 +37,10 @@ export const Pipe = (props: PipeProps) => {
 
   const [start, end] = span(from, to, clear);
   const [x, y, z] = lerp3(start, end, 0.5);
+  // A pipe that runs toward or away from the viewer slants on screen. Hang the label from the end that keeps it off the line.
+  const run = end[0] - start[0];
+  const slant = (end[2] - start[2]) * Math.sign(run || 1);
+  const anchorX = Math.abs(slant) < 0.15 * Math.abs(run) ? "center" : slant > 0 ? "right" : "left";
 
   return (
     <>
@@ -47,7 +54,7 @@ export const Pipe = (props: PipeProps) => {
       {label ? (
         // Under the line: packets and their labels own the space above it.
         <Billboard position={[x, y - LABEL_DROP, z]}>
-          <Type size={0.32} font="mono" color={tone === "neutral" ? theme.textDim : theme[tone]} opacity={Math.max(0, 2 * progress - 1) * (1 - 0.75 * dim)} onTop>
+          <Type size={0.38} font="mono" anchorX={anchorX} color={tone === "neutral" ? theme.textDim : theme[tone]} opacity={Math.max(0, 2 * progress - 1) * (1 - 0.75 * dim)} onTop>
             {label}
           </Type>
         </Billboard>
