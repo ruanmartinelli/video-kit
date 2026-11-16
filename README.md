@@ -20,13 +20,9 @@ Make a video that explains this pull request to its reviewer.
 
 Same agent, same prompt: *explain how a load balancer works.*
 
-**Without video-kit**
-
-https://github.com/user-attachments/assets/40afe786-2bb5-4c05-8c60-c47ad86cd426
-
-**With video-kit**
-
-https://github.com/user-attachments/assets/b242ed7c-387b-4977-92eb-8368facd47e8
+| Without video-kit | With video-kit |
+|---|---|
+| https://github.com/user-attachments/assets/40afe786-2bb5-4c05-8c60-c47ad86cd426 | https://github.com/user-attachments/assets/b242ed7c-387b-4977-92eb-8368facd47e8 |
 
 ## Numbers
 
