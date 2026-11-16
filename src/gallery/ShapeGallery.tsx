@@ -2,14 +2,14 @@ import { useCurrentFrame } from "remotion";
 import { CameraRig, Node, NODE_HEIGHT, nodeShapeSchema, pop, pulse, World, type Vec3 } from "../kit";
 
 const SHAPES = nodeShapeSchema.options;
-const COLUMNS = 4;
+const COLUMNS = 6;
 const position = (index: number): Vec3 => [
-  ((index % COLUMNS) - (COLUMNS - 1) / 2) * 3.6,
+  ((index % COLUMNS) - (COLUMNS - 1) / 2) * 4,
   NODE_HEIGHT / 2,
-  (Math.floor(index / COLUMNS) - (Math.ceil(SHAPES.length / COLUMNS) - 1) / 2) * 5,
+  (Math.floor(index / COLUMNS) - (Math.ceil(SHAPES.length / COLUMNS) - 1) / 2) * 6.5,
 ];
 
-export const shapeGalleryMeta = { id: "ShapeGallery", fps: 30, width: 1920, height: 1080, durationInFrames: 210 };
+export const shapeGalleryMeta = { id: "ShapeGallery", fps: 30, width: 1920, height: 1080, durationInFrames: 240 };
 
 /** Every node shape side by side. `pnpm stills ShapeGallery` is how you look at a shape you changed. */
 export const ShapeGallery = ({ tone = "accent" }: { tone?: "accent" | "danger" }) => {
@@ -24,8 +24,8 @@ export const ShapeGallery = ({ tone = "accent" }: { tone?: "accent" | "danger" }
           label={shape}
           shape={shape}
           tone={tone}
-          appear={pop(frame, 5 + index * 5)}
-          active={pulse(frame, 70 + index * 14, 24)}
+          appear={pop(frame, 5 + index * 2)}
+          active={pulse(frame, 70 + index * 6, 24)}
         />
       ))}
     </World>
