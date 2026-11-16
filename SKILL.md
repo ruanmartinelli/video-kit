@@ -31,14 +31,16 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `between(frame, from, to)` is 1 while something is on screen, for a panel's `appear`. `hop(frame, start)` is a packet's `progress` for a trip that starts at a cue. `pulse(frame, at)` lights a node on the frame something reaches it.
    - `layoutGraph(...)` gives positions for a flow; `layoutHub(...)` for one thing with many dependents. Give each node the `shape` that names what it is; `pieces/shapes.md` lists them. Packets, extra pipes and camera targets all read `graph.position(id)`.
+   - A `CodePanel` is as wide as its longest line, and `panel` leaves room for about 60 characters of code. Keep lines under that, or give the shot a `shift` of your own.
    - A shot with a docked panel on screen (`CodePanel`, `Outcomes`, `Tables`, `Meter`, ...) names the panel's side in `panel`, and the rig fits the targets into the rest of the frame. For a short panel over a wide path, the other way works too: leave `panel` out and `shift` the whole path down under it.
 
 5. **Check it.** `pnpm check <folder>` typechecks it. Then `pnpm stills <folder> cues --sheet` renders three frames per beat and tiles them twelve to an image, each under its frame number, in `<folder>/out/stills/`. Read every sheet.
 
-   The kit has already done part of the looking: a label the frame edge would cut is hidden, and labels that would overlap stop the render with an error that says what to change. On the sheets you look for the rest:
+   The kit has already done part of the looking: a node label the frame edge would cut is hidden, and two node labels that would overlap stop the render with an error that says what to change. That covers node labels only. On the sheets you look for the rest:
    - the subject of the beat is in frame, and no panel covers it
    - every panel is whole inside the frame
    - each tile differs from the one before it
+   - no `Chip`, `Gate` rule, `Callout` or packet label sits on a node label, and no `Callout` runs off the frame
 
    For any tile that looks wrong, and for one frame of each panel that carries code or small text, render that frame full size and read it: `pnpm stills <folder> 612 1` writes `out/stills/f0612.png`. Each run replaces what is in that folder. After a fix, re-render only the frames it touched: `pnpm stills <folder> 612,640 --sheet`.
 

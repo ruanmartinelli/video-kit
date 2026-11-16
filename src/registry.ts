@@ -222,6 +222,21 @@ const graph = layoutGraph({
 });`,
   },
   {
+    id: "chip",
+    group: "Overlay",
+    name: "Chip",
+    summary:
+      "A small tag in a top corner that names what is on screen: a file, a migration, which run this is. It can stay up while a panel is docked. Keep it short: a long path runs under a panel on the same side, so put the directory in `caption` and the file name in the chip.",
+    schemas: [{ title: "Chip", schema: chipSchema }],
+    code: `<Chip caption="migration, in db/migrate" tone="added" appear={between(frame, t.at("schema"), t.at("request"))}>
+  20260114_add_api_keys.sql
+</Chip>
+
+<Chip caption="run on screen" corner="top-right" appear={between(frame, t.at("before"), t.at("after"))}>
+  before the change
+</Chip>`,
+  },
+  {
     id: "tables",
     group: "Overlay",
     name: "Tables",
@@ -435,7 +450,7 @@ const hit = (start) => start + 14;
     summary:
       "A word and its one-line meaning, pinned in a corner while the thing it names is on screen. For a viewer who is new to the codebase or the domain. One term at a time, and take it away when the narration moves on.",
     schemas: [{ title: "Term", schema: termSchema }],
-    code: `<Term term="idempotent" meaning="safe to run twice, same result" appear={between(t.at("retry", "idempotent"), t.at("next"))} />`,
+    code: `<Term term="idempotent" meaning="safe to run twice, same result" appear={between(frame, t.at("retry", "idempotent"), t.at("next"))} />`,
   },
   {
     id: "chapter",

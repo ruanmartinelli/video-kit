@@ -29,6 +29,7 @@ Each piece has its props and an example in `pieces/<id>.md`. Read the ones you a
 
 ## Overlay
 
+- `chip` **Chip**: A small tag in a top corner that names what is on screen: a file, a migration, which run this is.
 - `tables` **Tables**: Database tables as flat panels over the scene: a name, then one row per column.
 - `outcomes` **Outcomes**: For a change to existing behaviour, like an auth check or a shared helper.
 - `schedule` **Schedule**: When a job runs, as ticks on a strip of time.

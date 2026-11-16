@@ -12,5 +12,5 @@ A word and its one-line meaning, pinned in a corner while the thing it names is 
 ## Example
 
 ```tsx
-<Term term="idempotent" meaning="safe to run twice, same result" appear={between(t.at("retry", "idempotent"), t.at("next"))} />
+<Term term="idempotent" meaning="safe to run twice, same result" appear={between(frame, t.at("retry", "idempotent"), t.at("next"))} />
 ```

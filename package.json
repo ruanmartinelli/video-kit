@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "narrate": "uv run --with edge-tts scripts/narrate.py",
+    "narrate": "PYTHONUNBUFFERED=1 uv run --with edge-tts scripts/narrate.py",
     "check": "node scripts/check.mjs",
     "stills": "node scripts/stills.mjs",
     "render": "node scripts/render.mjs",
