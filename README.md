@@ -24,7 +24,7 @@ Same agent, same prompt: *explain how a load balancer works.*
 |---|---|
 | https://github.com/user-attachments/assets/40afe786-2bb5-4c05-8c60-c47ad86cd426 | https://github.com/user-attachments/assets/b242ed7c-387b-4977-92eb-8368facd47e8 |
 
-## Benchmark
+## Results
 
 One job, run once without the skill and once with it: a 28-file pull request, as a two-minute video.
 
