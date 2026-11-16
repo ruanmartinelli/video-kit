@@ -16,8 +16,6 @@ Then ask for a video:
 Make a video that explains this pull request to its reviewer.
 ```
 
-> Narration text is sent to Microsoft's Edge text-to-speech service. Everything else stays on your machine.
-
 ## Before and after
 
 Same agent, same prompt: *explain how a load balancer works.*
