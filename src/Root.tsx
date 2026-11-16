@@ -1,4 +1,7 @@
 import { Composition } from "remotion";
+import { ActorGallery, actorGalleryMeta } from "./gallery/ActorGallery";
+import { OverlayGallery, overlayGalleryMeta } from "./gallery/OverlayGallery";
+import { PanelGallery, panelGalleryMeta } from "./gallery/PanelGallery";
 import { ShapeGallery, shapeGalleryMeta } from "./gallery/ShapeGallery";
 import { PrApiKeys, prApiKeysMeta } from "./videos/pr-api-keys/PrApiKeys";
 import { PrAuth, prAuthMeta } from "./videos/pr-auth/PrAuth";
@@ -18,5 +21,8 @@ export const Root = () => (
     <Composition component={PrGraphql} {...prGraphqlMeta} />
     <Composition component={PrCron} {...prCronMeta} />
     <Composition component={ShapeGallery} {...shapeGalleryMeta} />
+    <Composition component={ActorGallery} {...actorGalleryMeta} />
+    <Composition component={PanelGallery} {...panelGalleryMeta} />
+    <Composition component={OverlayGallery} {...overlayGalleryMeta} />
   </>
 );
