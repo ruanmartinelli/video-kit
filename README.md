@@ -1,8 +1,15 @@
 # video-kit
 
-A skill that lets a coding agent make narrated 3D explainer videos: of a pull request, a bug and its fix, a plan, or how a system works.
+A skill for coding agents. It makes narrated 3D explainer videos.
 
-You ask in plain words. The agent writes the script, narrates it, builds the scene, checks its own frames and renders an MP4.
+Ask for one in plain words:
+
+- a pull request
+- a bug and its fix
+- a plan
+- how a system works
+
+The agent writes the script, narrates it, builds the scene and renders an MP4.
 
 ## Install
 
@@ -12,17 +19,17 @@ Paste this to your agent:
 Install the video-kit skill: clone https://github.com/ruanmartinelli/video-kit into ~/.claude/skills/video-kit and run `pnpm install` inside it.
 ```
 
-Then ask for a video in whatever project you are working in:
+Then ask for a video:
 
 ```
 Make a video that explains this pull request to its reviewer.
 ```
 
-The narration text is sent to Microsoft's Edge text-to-speech service. Everything else runs on your machine.
+> Narration text is sent to Microsoft's Edge text-to-speech service. Everything else stays on your machine.
 
 ## Before and after
 
-The same agent, given the same prompt: *make a short video that explains how a load balancer works.*
+Same agent, same prompt: *explain how a load balancer works.*
 
 **Without video-kit**
 
@@ -34,22 +41,27 @@ https://github.com/user-attachments/assets/b242ed7c-387b-4977-92eb-8368facd47e8
 
 ## Numbers
 
-Measured on two jobs, each done once without the skill and once with it, by the same model.
+Two jobs, each run once without the skill and once with it.
 
-| | Without | With video-kit | |
+**A 28-file pull request, as a two-minute video**
+
+| | Without | With | |
 |---|---|---|---|
-| **A 28-file pull request, as a two-minute video** | | | |
-| Time | 77 min | 41 min | 46% less |
-| Tool calls | 199 | 122 | 39% fewer |
-| Tokens written | 113,875 | 71,507 | 37% fewer |
-| Frames looked at | 140 | 47 | 66% fewer |
-| Estimated cost | | | 35% less |
-| **How a load balancer works, in 30 seconds** (the videos above) | | | |
-| Time | 5.8 min | 8.3 min | 2.5 min more |
-| Tool calls | 32 | 37 | 5 more |
-| Tokens written | 29,283 | 18,440 | 37% fewer |
+| Time | 77 min | 41 min | −46% |
+| Tool calls | 199 | 122 | −39% |
+| Tokens written | 113,875 | 71,507 | −37% |
+| Frames looked at | 140 | 47 | −66% |
+| Estimated cost | | | −35% |
+
+**The load balancer video above**
+
+| | Without | With | |
+|---|---|---|---|
+| Time | 5.8 min | 8.3 min | +43% |
+| Tool calls | 32 | 37 | +16% |
+| Tokens written | 29,283 | 18,440 | −37% |
 | Estimated cost | | | about the same |
 
-The skill pays off on the larger job. On a 30-second video an agent working from scratch is just as cheap and a little faster; what the skill changes there is how the video looks.
+The skill pays off on bigger jobs. On a short video, working from scratch costs about the same.
 
-One run each, so read these as a signal. Cost is estimated from token counts at the usual price ratios (cache reads 0.1x, cache writes 1.25x and output 5x the input price). The two pull request runs did not share the speech service equally, so their times are rough.
+<sub>One run each. Cost is estimated from token counts. Times are rough.</sub>
