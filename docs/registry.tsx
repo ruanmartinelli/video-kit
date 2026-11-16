@@ -367,7 +367,8 @@ const start = t.at("outside");
 const progress = Math.min(1, Math.max(0, (frame - start) / 60));
 
 <Ripple at={graph.position("helper")} progress={progress} />
-<Graph3D graph={graph} nodes={{ PayoutExport: { active: ease(frame, start + 47, start + 59), tone: "danger" } }} />`,
+const hit = start + 51;
+<Graph3D graph={graph} nodes={{ PayoutExport: { active: ease(frame, hit - 4, hit + 8), tone: frame >= hit - 4 ? "danger" : "accent" } }} />`,
   },
   {
     id: "graph",

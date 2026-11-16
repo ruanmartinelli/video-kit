@@ -35,7 +35,20 @@ export const Manifest = (props: ManifestProps) => {
   const dim = { fontFamily: theme.sans, fontWeight: 600, color: theme.textDim };
 
   return (
-    <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, opacity: appear }}>
+    // A veil over the scene: the system stays visible behind the list, but its labels stop competing with it.
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 14,
+        opacity: appear,
+        background: `color-mix(in srgb, ${theme.background} 78%, transparent)`,
+      }}
+    >
       <div style={{ ...dim, fontSize: 30, marginBottom: 10 }}>{title}</div>
       {items.map((item, index) => (
         <div

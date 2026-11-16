@@ -314,7 +314,7 @@ export const HubDemo = ({ callers }: { callers: number }) => {
       <Ripple at={graph.position("helper")} progress={progress} />
       <Graph3D
         graph={graph}
-        nodes={Object.fromEntries(names.slice(2, callers).map((name) => [name, { active: ease(frame, reached - 4, reached + 8), tone: "danger" as const }]))}
+        nodes={Object.fromEntries(names.slice(2, callers).map((name) => [name, { active: ease(frame, reached - 4, reached + 8), tone: frame >= reached - 4 ? ("danger" as const) : ("accent" as const) }]))}
       />
     </World>
   );
