@@ -170,7 +170,7 @@ const graph = layoutGraph({
     group: "Actors",
     name: "Table",
     summary:
-      "A database table as a standing card: its name, then one row per column. Columns can slide in, carry what a PR did to them, and light up when a query touches them. `tableRow` gives a row's position, so pipes and packets can land on one column.",
+      "A database table as a board standing on the floor: its name, then one row per column. Columns can slide in, carry what a PR did to them, and light up when a query touches them. `tableRow` gives a row's position, so pipes and packets can land on one column.",
     demo: {
       component: TableDemo,
       durationInFrames: 200,
@@ -192,7 +192,7 @@ const graph = layoutGraph({
 
 <Table position={at} name="orders" columns={columns} />
 <Packet from={db} to={tableRow(at, columns, "refunded_at")} clear={[1.1, 0.35]} progress={p} />
-<CameraRig shots={[{ at: 0, targets: tableFrame(at, columns), view: "close" }]} />`,
+<CameraRig shots={[{ at: 0, targets: tableFrame(at, columns), elevation: 30 }]} />`,
   },
   {
     id: "change",

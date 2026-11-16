@@ -211,7 +211,7 @@ export const TableDemo = ({ change }: { change: "added" | "changed" | "removed" 
   ];
   return (
     <World>
-      <CameraRig shots={[{ at: 0, targets: [...tableFrame(ordersAt, orders), ...tableFrame(refundsAt, refunds)], view: "close", padding: 0.85, shift: [0, 0] }]} />
+      <CameraRig shots={[{ at: 0, targets: [...tableFrame(ordersAt, orders), ...tableFrame(refundsAt, refunds)], elevation: 30, padding: 0.8, shift: [0, 0] }]} />
       <Table position={ordersAt} name="orders" columns={orders} />
       <Table position={refundsAt} name="refunds" change="added" columns={refunds} appear={pop(frame, 10)} />
       <Pipe

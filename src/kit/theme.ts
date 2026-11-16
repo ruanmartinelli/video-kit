@@ -23,11 +23,9 @@ const dark = {
   added: "#3fb950",
   changed: "#d29922",
   removed: "#ff4d4d",
-  /** Flat cards: tables. */
-  card: "#141414",
-  cardLine: "#2a2a2a",
   /** Text on a `surface`-colored part. */
   onSurface: "#f4f4f4",
+  onSurfaceDim: "#9c9c9c",
   /** Shiki theme for CodePanel. */
   code: "vesper",
   /** How hard lit things glow. Light backgrounds wash out a strong glow. */
@@ -56,9 +54,8 @@ const light: typeof dark = {
   added: "#16a34a",
   changed: "#d97706",
   removed: "#e5484d",
-  card: "#ffffff",
-  cardLine: "#e6e6e6",
   onSurface: "#f4f4f4",
+  onSurfaceDim: "#9c9c9c",
   code: "github-light",
   glow: 0.15,
   ambient: 1.5,

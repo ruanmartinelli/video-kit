@@ -6,7 +6,7 @@ const COLUMNS = 4;
 const position = (index: number): Vec3 => [
   ((index % COLUMNS) - (COLUMNS - 1) / 2) * 3.6,
   NODE_HEIGHT / 2,
-  (Math.floor(index / COLUMNS) - 0.5) * 6.5,
+  (Math.floor(index / COLUMNS) - (Math.ceil(SHAPES.length / COLUMNS) - 1) / 2) * 5,
 ];
 
 export const shapeGalleryMeta = { id: "ShapeGallery", fps: 30, width: 1920, height: 1080, durationInFrames: 210 };

@@ -38,8 +38,8 @@ export const prApiKeysMeta = {
 const graph = layoutGraph({
   nodes: [
     { id: "client", label: "Client", shape: "client" },
-    { id: "router", label: "Router", change: "changed" },
-    { id: "controller", label: "ApiKeysController", change: "added" },
+    { id: "router", label: "Router", shape: "router", change: "changed" },
+    { id: "controller", label: "ApiKeysController", shape: "controller", change: "added" },
     { id: "service", label: "ApiKeyService", change: "added" },
     { id: "db", label: "Postgres", shape: "database" },
   ],
@@ -175,10 +175,10 @@ export const PrApiKeys = () => {
       <CameraRig
         shots={[
           { at: 0, targets: path, azimuth: 8 },
-          { at: cue.schema - 8, targets: [...users, ...apiKeys], view: "close", azimuth: -6, padding: 0.82, shift: [0, 0] },
-          { at: cue.alter - 8, targets: users, view: "close", azimuth: -14, padding: 1.25 },
+          { at: cue.schema - 8, targets: [...users, ...apiKeys], azimuth: -6, elevation: 30, padding: 0.9, shift: [0, 0.09] },
+          { at: cue.alter - 8, targets: users, azimuth: -10, elevation: 30, padding: 1.15 },
           { at: cue.request - 10, targets: path, azimuth: 10 },
-          { at: cue.read - 12, targets: [db, ...users, ...apiKeys], azimuth: -6, elevation: 26, padding: 0.9, shift: [0, 0] },
+          { at: cue.read - 12, targets: [db, ...users, ...apiKeys], azimuth: -6, elevation: 30, padding: 0.9, shift: [0, 0] },
           { at: cue.risk - 6, targets: [service, db], view: "close", azimuth: -16, padding: 1.9, shift: [-0.25, 0.05] },
         ]}
       />

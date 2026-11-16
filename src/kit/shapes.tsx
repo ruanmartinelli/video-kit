@@ -4,7 +4,20 @@ import { LatheGeometry, Vector2 } from "three";
 import { z } from "zod";
 import { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
 
-export const nodeShapeSchema = z.enum(["service", "database", "server", "queue", "client", "user", "cloud", "storage"]);
+export const nodeShapeSchema = z.enum([
+  "service",
+  "database",
+  "server",
+  "queue",
+  "client",
+  "user",
+  "cloud",
+  "storage",
+  "file",
+  "controller",
+  "router",
+  "worker",
+]);
 
 export type NodeShape = z.infer<typeof nodeShapeSchema>;
 
@@ -219,6 +232,136 @@ const Storage = ({ body, trim, inset }: ShapeProps) => (
   </>
 );
 
+const CODE_LINES: [indent: number, y: number, width: number][] = [
+  [0, 0.38, 0.5],
+  [0.1, 0.24, 0.46],
+  [0.1, 0.1, 0.34],
+  [0, -0.04, 0.28],
+  [0.1, -0.18, 0.5],
+  [0, -0.32, 0.18],
+];
+const PAGE_LEFT = -0.34;
+
+/** A source file: any class or module that has no better shape. */
+const File = ({ body, inset, glow }: ShapeProps) => (
+  <group rotation={[-0.12, 0, 0]}>
+    <RoundedBox args={[1, NODE_HEIGHT, 0.16]} radius={0.05} smoothness={4}>
+      {body}
+    </RoundedBox>
+    <RoundedBox args={[0.84, 1.04, 0.02]} radius={0.01} smoothness={2} position={[0, 0, 0.08]}>
+      {inset}
+    </RoundedBox>
+    {CODE_LINES.map(([indent, y, width]) => (
+      <mesh key={y} position={[PAGE_LEFT + indent + width / 2, y, 0.095]}>
+        <boxGeometry args={[width, 0.05, 0.01]} />
+        {glow}
+      </mesh>
+    ))}
+  </group>
+);
+
+const DECK_SLOPE = 0.5;
+const DECK_THICKNESS = 0.2;
+const BUTTON_XS = [-0.6, -0.3, 0];
+
+/** A control desk: buttons and a slider. Takes a request and decides what to call. */
+const Controller = ({ body, trim, inset, glow }: ShapeProps) => (
+  <>
+    <RoundedBox args={[1.8, 0.45, 1.5]} radius={0.08} smoothness={4} position={[0, FLOOR + 0.225, 0]}>
+      {body}
+    </RoundedBox>
+    <group position={[0, 0.06, -0.05]} rotation={[DECK_SLOPE, 0, 0]}>
+      <RoundedBox args={[1.8, DECK_THICKNESS, 1.3]} radius={0.06} smoothness={4}>
+        {body}
+      </RoundedBox>
+      <RoundedBox args={[1.56, 0.02, 1.06]} radius={0.01} smoothness={2} position={[0, DECK_THICKNESS / 2, 0]}>
+        {inset}
+      </RoundedBox>
+      {BUTTON_XS.map((x) => (
+        <mesh key={x} position={[x, DECK_THICKNESS / 2 + 0.04, 0.22]}>
+          <cylinderGeometry args={[0.1, 0.1, 0.06, 24]} />
+          {glow}
+        </mesh>
+      ))}
+      {BUTTON_XS.map((x) => (
+        <mesh key={x} position={[x, DECK_THICKNESS / 2 + 0.04, -0.2]}>
+          <cylinderGeometry args={[0.1, 0.1, 0.06, 24]} />
+          {trim}
+        </mesh>
+      ))}
+      <mesh position={[0.52, DECK_THICKNESS / 2 + 0.02, 0]}>
+        <boxGeometry args={[0.07, 0.02, 0.8]} />
+        {trim}
+      </mesh>
+      <RoundedBox args={[0.24, 0.1, 0.16]} radius={0.03} smoothness={2} position={[0.52, DECK_THICKNESS / 2 + 0.06, -0.12]}>
+        {trim}
+      </RoundedBox>
+    </group>
+  </>
+);
+
+const POST_BASE = disk(0.42, 0.1, 0.04);
+const SIGNS: [y: number, direction: 1 | -1, z: number][] = [
+  [0.36, 1, 0],
+  [-0.06, -1, 0.16],
+];
+
+/** A signpost: one way in, several ways out. */
+const Router = ({ body, trim }: ShapeProps) => (
+  <>
+    <mesh>
+      <cylinderGeometry args={[0.09, 0.09, NODE_HEIGHT, 16]} />
+      {trim}
+    </mesh>
+    <mesh geometry={POST_BASE} position={[0, FLOOR + 0.04, 0]}>
+      {trim}
+    </mesh>
+    {SIGNS.map(([y, direction, z]) => (
+      <group key={y} position={[0, y, z]} scale={[direction, 1, 1]}>
+        <RoundedBox args={[1.05, 0.36, 0.16]} radius={0.04} smoothness={3} position={[0.22, 0, 0]}>
+          {body}
+        </RoundedBox>
+        <mesh position={[0.745, 0, 0]} rotation={[0, 0, Math.PI / 4]}>
+          <boxGeometry args={[0.255, 0.255, 0.16]} />
+          {body}
+        </mesh>
+      </group>
+    ))}
+  </>
+);
+
+const TEETH = 8;
+
+/** A gear: something that runs in the background, a job or a consumer. */
+const Worker = ({ body, inset, glow }: ShapeProps) => (
+  <group rotation={[-0.12, 0, 0]}>
+    <mesh rotation={[Math.PI / 2, 0, 0]}>
+      <cylinderGeometry args={[0.44, 0.44, 0.3, 48]} />
+      {body}
+    </mesh>
+    {Array.from({ length: TEETH }, (_, tooth) => {
+      const angle = (tooth / TEETH) * Math.PI * 2;
+      return (
+        <RoundedBox
+          key={tooth}
+          args={[0.22, 0.22, 0.3]}
+          radius={0.04}
+          smoothness={2}
+          position={[Math.cos(angle) * 0.49, Math.sin(angle) * 0.49, 0]}
+          rotation={[0, 0, angle]}
+        >
+          {body}
+        </RoundedBox>
+      );
+    })}
+    <mesh rotation={[Math.PI / 2, 0, 0]}>
+      <cylinderGeometry args={[0.18, 0.18, 0.32, 32]} />
+      {inset}
+    </mesh>
+    <Led position={[0, 0, 0.16]} glow={glow} />
+  </group>
+);
+
 /** Every shape fits the node's 2 x 1.2 x 2 box and stands on its floor. */
 export const shapes: Record<NodeShape, (props: ShapeProps) => ReactNode> = {
   service: Service,
@@ -229,4 +372,8 @@ export const shapes: Record<NodeShape, (props: ShapeProps) => ReactNode> = {
   user: User,
   cloud: Cloud,
   storage: Storage,
+  file: File,
+  controller: Controller,
+  router: Router,
+  worker: Worker,
 };
