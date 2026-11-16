@@ -1,3 +1,4 @@
+import "./base";
 import { Player, type PlayerRef } from "@remotion/player";
 import { StrictMode, useEffect, useRef, useState, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
