@@ -124,7 +124,7 @@ const Rotation = ({ frame }: { frame: number }) => {
             <meshStandardMaterial
               color={theme.surface}
               emissive={theme.accent}
-              emissiveIntensity={0.12 + 1.1 * (lit[index] ?? 0)}
+              emissiveIntensity={(0.12 + 1.1 * (lit[index] ?? 0)) * theme.glow}
             />
           </mesh>
           <Label position={[0, 0.12, 0]} size={0.17}>
@@ -134,7 +134,7 @@ const Rotation = ({ frame }: { frame: number }) => {
       ))}
       <mesh position={[pointerX, 0.26, 0]} rotation={[Math.PI, 0, 0]}>
         <coneGeometry args={[0.09, 0.2, 24]} />
-        <meshStandardMaterial color={theme.text} emissive={theme.text} emissiveIntensity={0.8} />
+        <meshStandardMaterial color={theme.text} emissive={theme.text} emissiveIntensity={0.8 * theme.glow} />
       </mesh>
     </>
   );

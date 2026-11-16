@@ -5,13 +5,14 @@ import json from "shiki/langs/json.mjs";
 import python from "shiki/langs/python.mjs";
 import sql from "shiki/langs/sql.mjs";
 import typescript from "shiki/langs/typescript.mjs";
+import githubLight from "shiki/themes/github-light.mjs";
 import vesper from "shiki/themes/vesper.mjs";
 import { z } from "zod";
 import { unitSchema } from "./motion";
 import { theme } from "./theme";
 
 const highlighter = createHighlighterCoreSync({
-  themes: [vesper],
+  themes: [vesper, githubLight],
   langs: [typescript, python, bash, json, sql],
   engine: createJavaScriptRegexEngine(),
 });
@@ -35,7 +36,7 @@ export const CodePanel = (props: CodePanelProps) => {
     return null;
   }
 
-  const lines = highlighter.codeToTokensBase(code.trim(), { lang, theme: "vesper" });
+  const lines = highlighter.codeToTokensBase(code.trim(), { lang, theme: theme.code });
   const slide = (1 - appear) * (side === "right" ? 60 : -60);
 
   return (
@@ -69,7 +70,7 @@ export const CodePanel = (props: CodePanelProps) => {
               whiteSpace: "pre",
               minHeight: "1.65em",
               opacity: highlight.length === 0 || lit ? 1 : 0.32,
-              background: lit ? "rgba(82, 168, 255, 0.14)" : "transparent",
+              background: lit ? `color-mix(in srgb, ${theme.accent} 12%, transparent)` : "transparent",
               boxShadow: lit ? `inset 4px 0 0 ${theme.accent}` : "none",
             }}
           >

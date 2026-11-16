@@ -31,6 +31,7 @@ export type NodeState = z.input<typeof nodeStateSchema> & {
 type NodeProps = z.input<typeof nodeSchema> & Pick<NodeState, "children">;
 
 const GLASS_OPACITY = 0.16;
+const LIT_TINT = 0.3;
 /** In pixels of the rendered frame. */
 const OUTLINE_THICKNESS = 3;
 
@@ -52,6 +53,8 @@ export const Node = ({ children, ...props }: NodeProps) => {
     depthWrite: open === 0,
   };
   const dimmed = (color: string) => new Color(color).lerp(new Color(theme.dimmed), dim);
+  // Lit parts take on the tone itself, so the state reads on a light background where a glow would not.
+  const tinted = (color: string) => dimmed(color).lerp(new Color(theme[tone]), LIT_TINT * active * lit);
 
   // Idle shapes are grey on black: the outline is what separates them. Lit, it takes the tone.
   const outline = (
@@ -69,18 +72,18 @@ export const Node = ({ children, ...props }: NodeProps) => {
         <Shape
           body={
             <>
-              <meshStandardMaterial {...glass} color={dimmed(theme.surface)} emissive={theme[tone]} emissiveIntensity={0.14 * active * lit} />
+              <meshStandardMaterial {...glass} color={tinted(theme.surface)} emissive={theme[tone]} emissiveIntensity={0.14 * theme.glow * active * lit} />
               {outline}
             </>
           }
           trim={
             <>
-              <meshStandardMaterial {...glass} color={dimmed(theme.pipe)} emissive={theme[tone]} emissiveIntensity={0.14 * active * lit} />
+              <meshStandardMaterial {...glass} color={tinted(theme.pipe)} emissive={theme[tone]} emissiveIntensity={0.14 * theme.glow * active * lit} />
               {outline}
             </>
           }
-          inset={<meshStandardMaterial {...glass} color={theme.dimmed} />}
-          glow={<meshStandardMaterial {...glass} color={dimmed(theme[tone])} emissive={theme[tone]} emissiveIntensity={0.9 * lit} />}
+          inset={<meshStandardMaterial {...glass} color={dimmed(theme.inset)} />}
+          glow={<meshStandardMaterial {...glass} color={dimmed(theme[tone])} emissive={theme[tone]} emissiveIntensity={0.9 * theme.glow * lit} />}
         />
       </group>
       {open > 0 ? <group scale={open}>{children}</group> : null}

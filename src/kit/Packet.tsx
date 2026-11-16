@@ -28,7 +28,7 @@ export const Packet = (props: PacketProps) => {
   return (
     <mesh position={[x, y + Math.sin(Math.PI * progress) * ARC_HEIGHT, z]}>
       <sphereGeometry args={[0.22, 32, 32]} />
-      <meshStandardMaterial color={theme[tone]} emissive={theme[tone]} emissiveIntensity={2} />
+      <meshStandardMaterial color={theme[tone]} emissive={theme[tone]} emissiveIntensity={2 * theme.glow} />
     </mesh>
   );
 };

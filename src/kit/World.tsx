@@ -22,8 +22,8 @@ export const World = ({ children, overlay }: WorldProps) => {
       <ThreeCanvas width={width} height={height} camera={{ fov: CAMERA_FOV, position: [0, 7, 15] }}>
         <color attach="background" args={[theme.background]} />
         <fog attach="fog" args={[theme.background, 18, 55]} />
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[6, 10, 8]} intensity={2.6} />
+        <ambientLight intensity={theme.ambient} />
+        <directionalLight position={[6, 10, 8]} intensity={theme.sun} />
         <directionalLight position={[-8, 4, -6]} intensity={0.6} />
         <mesh rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[160, 160]} />
