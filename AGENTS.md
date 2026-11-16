@@ -99,7 +99,7 @@ Pick the piece by what the beat is about. Flat panels dock in the same place, so
 - **The app's own screen**: `Screenshot`, with `highlight` on what the narration names and `wipe` from the old screen to the new.
 - **A video over three minutes**: `Chapter`, with a title card at each chapter start.
 
-A bug video opens on what the user saw, follows the one record that went wrong to the line that explains it, and ends on the fix replayed with the same record.
+`src/videos/bug-low-stock/` is the reference bug video. It opens on what the user saw, follows the one record that went wrong to the line that explains it, replays the same record with the fix, then shows a case that must still work, and ends on what the fix costs.
 
 ## Presenting it yourself
 

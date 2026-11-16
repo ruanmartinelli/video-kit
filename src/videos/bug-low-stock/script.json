@@ -1,0 +1,18 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    { "id": "alert", "text": "The team got a low stock alert for a product that was never low." },
+    { "id": "stock", "text": "There were 120 in stock. The minimum is 100." },
+    { "id": "order", "text": "Then one order came in, for 10." },
+    { "id": "writes", "text": "The save writes the row twice: first it releases everything, then it reserves what is left." },
+    { "id": "trigger", "text": "A trigger sees each write on its own, and asks one question: is it below the minimum?" },
+    { "id": "first", "text": "The first write says zero, so it passes, and the alert goes out." },
+    { "id": "second", "text": "The second write says 110, and is turned back. Too late." },
+    { "id": "day", "text": "Over one day, that was six alerts. None of them was real." },
+    { "id": "fix", "text": "The fix judges the whole save: where the row started, and where it ended." },
+    { "id": "replay", "text": "Here is that order again, after the fix." },
+    { "id": "quiet", "text": "Going from 120 to 110 never crosses the line, so nothing is sent." },
+    { "id": "real", "text": "And when stock really drops to 90, the alert still goes out." },
+    { "id": "cost", "text": "The cost: the trigger now has to hold every write until the save ends." }
+  ]
+}

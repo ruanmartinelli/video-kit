@@ -11,6 +11,8 @@ import { PrCron, prCronMeta } from "./videos/pr-cron/PrCron";
 import { PrEndpoint, prEndpointMeta } from "./videos/pr-endpoint/PrEndpoint";
 import { PrGraphql, prGraphqlMeta } from "./videos/pr-graphql/PrGraphql";
 import { PrShared, prSharedMeta } from "./videos/pr-shared/PrShared";
+import { BugLowStock, bugLowStockMeta } from "./videos/bug-low-stock/BugLowStock";
+import { bugLowStockBoard, bugLowStockBoardMeta } from "./videos/bug-low-stock/board";
 import { LoadBalancer, loadBalancerMeta } from "./videos/load-balancer/LoadBalancer";
 import { loadBalancerBoard, loadBalancerBoardMeta } from "./videos/load-balancer/board";
 
@@ -18,6 +20,8 @@ export const Root = () => (
   <>
     <Composition component={LoadBalancer} {...loadBalancerMeta} />
     <Composition component={Storyboard} {...loadBalancerBoardMeta} defaultProps={loadBalancerBoard} />
+    <Composition component={BugLowStock} {...bugLowStockMeta} />
+    <Composition component={Storyboard} {...bugLowStockBoardMeta} defaultProps={bugLowStockBoard} />
     <Composition component={PrApiKeys} {...prApiKeysMeta} />
     <Composition component={PrAuth} {...prAuthMeta} />
     <Composition component={PrShared} {...prSharedMeta} />
