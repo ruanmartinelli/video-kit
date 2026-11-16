@@ -41,9 +41,7 @@ https://github.com/user-attachments/assets/b242ed7c-387b-4977-92eb-8368facd47e8
 
 ## Numbers
 
-Two jobs, each run once without the skill and once with it.
-
-**A 28-file pull request, as a two-minute video**
+One job, run once without the skill and once with it: a 28-file pull request, as a two-minute video.
 
 | | Without | With | |
 |---|---|---|---|
@@ -52,16 +50,5 @@ Two jobs, each run once without the skill and once with it.
 | Tokens written | 113,875 | 71,507 | −37% |
 | Frames looked at | 140 | 47 | −66% |
 | Estimated cost | | | −35% |
-
-**The load balancer video above**
-
-| | Without | With | |
-|---|---|---|---|
-| Time | 5.8 min | 8.3 min | +43% |
-| Tool calls | 32 | 37 | +16% |
-| Tokens written | 29,283 | 18,440 | −37% |
-| Estimated cost | | | about the same |
-
-The skill pays off on bigger jobs. On a short video, working from scratch costs about the same.
 
 <sub>One run each. Cost is estimated from token counts. Times are rough.</sub>
