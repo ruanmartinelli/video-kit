@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "Inter";
+  font-family: "Geist";
   font-weight: 600;
-  src: url("/fonts/inter-600.woff") format("woff");
+  src: url("/fonts/geist-600.woff") format("woff");
 }
 
 :root {
@@ -54,7 +54,7 @@ nav {
 nav strong {
   display: block;
   margin-bottom: 20px;
-  font-family: Inter, var(--body);
+  font-family: Geist, var(--body);
   font-size: 18px;
 }
 
@@ -84,7 +84,7 @@ main {
 
 h1,
 h2 {
-  font-family: Inter, var(--body);
+  font-family: Geist, var(--body);
 }
 
 h1 {
@@ -130,7 +130,7 @@ section {
   border: 2px dashed #52a8ff;
   border-radius: 14px;
   color: #52a8ff;
-  font: 600 34px Inter, sans-serif;
+  font: 600 34px Geist, sans-serif;
 }
 
 .controls {
@@ -191,7 +191,7 @@ table.props {
 table.props caption {
   padding-bottom: 6px;
   text-align: left;
-  font: 600 15px Inter, var(--body);
+  font: 600 15px Geist, var(--body);
 }
 
 table.props th {

@@ -27,7 +27,7 @@ export const World = ({ children, overlay }: WorldProps) => {
         <directionalLight position={[-8, 4, -6]} intensity={0.6} />
         <mesh rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[160, 160]} />
-          <meshStandardMaterial color={theme.floor} />
+          <meshBasicMaterial color={theme.floor} toneMapped={false} />
         </mesh>
         <gridHelper args={[160, 160, theme.grid, theme.grid]} position={[0, 0.01, 0]} />
         {children}
