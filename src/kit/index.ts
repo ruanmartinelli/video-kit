@@ -11,6 +11,7 @@ export { Label, labelSchema } from "./Label";
 export { ease, lerp, lerp3, pop, pulse, type Vec3 } from "./motion";
 export { Narration } from "./Narration";
 export { Node, nodeSchema, type NodeState } from "./Node";
+export { outcomeSchema, Outcomes, outcomesSchema } from "./Outcomes";
 export { Packet, packetSchema } from "./Packet";
 export { Pipe, pipeSchema } from "./Pipe";
 export { nodeShapeSchema, type NodeShape } from "./shapes";

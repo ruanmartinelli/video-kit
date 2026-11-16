@@ -11,6 +11,8 @@ import {
   labelSchema,
   nodeSchema,
   nodeShapeSchema,
+  outcomeSchema,
+  outcomesSchema,
   packetSchema,
   pipeSchema,
   linkSchema,
@@ -28,6 +30,7 @@ import {
   GraphDemo,
   LabelDemo,
   NodeDemo,
+  OutcomesDemo,
   PacketDemo,
   TablesDemo,
   WorldDemo,
@@ -207,6 +210,43 @@ const graph = layoutGraph({
 </World>`,
   },
   {
+    id: "outcomes",
+    group: "Overlay",
+    name: "Outcomes",
+    summary:
+      "For a PR that changes existing behaviour, like an auth check or a shared helper. The same cases are answered before and after, and a row whose answer changed turns red. In the 3D world each case is a labelled Packet sent through the changed node twice; fill the row on the frame the packet reaches it.",
+    demo: {
+      component: OutcomesDemo,
+      durationInFrames: 220,
+      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }],
+    },
+    schemas: [
+      { title: "Outcomes", schema: outcomesSchema },
+      { title: "Row", schema: outcomeSchema },
+    ],
+    code: `const before = t.at("base", "admin");
+const after = t.at("replay", "admin");
+const hit = (start) => start + 14;
+
+<World
+  overlay={
+    <Outcomes
+      rows={[{
+        name: "admin, other tenant",
+        before: "blocked",
+        after: "passes",
+        filled: ease(frame, hit(before) - 4, hit(before) + 6) + ease(frame, hit(after) - 4, hit(after) + 6),
+      }]}
+    />
+  }
+>
+  <Packet from={client} to={guard} progress={ease(frame, before, hit(before))} label="admin, other tenant" />
+  <Packet from={guard} to={client} progress={ease(frame, hit(before), hit(before) + 14)} label="admin, other tenant" />
+  <Packet from={client} to={guard} progress={ease(frame, after, hit(after))} label="admin, other tenant" />
+  <Packet from={guard} to={api} progress={ease(frame, hit(after), hit(after) + 14)} label="admin, other tenant" tone="danger" />
+</World>`,
+  },
+  {
     id: "change",
     group: "Actors",
     name: "Change marks",
@@ -233,7 +273,10 @@ const graph = layoutGraph({
     demo: {
       component: PacketDemo,
       durationInFrames: 120,
-      controls: [{ key: "tone", kind: "select", options: ["accent", "danger"], initial: "accent" }],
+      controls: [
+        { key: "tone", kind: "select", options: ["accent", "danger"], initial: "accent" },
+        { key: "label", kind: "text", initial: "" },
+      ],
     },
     schemas: [
       { title: "Packet", schema: packetSchema },

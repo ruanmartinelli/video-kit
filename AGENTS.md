@@ -12,7 +12,7 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 
 3. **Compose.** One file, `src/videos/<name>/<Name>.tsx`, registered in `src/Root.tsx`:
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
-   - `layoutGraph(...)` gives positions. Give each node the `shape` that names what it is (`database`, `server`, `queue`, `client`, `user`, `cloud`, `storage` for systems; `router`, `controller`, `worker`, `file` for code); `service` is the plain box. Packets, extra pipes and camera targets all read `graph.position(id)`.
+   - `layoutGraph(...)` gives positions. Give each node the `shape` that names what it is (`database`, `server`, `queue`, `client`, `user`, `cloud`, `storage`, `clock` for systems; `router`, `controller`, `worker`, `file`, `shield` for code); `service` is the plain box. Packets, extra pipes and camera targets all read `graph.position(id)`.
    - One `<World>`, one `<CameraRig>`, actors as children; `Narration`, `Caption`, `CodePanel`, `Tables` and `Chip` in `overlay`.
 
 4. **Look at it.** `pnpm stills <CompositionId>` renders one frame per second to `out/stills/<CompositionId>/`; pass `120,340,515` to render chosen frames. Read the PNGs. Done when every still passes all of these:
@@ -31,7 +31,17 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 - Tables are flat: `Tables` in `overlay`, with the database node beside it in the world. One beat per migration, with a `Chip` naming its file. Columns enter with `appear`.
 - A query is a packet from the service to the database. The row it reads or writes pulses its `lit` on the frame the packet lands.
 - Name the file on screen with a `Chip` for every hop whose code the narration talks about, so the viewer can check it against the diff.
-- `Tables`, `CodePanel` and a wide shot of the whole path each want the frame: show one at a time.
+- `Tables`, `Outcomes`, `CodePanel` and a wide shot of the whole path each want the frame: show one at a time.
+
+### Changed behaviour
+
+`src/videos/pr-auth/` is the reference. When a PR changes what existing code answers (an auth check, a policy, a shared helper), show the answers, since the diff alone does not.
+
+- Pick the cases that matter: each role, each tenant, each kind of input. Five or fewer, and one of them is the case whose answer changed.
+- Send every case through the changed node twice, as a `Packet` with a `label`: once as the base branch answers, once as the PR answers. A case that passes travels on; a case that is refused travels back to where it came from.
+- `Outcomes` in `overlay` keeps score. Fill a row's `before` or `after` on the frame its packet reaches the node.
+- A `Chip` says which run is on screen: `before this PR`, `with this PR`.
+- The case whose answer changed goes last, in `danger`, and is followed all the way to what it now reaches. End on the lines of code that explain it.
 
 ## How the kit works
 

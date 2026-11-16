@@ -11,6 +11,7 @@ import {
   layoutGraph,
   Node,
   NODE_HEIGHT,
+  Outcomes,
   Packet,
   Pipe,
   pop,
@@ -89,7 +90,7 @@ export const NodeDemo = ({ label, shape, tone }: { label: string; shape: NodeSha
   );
 };
 
-export const PacketDemo = ({ tone }: { tone: "accent" | "danger" }) => {
+export const PacketDemo = ({ tone, label }: { tone: "accent" | "danger"; label: string }) => {
   const frame = useCurrentFrame();
   return (
     <World>
@@ -97,7 +98,7 @@ export const PacketDemo = ({ tone }: { tone: "accent" | "danger" }) => {
       <Pipe from={left} to={right} progress={ease(frame, 5, 30)} />
       <Node position={left} label="From" />
       <Node position={right} label="To" active={pulse(frame, 85)} tone={tone} />
-      <Packet from={left} to={right} progress={ease(frame, 40, 85)} tone={tone} />
+      <Packet from={left} to={right} progress={ease(frame, 40, 85)} tone={tone} label={label || undefined} />
     </World>
   );
 };
@@ -230,6 +231,63 @@ export const TablesDemo = ({ direction, side }: { direction: "column" | "row"; s
       <Node position={left} label="Service" />
       <Node position={right} label="Postgres" shape="database" active={pulse(frame, landed, 24)} />
       <Packet from={left} to={right} progress={ease(frame, landed - 20, landed)} tone="accent" />
+    </World>
+  );
+};
+
+export const OutcomesDemo = ({ side }: { side: "left" | "right" }) => {
+  const frame = useCurrentFrame();
+  const graph = layoutGraph({
+    nodes: [
+      { id: "client", label: "Client", shape: "client" },
+      { id: "guard", label: "requireAdmin", shape: "shield", change: "changed" },
+      { id: "api", label: "Billing", shape: "controller" },
+    ],
+    edges: [
+      ["client", "guard"],
+      ["guard", "api"],
+    ],
+    columnGap: 5,
+  });
+  const [client, guard, api] = graph.nodes.map((node) => node.position) as [Vec3, Vec3, Vec3];
+  // Each caller is sent twice: once on the base branch, once with the PR.
+  const callers = [
+    { name: "admin", was: true, now: true, before: 20, after: 110 },
+    { name: "guest", was: false, now: true, before: 55, after: 145 },
+  ];
+  const leg = 16;
+  const trip = (name: string, start: number, passes: boolean, wrong: boolean) => (
+    <group key={start}>
+      <Packet from={client} to={guard} progress={ease(frame, start, start + leg)} label={name} />
+      <Packet
+        from={guard}
+        to={passes ? api : client}
+        progress={ease(frame, start + leg, start + 2 * leg)}
+        label={name}
+        tone={wrong ? "danger" : "neutral"}
+      />
+    </group>
+  );
+  const flipped = 145 + leg;
+  return (
+    <World
+      overlay={
+        <Outcomes
+          side={side}
+          appear={ease(frame, 4, 16)}
+          rows={callers.map((caller) => ({
+            name: caller.name,
+            before: caller.was ? "passes" : "blocked",
+            after: caller.now ? "passes" : "blocked",
+            filled: ease(frame, caller.before + leg - 4, caller.before + leg + 6) + ease(frame, caller.after + leg - 4, caller.after + leg + 6),
+          }))}
+        />
+      }
+    >
+      <CameraRig shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), azimuth: -8, padding: 1.25, shift: [0, -0.16] }]} />
+      <Graph3D graph={graph} nodes={{ guard: { active: ease(frame, flipped - 2, flipped + 8), tone: "danger" } }} />
+      {callers.map((caller) => trip(caller.name, caller.before, caller.was, false))}
+      {callers.map((caller) => trip(caller.name, caller.after, caller.now, caller.now !== caller.was))}
     </World>
   );
 };
