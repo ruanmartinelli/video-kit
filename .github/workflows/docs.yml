@@ -28,6 +28,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
+      - name: The agents' reference matches the registry
+        run: pnpm kit:api && git diff --exit-code skills/video-kit/references
       - id: pages
         uses: actions/configure-pages@v5
       - run: pnpm docs:build

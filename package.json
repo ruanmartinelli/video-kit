@@ -11,6 +11,7 @@
     "narrate": "uv run --with edge-tts scripts/narrate.py",
     "docs:dev": "vite --config docs/vite.config.ts",
     "docs:build": "vite build --config docs/vite.config.ts",
+    "kit:api": "node scripts/kit-api.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

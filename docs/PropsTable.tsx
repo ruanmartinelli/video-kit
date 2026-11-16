@@ -39,7 +39,8 @@ const typeOf = (schema: JsonSchema): string => {
   return schema.type ?? "unknown";
 };
 
-const rowsOf = (schema: z.ZodType) => {
+/** A schema as prop rows. The docs page and the agents' reference are both built from this. */
+export const rowsOf = (schema: z.ZodType) => {
   const json = z.toJSONSchema(schema, { io: "input" }) as JsonSchema;
   const required = new Set(json.required ?? []);
   return Object.entries(json.properties ?? {}).map(([name, prop]) => ({

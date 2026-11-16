@@ -21,33 +21,27 @@ TICKS_PER_MS = 10_000
 # Room after the last word so the voice is not cut mid-breath.
 BEAT_TAIL_MS = 250
 # The endpoint is unofficial and throttles bursts: space requests out, and
-# back off when one comes back empty.
-ATTEMPTS = 3
-BACKOFF_SECONDS = 5
+# wait when one comes back empty. A short probe sentence can get through while
+# a real beat is still throttled, so there is no cheap way to tell the two apart.
+WAITS = [5, 15, 45, 90, 120]
 PAUSE_SECONDS = 1.5
-# A sentence the endpoint accepts, to tell throttling from a rejected beat.
-PROBE = "This is a test."
 
 
 async def synthesize(text: str, voice: str, audio_path: pathlib.Path) -> list[dict]:
-    for attempt in range(1, ATTEMPTS + 1):
+    """The service throttles after a burst of requests and answers with no audio. Waiting is the fix, so wait here."""
+    for attempt, wait in enumerate([*WAITS, None], start=1):
         try:
             return await synthesize_once(text, voice, audio_path)
         except edge_tts.exceptions.NoAudioReceived:
-            if attempt == ATTEMPTS:
-                raise SystemExit(f"edge-tts returned no audio for: {text}\n{await diagnose(voice)}")
-            await asyncio.sleep(BACKOFF_SECONDS * attempt)
+            if wait is None:
+                raise SystemExit(
+                    f"edge-tts returned no audio for: {text}\n"
+                    f"It was asked {attempt} times over {sum(WAITS) // 60} minutes. The service throttles for longer than that when it is busy: "
+                    "run this again in a few minutes; finished beats are kept. Reword the beat only if it alone keeps failing while the beats after it go through."
+                )
+            print(f"  no audio, waiting {wait}s ({attempt}/{len(WAITS)})", flush=True)
+            await asyncio.sleep(wait)
     raise AssertionError("unreachable")
-
-
-async def diagnose(voice: str) -> str:
-    """Why a beat got no audio: ask for a sentence that is known to work."""
-    try:
-        async for _ in edge_tts.Communicate(PROBE, voice).stream():
-            pass
-    except edge_tts.exceptions.NoAudioReceived:
-        return "It is throttling: a plain test sentence got no audio either. Run it again in a few minutes; finished beats are kept."
-    return "It rejects this sentence: a plain test sentence went through. Shorten the beat or split it in two."
 
 
 async def synthesize_once(text: str, voice: str, audio_path: pathlib.Path) -> list[dict]:

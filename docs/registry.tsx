@@ -117,7 +117,7 @@ export const entries: Entry[] = [
     group: "Stage",
     name: "CameraRig",
     summary:
-      "The camera is the narrator. Give each shot the points to keep in frame and an angle; the rig works out where to stand and eases between shots.",
+      "The camera is the narrator. Give each shot the points to keep in frame and an angle; the rig works out where to stand and eases between shots. When a docked panel is on screen, name its side in `panel` and the rig fits the targets into the rest of the frame. Give it the `graph` and it refuses a shot where two node labels overlap.",
     demo: {
       component: CameraDemo,
       durationInFrames: 240,
@@ -131,11 +131,21 @@ export const entries: Entry[] = [
       { title: "CameraRig", schema: cameraRigSchema },
       { title: "Shot", schema: shotSchema },
     ],
+    otherProps: [
+      {
+        name: "graph",
+        type: "Graph | Graph[]",
+        description:
+          "The graph on stage. With it the rig checks every shot once the camera has settled: two node labels overlapping throws, and the error says what to change.",
+      },
+    ],
     code: `<CameraRig
+  graph={graph}
   shots={[
     { at: 0, targets: everything },
     { at: t.at("inside"), targets: [graph.position("lb")], view: "close", azimuth: 12 },
-    { at: t.at("failure"), targets: everything, azimuth: -18 },
+    // A CodePanel is on the right from here: the rig keeps the balancer clear of it.
+    { at: t.at("code"), targets: [graph.position("lb")], view: "close", panel: "right" },
   ]}
 />`,
   },
@@ -214,7 +224,7 @@ export const loadBalancerBoardMeta = storyboardMeta("LoadBalancerBoard", loadBal
     group: "Actors",
     name: "Node shapes",
     summary:
-      "What a Node looks like. Pick the shape that names the thing, so the viewer reads it before the label. All of them fit the same 2 x 1.2 x 2 box, so pipes, packets, the camera and `open` work the same on each.",
+      "What a Node looks like. Pick the shape that names the thing, so the viewer reads it before the label. All of them fit the same 2 x 1.2 x 2 box, so pipes, packets, the camera and `open` work the same on each. For systems: `database`, `server`, `queue`, `client` (a screen), `phone`, `user`, `cloud` (the internet), `external` (a system someone else runs), `storage` (files), `log` (an append-only record), `clock` (a schedule), `notification` (an email, an alert). For code: `router`, `controller`, `worker` (a job), `trigger` (code that runs because something else happened), `agent` (an automation or assistant), `model` (the LLM it calls), `file` (any module), `shield` (a check every request passes), `key` (a credential). `service` is the plain box.",
     demo: {
       component: ShapeGallery,
       durationInFrames: shapeGalleryMeta.durationInFrames,
@@ -356,7 +366,10 @@ const hit = (start) => start + 14;
     demo: {
       component: MeterDemo,
       durationInFrames: 150,
-      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }, { key: "breach", kind: "select", options: ["below", "above"], initial: "below" }],
+      controls: [
+        { key: "side", kind: "select", options: ["right", "left"], initial: "right" },
+        { key: "breach", kind: "select", options: ["below", "above"], initial: "below" },
+      ],
     },
     schemas: [{ title: "Meter", schema: meterSchema }],
     code: `<Meter label="available" value={12 - 9 * ease(frame, t.at("sold"), t.at("sold") + 40)} max={20} limit={5} limitLabel="minimum" unit="units" />
@@ -427,7 +440,11 @@ const hit = (start) => start + 14;
     demo: {
       component: ProportionDemo,
       durationInFrames: 150,
-      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }, { key: "part", kind: "range", min: 0, max: 100, step: 1, initial: 33 }, { key: "tone", kind: "select", options: ["accent", "danger", "added"], initial: "accent" }],
+      controls: [
+        { key: "side", kind: "select", options: ["right", "left"], initial: "right" },
+        { key: "part", kind: "range", min: 0, max: 100, step: 1, initial: 33 },
+        { key: "tone", kind: "select", options: ["accent", "danger", "added"], initial: "accent" },
+      ],
     },
     schemas: [{ title: "Proportion", schema: proportionSchema }],
     code: `<Proportion part={33} total={100} label="orders have a tracking number" progress={ease(frame, t.at("share"), t.at("share") + 40)} />`,
@@ -467,7 +484,10 @@ const hit = (start) => start + 14;
     demo: {
       component: ChatDemo,
       durationInFrames: 210,
-      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }, { key: "question", kind: "text", initial: "Why did order #1040 ship late?" }],
+      controls: [
+        { key: "side", kind: "select", options: ["right", "left"], initial: "right" },
+        { key: "question", kind: "text", initial: "Why did order #1040 ship late?" },
+      ],
     },
     schemas: [
       { title: "Chat", schema: chatSchema },
@@ -624,7 +644,13 @@ const current = starts.findLastIndex((start) => start <= frame);
       ],
     },
     schemas: [{ title: "Gate", schema: gateSchema }],
-    otherProps: [{ name: "gatePoint(from, to, at?)", type: "Vec3", description: "The ring's center. Send a Packet to it with `clear={[NODE_CLEAR, 0]}`, and on from it with `clear={[0, NODE_CLEAR]}`." }],
+    otherProps: [
+      {
+        name: "gatePoint(from, to, at?)",
+        type: "Vec3",
+        description: "The ring's center. Send a Packet to it with `clear={[NODE_CLEAR, 0]}`, and on from it with `clear={[0, NODE_CLEAR]}`.",
+      },
+    ],
     code: `const gate = gatePoint(api, stock);
 const reach = t.at("check", "stock"); // the frame the packet is at the ring
 
@@ -726,7 +752,11 @@ const hit = start + 51;
     otherProps: [
       { name: "graph", type: "Graph", description: "What layoutGraph() returned." },
       { name: "nodes", type: "Record<id, NodeState>", description: "Per-node active, tone, appear, open, children." },
-      { name: "edges", type: "Record<\"from->to\", number | { progress, tone, label }>", description: "Per-edge draw progress, 0 to 1, or the pipe's progress, tone and label." },
+      {
+        name: "edges",
+        type: 'Record<"from->to", number | { progress, tone, label }>',
+        description: "Per-edge draw progress, 0 to 1, or the pipe's progress, tone and label.",
+      },
     ],
     code: `const graph = layoutGraph({
   nodes: [{ id: "lb", label: "Load balancer" }, { id: "a", label: "Server A" }],
@@ -750,7 +780,11 @@ const hit = start + 51;
     schemas: [{ title: "layoutLanes(graph, options)", schema: lanesSchema }],
     otherProps: [
       { name: "graph", type: "Graph", description: "What layoutGraph() or layoutHub() returned." },
-      { name: "returns", type: "Record<lane, Graph & { labelAt }>", description: "One Graph per lane. `labelAt` is where a Label naming the lane goes; add it to the shot's targets." },
+      {
+        name: "returns",
+        type: "Record<lane, Graph & { labelAt }>",
+        description: "One Graph per lane. `labelAt` is where a Label naming the lane goes; add it to the shot's targets.",
+      },
     ],
     code: `const { before, after } = layoutLanes(graph);
 
