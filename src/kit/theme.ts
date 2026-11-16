@@ -19,7 +19,7 @@ const dark = {
   textDim: "#7d7d7d",
   panel: "rgba(10, 10, 10, 0.92)",
   panelBorder: "#2e2e2e",
-  /** What a PR did to something. */
+  /** What the change being shown did to something. */
   added: "#3fb950",
   changed: "#d29922",
   removed: "#ff4d4d",

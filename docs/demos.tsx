@@ -266,7 +266,7 @@ export const OutcomesDemo = ({ side }: { side: "left" | "right" }) => {
     columnGap: 5,
   });
   const [client, guard, api] = graph.nodes.map((node) => node.position) as [Vec3, Vec3, Vec3];
-  // Each caller is sent twice: once on the base branch, once with the PR.
+  // Each caller is sent twice: once before the change, once after it.
   const callers = [
     { name: "admin", was: true, now: true, before: 20, after: 110 },
     { name: "guest", was: false, now: true, before: 55, after: 145 },
@@ -363,7 +363,7 @@ export const ManifestDemo = ({ current }: { current: string }) => {
   const frame = useCurrentFrame();
   const items = [
     { kind: "Auth", name: "requireAdmin", change: "changed" as const, note: "existing policy changed" },
-    { kind: "Shared code", name: "formatMoney()", change: "changed" as const, note: "8 callers, 5 outside this PR" },
+    { kind: "Shared code", name: "formatMoney()", change: "changed" as const, note: "8 callers, 5 not updated" },
     { kind: "New endpoint", name: "GET /invoices/export", change: "added" as const },
     { kind: "New cron", name: "ExpireKeysJob", change: "added" as const, note: "every 5 min" },
   ];

@@ -6,8 +6,8 @@ const FPS = 30;
 
 export const timeline = createTimeline(narration, { fps: FPS });
 
-export const prGraphqlMeta = {
-  id: "PrGraphql",
+export const graphqlFieldMeta = {
+  id: "GraphqlField",
   fps: FPS,
   width: 1920,
   height: 1080,
@@ -60,7 +60,7 @@ const USERS = [0, 1, 2].map((index) => ({ label: "user " + (index + 1), call: cu
 const BURST = Array.from({ length: 26 }, (_, index) => cue.hundred + 3 * index);
 const burstEnd = BURST[BURST.length - 1]! + LEG;
 
-export const PrGraphql = () => {
+export const GraphqlField = () => {
   const frame = useCurrentFrame();
 
   const between = (from: number, to: number) => ease(frame, from - 6, from + 6) * (1 - ease(frame, to - 10, to));

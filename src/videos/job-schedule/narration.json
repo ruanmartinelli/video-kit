@@ -5,7 +5,7 @@
       "id": "intro",
       "text": "This pull request adds a background job, and changes a schedule.",
       "hash": "82f6c28c9fa8",
-      "audio": "narration/pr-cron/intro.mp3",
+      "audio": "narration/job-schedule/intro.mp3",
       "durationMs": 3825,
       "words": [
         {
@@ -69,7 +69,7 @@
       "id": "job",
       "text": "The new job is expire keys. It deletes API keys that are past their date.",
       "hash": "c2d4887f2f18",
-      "audio": "narration/pr-cron/job.mp3",
+      "audio": "narration/job-schedule/job.mp3",
       "durationMs": 4950,
       "words": [
         {
@@ -153,7 +153,7 @@
       "id": "trigger",
       "text": "The service puts it on the queue whenever a key is revoked.",
       "hash": "b08333ca2f56",
-      "audio": "narration/pr-cron/trigger.mp3",
+      "audio": "narration/job-schedule/trigger.mp3",
       "durationMs": 3425,
       "words": [
         {
@@ -222,7 +222,7 @@
       "id": "clock",
       "text": "Separately, the scheduler starts the usage sync on a timer.",
       "hash": "68742d84818d",
-      "audio": "narration/pr-cron/clock.mp3",
+      "audio": "narration/job-schedule/clock.mp3",
       "durationMs": 3750,
       "words": [
         {
@@ -281,7 +281,7 @@
       "id": "schedule",
       "text": "That timer used to fire every hour. Now it fires every five minutes.",
       "hash": "c8e9d9171de5",
-      "audio": "narration/pr-cron/schedule.mp3",
+      "audio": "narration/job-schedule/schedule.mp3",
       "durationMs": 4662,
       "words": [
         {
@@ -355,7 +355,7 @@
       "id": "risk",
       "text": "One thing to check. Each run reads the whole usage table, and it now runs twelve times as often.",
       "hash": "949803456113",
-      "audio": "narration/pr-cron/risk.mp3",
+      "audio": "narration/job-schedule/risk.mp3",
       "durationMs": 5888,
       "words": [
         {

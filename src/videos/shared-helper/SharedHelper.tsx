@@ -24,8 +24,8 @@ const FPS = 30;
 
 export const timeline = createTimeline(narration, { fps: FPS });
 
-export const prSharedMeta = {
-  id: "PrShared",
+export const sharedHelperMeta = {
+  id: "SharedHelper",
   fps: FPS,
   width: 1920,
   height: 1080,
@@ -90,7 +90,7 @@ for (const payout of payouts) {
 await bank.upload(toCsv(rows));
 `;
 
-export const PrShared = () => {
+export const SharedHelper = () => {
   const frame = useCurrentFrame();
 
   const between = (from: number, to: number) => ease(frame, from - 6, from + 6) * (1 - ease(frame, to - 10, to));

@@ -246,7 +246,7 @@ const graph = layoutGraph({
     group: "Overlay",
     name: "Tables",
     summary:
-      "Database tables as flat panels over the scene: a name, then one row per column. Flat for the same reason as code: column names and types have to be read. Columns can slide in, carry what a PR did to them, and light up when a query touches them. In the 3D world the query is a packet reaching the database; pulse the row's `lit` on the frame it lands.",
+      "Database tables as flat panels over the scene: a name, then one row per column. Flat for the same reason as code: column names and types have to be read. Columns can slide in, carry what a change did to them, and light up when a query touches them. In the 3D world the query is a packet reaching the database; pulse the row's `lit` on the frame it lands.",
     demo: {
       component: TablesDemo,
       durationInFrames: 200,
@@ -285,7 +285,7 @@ const graph = layoutGraph({
     group: "Overlay",
     name: "Outcomes",
     summary:
-      "For a PR that changes existing behaviour, like an auth check or a shared helper. The same cases are answered before and after, and a row whose answer changed turns red. In the 3D world each case is a labelled Packet sent through the changed node twice; fill the row on the frame the packet reaches it.",
+      "For a change to existing behaviour, like an auth check or a shared helper. The same cases are answered before and after, and a row whose answer changed turns red. In the 3D world each case is a labelled Packet sent through the changed node twice; fill the row on the frame the packet reaches it.",
     demo: {
       component: OutcomesDemo,
       durationInFrames: 220,
@@ -570,7 +570,7 @@ const current = starts.findLastIndex((start) => start <= frame);
     group: "Overlay",
     name: "Manifest",
     summary:
-      "The opening card of a PR review that covers more than one thing: every item, in the order the video covers them, and a line for what it leaves out. Bring it back between sections with `current` set, so the viewer knows where they are.",
+      "The opening card of a video that covers more than one thing, like a review or a release: every item, in the order the video covers them, and a line for what it leaves out. Bring it back between sections with `current` set, so the viewer knows where they are.",
     demo: {
       component: ManifestDemo,
       durationInFrames: 120,
@@ -594,7 +594,7 @@ const current = starts.findLastIndex((start) => start <= frame);
     group: "Actors",
     name: "Change marks",
     summary:
-      "For reviewing a PR. `change` on a Node, a Table or a column says what the PR did to it: green is added, amber is changed, red is removed. Leave it off everything the PR did not touch, so color means this PR. Chip names the file or migration on screen so the viewer can go find it.",
+      "For showing what a change did: a pull request, a migration, a new version. `change` on a Node, a Table or a column says what happened to it: green is added, amber is changed, red is removed. Leave it off everything the change did not touch, so color always means the change. Chip names the file or migration on screen so the viewer can go find it.",
     demo: { component: ChangeDemo, durationInFrames: 120 },
     schemas: [{ title: "Chip", schema: chipSchema }],
     code: `const graph = layoutGraph({

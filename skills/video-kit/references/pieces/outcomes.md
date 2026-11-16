@@ -1,10 +1,10 @@
 # Outcomes
 
-For a PR that changes existing behaviour, like an auth check or a shared helper. The same cases are answered before and after, and a row whose answer changed turns red. In the 3D world each case is a labelled Packet sent through the changed node twice; fill the row on the frame the packet reaches it.
+For a change to existing behaviour, like an auth check or a shared helper. The same cases are answered before and after, and a row whose answer changed turns red. In the 3D world each case is a labelled Packet sent through the changed node twice; fill the row on the frame the packet reaches it.
 
 ## Outcomes
 
-- `rows` ({ name: string; before: string; after: string; filled: number 0–2 })[], required. The same cases, tried on both sides of the PR. Keep it to five or fewer.
+- `rows` ({ name: string; before: string; after: string; filled: number 0–2 })[], required. The same cases, tried before and after the change. Keep it to five or fewer.
 - `heading` string = "who asks". What the names are: `who asks`, `input`, `caller`.
 - `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
@@ -12,8 +12,8 @@ For a PR that changes existing behaviour, like an auth check or a shared helper.
 ## Row
 
 - `name` string, required. Who or what is tried: a role, an input, a caller.
-- `before` string, required. The answer on the base branch. One or two words: `blocked`, `$1,000.00`.
-- `after` string, required. The answer with this PR.
+- `before` string, required. The answer before the change. One or two words: `blocked`, `$1,000.00`.
+- `after` string, required. The answer after it.
 - `filled` number 0–2 = 2. How much of the row is in: 0 = name only, 1 = `before` is in, 2 = `after` is in. Add two ease() calls. A row whose answers differ turns red as `after` arrives.
 
 ## Example

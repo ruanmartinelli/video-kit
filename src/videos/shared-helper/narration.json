@@ -5,7 +5,7 @@
       "id": "intro",
       "text": "This pull request drops the cents from prices in the cart.",
       "hash": "2e786b531106",
-      "audio": "narration/pr-shared/intro.mp3",
+      "audio": "narration/shared-helper/intro.mp3",
       "durationMs": 3475,
       "words": [
         {
@@ -69,7 +69,7 @@
       "id": "helper",
       "text": "It does that by changing one shared helper, format money.",
       "hash": "2b2bb9657950",
-      "audio": "narration/pr-shared/helper.mp3",
+      "audio": "narration/shared-helper/helper.mp3",
       "durationMs": 3400,
       "words": [
         {
@@ -128,7 +128,7 @@
       "id": "change",
       "text": "The same amount now comes back as a different string.",
       "hash": "2570ac5c7eb0",
-      "audio": "narration/pr-shared/change.mp3",
+      "audio": "narration/shared-helper/change.mp3",
       "durationMs": 2862,
       "words": [
         {
@@ -187,7 +187,7 @@
       "id": "callers",
       "text": "Eight files call this helper.",
       "hash": "45009705318b",
-      "audio": "narration/pr-shared/callers.mp3",
+      "audio": "narration/shared-helper/callers.mp3",
       "durationMs": 1475,
       "words": [
         {
@@ -221,7 +221,7 @@
       "id": "inside",
       "text": "Three of them are in this pull request, and were updated for it.",
       "hash": "272978aa60c7",
-      "audio": "narration/pr-shared/inside.mp3",
+      "audio": "narration/shared-helper/inside.mp3",
       "durationMs": 3638,
       "words": [
         {
@@ -295,7 +295,7 @@
       "id": "outside",
       "text": "The other five are not, and they get the new string too.",
       "hash": "3fa85d6557a9",
-      "audio": "narration/pr-shared/outside.mp3",
+      "audio": "narration/shared-helper/outside.mp3",
       "durationMs": 3062,
       "words": [
         {
@@ -364,7 +364,7 @@
       "id": "risk",
       "text": "One thing to check. Payout export writes this string into the file it sends to the bank.",
       "hash": "b1c83d2e20e8",
-      "audio": "narration/pr-shared/risk.mp3",
+      "audio": "narration/shared-helper/risk.mp3",
       "durationMs": 5312,
       "words": [
         {

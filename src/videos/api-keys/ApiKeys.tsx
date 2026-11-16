@@ -6,8 +6,8 @@ const FPS = 30;
 
 export const timeline = createTimeline(narration, { fps: FPS });
 
-export const prApiKeysMeta = {
-  id: "PrApiKeys",
+export const apiKeysMeta = {
+  id: "ApiKeys",
   fps: FPS,
   width: 1920,
   height: 1080,
@@ -77,7 +77,7 @@ async function createKey(userId) {
 }
 `;
 
-export const PrApiKeys = () => {
+export const ApiKeys = () => {
   const frame = useCurrentFrame();
 
   // A query is a packet from the service to the database. The row it touches lights when it lands.

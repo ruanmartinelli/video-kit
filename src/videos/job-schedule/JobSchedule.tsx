@@ -6,8 +6,8 @@ const FPS = 30;
 
 export const timeline = createTimeline(narration, { fps: FPS });
 
-export const prCronMeta = {
-  id: "PrCron",
+export const jobScheduleMeta = {
+  id: "JobSchedule",
   fps: FPS,
   width: 1920,
   height: 1080,
@@ -62,7 +62,7 @@ const LEG = 13;
 // Once the schedule is on screen, the scheduler keeps starting runs at the new pace.
 const RUNS = Array.from({ length: 30 }, (_, index) => cue.now + 8 + 10 * index).filter((start) => start < timeline.durationInFrames - 2 * LEG);
 
-export const PrCron = () => {
+export const JobSchedule = () => {
   const frame = useCurrentFrame();
 
   const hop = (from: string, to: string, start: number, extra: { label?: string; tone?: "neutral" | "accent" | "danger" } = {}) => (

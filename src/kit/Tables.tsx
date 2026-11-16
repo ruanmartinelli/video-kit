@@ -7,7 +7,7 @@ const changeSchema = z.enum(["added", "changed", "removed"]);
 export const columnSchema = z.object({
   name: z.string(),
   type: z.string().describe("Shown dim on the right: the SQL type, plus what matters about it (`int not null`). Keep it under ~18 characters."),
-  change: changeSchema.optional().describe("What the PR did to this column."),
+  change: changeSchema.optional().describe("What the change being shown did to this column."),
   appear: unitSchema.default(1).describe("0 = not there, 1 = fully in. The rows below slide down as it grows."),
   lit: unitSchema.default(0).describe("0 = idle, 1 = a query is touching it right now. Pulse it on the frame the query's packet reaches the database."),
 });
@@ -15,7 +15,7 @@ export const columnSchema = z.object({
 export const tableSchema = z.object({
   name: z.string(),
   columns: z.array(columnSchema).describe("Only the columns the story needs, top to bottom."),
-  change: changeSchema.optional().describe("What the PR did to the whole table."),
+  change: changeSchema.optional().describe("What the change being shown did to the whole table."),
   appear: z.number().min(0).default(1).describe("0 = not there, 1 = fully in. Drive with pop(). Its place is kept while it is out."),
 });
 

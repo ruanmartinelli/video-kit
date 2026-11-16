@@ -15,7 +15,7 @@ A few values as bars drawn to scale from a shared zero: before and after, cold a
 
 - `label` string, required. What the bar is, under it: `before`, `after`, `p99`.
 - `value` number, required. Its size. Every bar is drawn to scale against the largest.
-- `tone` "neutral" | "accent" | "danger" | "added" | "changed" | "removed" = "neutral". neutral for the baseline; added/changed/removed for what a PR did; accent or danger to point at one.
+- `tone` "neutral" | "accent" | "danger" | "added" | "changed" | "removed" = "neutral". neutral for the baseline; added/changed/removed for what a change did; accent or danger to point at one.
 
 ## Example
 

@@ -6,8 +6,8 @@ const FPS = 30;
 
 export const timeline = createTimeline(narration, { fps: FPS });
 
-export const prAuthMeta = {
-  id: "PrAuth",
+export const authCheckMeta = {
+  id: "AuthCheck",
   fps: FPS,
   width: 1920,
   height: 1080,
@@ -110,7 +110,7 @@ function requireAdmin(req) {
 }
 `;
 
-export const PrAuth = () => {
+export const AuthCheck = () => {
   const frame = useCurrentFrame();
 
   // One caller's trip: to the check, then on to the controller or back where it came from.

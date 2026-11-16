@@ -5,7 +5,7 @@
       "id": "intro",
       "text": "This pull request adds to the GraphQL schema.",
       "hash": "af6166b6acec",
-      "audio": "narration/pr-graphql/intro.mp3",
+      "audio": "narration/graphql-field/intro.mp3",
       "durationMs": 3225,
       "words": [
         {
@@ -54,7 +54,7 @@
       "id": "mutation",
       "text": "There is one new mutation, create API key.",
       "hash": "c31ed55b1775",
-      "audio": "narration/pr-graphql/mutation.mp3",
+      "audio": "narration/graphql-field/mutation.mp3",
       "durationMs": 3250,
       "words": [
         {
@@ -103,7 +103,7 @@
       "id": "field",
       "text": "And one new field on user, API keys.",
       "hash": "11eb5702465d",
-      "audio": "narration/pr-graphql/field.mp3",
+      "audio": "narration/graphql-field/field.mp3",
       "durationMs": 3062,
       "words": [
         {
@@ -152,7 +152,7 @@
       "id": "query",
       "text": "Follow one query. It asks for three users, and one database query returns them.",
       "hash": "01b7eacdf7c9",
-      "audio": "narration/pr-graphql/query.mp3",
+      "audio": "narration/graphql-field/query.mp3",
       "durationMs": 5162,
       "words": [
         {
@@ -231,7 +231,7 @@
       "id": "fanout",
       "text": "Then the new resolver runs once for each user. Three users, three more queries.",
       "hash": "3b54c338fcfe",
-      "audio": "narration/pr-graphql/fanout.mp3",
+      "audio": "narration/graphql-field/fanout.mp3",
       "durationMs": 5212,
       "words": [
         {
@@ -310,7 +310,7 @@
       "id": "risk",
       "text": "One thing to check. A page of a hundred users means a hundred queries, so this field needs a batch loader.",
       "hash": "f3be8c2ace9a",
-      "audio": "narration/pr-graphql/risk.mp3",
+      "audio": "narration/graphql-field/risk.mp3",
       "durationMs": 6075,
       "words": [
         {

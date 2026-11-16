@@ -12,7 +12,7 @@ A service, process or machine. It can pop into the scene, light up, carry a badg
 - `id` string. Name used by Focus to keep this node lit.
 - `position` Vec3, required. Center of the box. y = NODE_HEIGHT / 2 sits it on the floor.
 - `label` string, required
-- `change` "added" | "changed" | "removed". What a PR did to this node. Colors its outline; leave it out for nodes the PR did not touch.
+- `change` "added" | "changed" | "removed". What the change being shown did to this node: a pull request, a migration, a new version. Colors its outline; leave it out for nodes the change did not touch.
 - `shape` "service" | "database" | "server" | "queue" | "client" | "user" | "cloud" | "storage" | "file" | "controller" | "router" | "worker" | "clock" | "shield" | "trigger" | "agent" | "model" | "external" | "phone" | "notification" | "key" | "log" = "service". What it looks like. Pick the one that names what the node is; service is a plain box.
 
 ## Also

@@ -5,7 +5,7 @@
       "id": "intro",
       "text": "This pull request adds API keys.",
       "hash": "d4312cb81131",
-      "audio": "narration/pr-api-keys/intro.mp3",
+      "audio": "narration/api-keys/intro.mp3",
       "durationMs": 2812,
       "words": [
         {
@@ -44,7 +44,7 @@
       "id": "touched",
       "text": "Three parts of the request path are new or changed.",
       "hash": "98b143935e4e",
-      "audio": "narration/pr-api-keys/touched.mp3",
+      "audio": "narration/api-keys/touched.mp3",
       "durationMs": 3325,
       "words": [
         {
@@ -103,7 +103,7 @@
       "id": "schema",
       "text": "First, the schema. There are two migrations.",
       "hash": "513db1435213",
-      "audio": "narration/pr-api-keys/schema.mp3",
+      "audio": "narration/api-keys/schema.mp3",
       "durationMs": 3000,
       "words": [
         {
@@ -147,7 +147,7 @@
       "id": "create",
       "text": "The first creates a new table, API keys. It stores a hash of the key, and links back to users.",
       "hash": "6f6dbe3b0825",
-      "audio": "narration/pr-api-keys/create.mp3",
+      "audio": "narration/api-keys/create.mp3",
       "durationMs": 6762,
       "words": [
         {
@@ -256,7 +256,7 @@
       "id": "alter",
       "text": "The second adds a limit column to users. It is not null, with a default of five.",
       "hash": "d6975f07ec97",
-      "audio": "narration/pr-api-keys/alter.mp3",
+      "audio": "narration/api-keys/alter.mp3",
       "durationMs": 5400,
       "words": [
         {
@@ -350,7 +350,7 @@
       "id": "request",
       "text": "Now follow one request. A client posts to the new route, and the controller hands it to the service.",
       "hash": "947e5a8177cb",
-      "audio": "narration/pr-api-keys/request.mp3",
+      "audio": "narration/api-keys/request.mp3",
       "durationMs": 6050,
       "words": [
         {
@@ -454,7 +454,7 @@
       "id": "read",
       "text": "The service first reads the limit for that user.",
       "hash": "11e3f42b1f85",
-      "audio": "narration/pr-api-keys/read.mp3",
+      "audio": "narration/api-keys/read.mp3",
       "durationMs": 2875,
       "words": [
         {
@@ -508,7 +508,7 @@
       "id": "write",
       "text": "Then it inserts the new key, storing only the hash.",
       "hash": "7fc3d4f62b05",
-      "audio": "narration/pr-api-keys/write.mp3",
+      "audio": "narration/api-keys/write.mp3",
       "durationMs": 3562,
       "words": [
         {
@@ -567,7 +567,7 @@
       "id": "risk",
       "text": "One thing to check. The read and the insert are separate steps, so two requests at once can both get past the limit.",
       "hash": "9456f9a86f46",
-      "audio": "narration/pr-api-keys/risk.mp3",
+      "audio": "narration/api-keys/risk.mp3",
       "durationMs": 7175,
       "words": [
         {

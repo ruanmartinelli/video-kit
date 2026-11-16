@@ -15,7 +15,7 @@ Each piece has its props and an example in `pieces/<id>.md`. Read the ones you a
 
 - `node` **Node**: A service, process or machine.
 - `shapes` **Node shapes**: What a Node looks like.
-- `change` **Change marks**: For reviewing a PR.
+- `change` **Change marks**: For showing what a change did: a pull request, a migration, a new version.
 - `packet` **Packet + Pipe**: The packet is the thing the viewer follows: a request, a message, a row.
 - `gate` **Gate**: A condition drawn on the connection itself: a ring the pipe runs through, with its rule above it.
 - `fan` **Fan**: One thing becomes many, or many collapse into one: a request fanned out to shards, a batch split into jobs, duplicates merged into one record.
@@ -29,7 +29,7 @@ Each piece has its props and an example in `pieces/<id>.md`. Read the ones you a
 ## Overlay
 
 - `tables` **Tables**: Database tables as flat panels over the scene: a name, then one row per column.
-- `outcomes` **Outcomes**: For a PR that changes existing behaviour, like an auth check or a shared helper.
+- `outcomes` **Outcomes**: For a change to existing behaviour, like an auth check or a shared helper.
 - `schedule` **Schedule**: When a job runs, as ticks on a strip of time.
 - `lifecycle` **Lifecycle**: The states a record moves through, in a row, with the current one lit and a marker that travels between them.
 - `meter` **Meter**: A value moving against a limit: stock crossing its minimum, a transaction filling toward its time cap, a queue backing up.
@@ -42,6 +42,6 @@ Each piece has its props and an example in `pieces/<id>.md`. Read the ones you a
 - `term` **Term**: A word and its one-line meaning, pinned in a corner while the thing it names is on screen.
 - `chapter` **Chapter**: For a video longer than a few minutes: a title card when a chapter starts, and a thin rail along the bottom that shows how far in the viewer is.
 - `screenshot` **Screenshot**: An app screen in a browser frame, for the part of a story that happens in the UI.
-- `manifest` **Manifest**: The opening card of a PR review that covers more than one thing: every item, in the order the video covers them, and a line for what it leaves out.
+- `manifest` **Manifest**: The opening card of a video that covers more than one thing, like a review or a release: every item, in the order the video covers them, and a line for what it leaves out.
 - `code-panel` **CodePanel**: Highlighted code on a flat card, because code at an angle is unreadable.
 - `caption` **Caption + Narration**: Caption shows the words of the current beat and lights each one as it is spoken.

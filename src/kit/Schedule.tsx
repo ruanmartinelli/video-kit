@@ -5,7 +5,7 @@ import { theme } from "./theme";
 export const scheduleRowSchema = z.object({
   label: z.string().describe("Which schedule this is: `before`, `after`, a job name."),
   everyMinutes: z.number().positive().describe("Minutes between runs. 60 is hourly, 1440 is daily."),
-  tone: z.enum(["neutral", "added", "changed", "removed"]).default("neutral").describe("neutral for the schedule as it was; the rest mark what the PR did."),
+  tone: z.enum(["neutral", "added", "changed", "removed"]).default("neutral").describe("neutral for the schedule as it was; the rest mark what the change did."),
   progress: unitSchema.default(1).describe("How much of the window has played, left to right. Drive with ease(); the run count climbs with it."),
 });
 

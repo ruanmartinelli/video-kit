@@ -14,7 +14,7 @@ When a job runs, as ticks on a strip of time. Put the old and the new interval o
 
 - `label` string, required. Which schedule this is: `before`, `after`, a job name.
 - `everyMinutes` number, required. Minutes between runs. 60 is hourly, 1440 is daily.
-- `tone` "neutral" | "added" | "changed" | "removed" = "neutral". neutral for the schedule as it was; the rest mark what the PR did.
+- `tone` "neutral" | "added" | "changed" | "removed" = "neutral". neutral for the schedule as it was; the rest mark what the change did.
 - `progress` number 0–1 = 1. How much of the window has played, left to right. Drive with ease(); the run count climbs with it.
 
 ## Example

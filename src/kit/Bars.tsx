@@ -8,7 +8,7 @@ export const barSchema = z.object({
   tone: z
     .enum(["neutral", "accent", "danger", "added", "changed", "removed"])
     .default("neutral")
-    .describe("neutral for the baseline; added/changed/removed for what a PR did; accent or danger to point at one."),
+    .describe("neutral for the baseline; added/changed/removed for what a change did; accent or danger to point at one."),
 });
 
 export const barsSchema = z.object({

@@ -22,8 +22,8 @@ const FPS = 30;
 
 export const timeline = createTimeline(narration, { fps: FPS });
 
-export const prEndpointMeta = {
-  id: "PrEndpoint",
+export const newEndpointMeta = {
+  id: "NewEndpoint",
   fps: FPS,
   width: 1920,
   height: 1080,
@@ -93,7 +93,7 @@ api.get("/orders", orders.index);
 router.get("/invoices/export", exportAll);
 `;
 
-export const PrEndpoint = () => {
+export const NewEndpoint = () => {
   const frame = useCurrentFrame();
 
   const hop = (from: string, to: string, start: number, extra: { label?: string; tone?: "neutral" | "accent" | "danger" } = {}) => (

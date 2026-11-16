@@ -14,7 +14,7 @@ For something many things depend on: a shared helper, a table, a core service. `
 - `at` Vec3, required. Where it starts: the center of the node that changed. Drawn on the floor under it.
 - `radius` unknown = [10,7.2]. Where the front is at progress 1, and gone. Set it a little past what it should reach; give layoutHub's radius shape to match its spokes.
 - `progress` number 0–1, required. 0 = nothing yet, 1 = the front is at `radius`. The front travels at a steady pace, so it reaches halfway at 0.5.
-- `tone` "accent" | "danger" | "added" | "changed" | "removed" = "changed". changed for a PR's blast radius; danger for a failure spreading.
+- `tone` "accent" | "danger" | "added" | "changed" | "removed" = "changed". changed for how far a change reaches; danger for a failure spreading.
 - `rings` number = 3. The front plus the echoes that trail it.
 
 ## Example

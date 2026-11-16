@@ -31,7 +31,7 @@ The kit is the repository this skill lives in. Find it once with `cd -P "<this s
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `layoutGraph(...)` gives positions for a flow; `layoutHub(...)` for one thing with many dependents. Give each node the `shape` that names what it is; `pieces/shapes.md` lists them. Packets, extra pipes and camera targets all read `graph.position(id)`.
    - One `<World>`, one `<CameraRig graph={graph}>`, actors as children; `Narration`, `Caption` and every flat panel in `overlay`.
-   - A shot with a docked panel on screen (`CodePanel`, `Outcomes`, `Tables`, `Meter`, ...) names the panel's side in `panel`, and the rig fits the targets into the rest of the frame. For a short panel over a wide path, the other way works too: leave `panel` out and `shift` the whole path down under it, as `pr-auth` does.
+   - A shot with a docked panel on screen (`CodePanel`, `Outcomes`, `Tables`, `Meter`, ...) names the panel's side in `panel`, and the rig fits the targets into the rest of the frame. For a short panel over a wide path, the other way works too: leave `panel` out and `shift` the whole path down under it, as `auth-check` does.
 
 5. **Check it.** `pnpm typecheck`, then `pnpm stills <Id> cues --sheet`. That renders three frames per beat and tiles them twelve to an image, each under its frame number. Read every sheet.
 

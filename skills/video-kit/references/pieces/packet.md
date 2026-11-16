@@ -17,7 +17,7 @@ The packet is the thing the viewer follows: a request, a message, a row. The pip
 - `from` Vec3, required. Center of the node it leaves.
 - `to` Vec3, required. Center of the node it reaches.
 - `clear` [number, number]. Distance to stay clear of `from` and `to`. Defaults to a node's edge.
-- `tone` "neutral" | "added" | "changed" | "removed" = "neutral". neutral is a plain connection; the rest mark what a PR did to it.
+- `tone` "neutral" | "added" | "changed" | "removed" = "neutral". neutral is a plain connection; the rest mark what the change being shown did to it.
 - `progress` number 0–1 = 1. How much of the pipe is drawn, growing out of `from`. 0 hides it.
 - `label` string. What travels on it, under its middle: a route, a topic, a query name. Comes in with `progress`.
 

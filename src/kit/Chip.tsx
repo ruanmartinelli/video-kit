@@ -4,7 +4,7 @@ import { theme } from "./theme";
 
 export const chipSchema = z.object({
   children: z.string().describe("A filename, a migration name, a `file:line`. One line."),
-  tone: z.enum(["neutral", "added", "changed", "removed"]).default("neutral").describe("Color of the dot. Use it for what a PR did to the thing named."),
+  tone: z.enum(["neutral", "added", "changed", "removed"]).default("neutral").describe("Color of the dot. Use it for what the change being shown did to the thing named."),
   caption: z.string().optional().describe("Small text above it that says what kind of thing it is: `migration`, `changed file`."),
   corner: z.enum(["top-left", "top-right"]).default("top-left"),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),

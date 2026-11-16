@@ -27,7 +27,9 @@ export const nodeSchema = nodeStateSchema.extend({
   change: z
     .enum(["added", "changed", "removed"])
     .optional()
-    .describe("What a PR did to this node. Colors its outline; leave it out for nodes the PR did not touch."),
+    .describe(
+      "What the change being shown did to this node: a pull request, a migration, a new version. Colors its outline; leave it out for nodes the change did not touch.",
+    ),
   shape: nodeShapeSchema.default("service").describe("What it looks like. Pick the one that names what the node is; service is a plain box."),
 });
 

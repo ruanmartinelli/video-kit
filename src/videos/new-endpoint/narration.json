@@ -5,7 +5,7 @@
       "id": "intro",
       "text": "This pull request adds one new endpoint, invoice export.",
       "hash": "d625ddc5bc82",
-      "audio": "narration/pr-endpoint/intro.mp3",
+      "audio": "narration/new-endpoint/intro.mp3",
       "durationMs": 3988,
       "words": [
         {
@@ -59,7 +59,7 @@
       "id": "existing",
       "text": "Today, every route passes the auth check before it reaches a controller.",
       "hash": "d809f827ecd0",
-      "audio": "narration/pr-endpoint/existing.mp3",
+      "audio": "narration/new-endpoint/existing.mp3",
       "durationMs": 4175,
       "words": [
         {
@@ -128,7 +128,7 @@
       "id": "added",
       "text": "The new route gets its own controller.",
       "hash": "df28f64e4896",
-      "audio": "narration/pr-endpoint/added.mp3",
+      "audio": "narration/new-endpoint/added.mp3",
       "durationMs": 2088,
       "words": [
         {
@@ -172,7 +172,7 @@
       "id": "follow",
       "text": "Follow one request. The router hands it straight to the new controller, which reads every invoice.",
       "hash": "94de0488424a",
-      "audio": "narration/pr-endpoint/follow.mp3",
+      "audio": "narration/new-endpoint/follow.mp3",
       "durationMs": 6138,
       "words": [
         {
@@ -261,7 +261,7 @@
       "id": "risk",
       "text": "One thing to check. The new route is registered outside the auth check, so anyone can call it.",
       "hash": "8e221b18eeb0",
-      "audio": "narration/pr-endpoint/risk.mp3",
+      "audio": "narration/new-endpoint/risk.mp3",
       "durationMs": 5225,
       "words": [
         {

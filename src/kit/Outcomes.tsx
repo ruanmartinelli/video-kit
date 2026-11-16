@@ -4,8 +4,8 @@ import { theme } from "./theme";
 
 export const outcomeSchema = z.object({
   name: z.string().describe("Who or what is tried: a role, an input, a caller."),
-  before: z.string().describe("The answer on the base branch. One or two words: `blocked`, `$1,000.00`."),
-  after: z.string().describe("The answer with this PR."),
+  before: z.string().describe("The answer before the change. One or two words: `blocked`, `$1,000.00`."),
+  after: z.string().describe("The answer after it."),
   filled: z
     .number()
     .min(0)
@@ -15,7 +15,7 @@ export const outcomeSchema = z.object({
 });
 
 export const outcomesSchema = z.object({
-  rows: z.array(outcomeSchema).min(1).describe("The same cases, tried on both sides of the PR. Keep it to five or fewer."),
+  rows: z.array(outcomeSchema).min(1).describe("The same cases, tried before and after the change. Keep it to five or fewer."),
   heading: z.string().default("who asks").describe("What the names are: `who asks`, `input`, `caller`."),
   side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
@@ -29,7 +29,7 @@ const ANSWER = 150;
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
 /**
- * A scoreboard for behaviour a PR changed: the same cases answered before and
+ * A scoreboard for behaviour that changed: the same cases answered before and
  * after. In the 3D world each case is a labelled Packet sent through the
  * changed node twice. Goes in World's `overlay`.
  */
