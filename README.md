@@ -16,7 +16,7 @@ The agent writes the script, narrates it, builds the scene and renders an MP4.
 Paste this to your agent:
 
 ```
-Install the video-kit skill: clone https://github.com/ruanmartinelli/video-kit into ~/.claude/skills/video-kit and run `pnpm install` inside it.
+Install the video-kit skill: clone https://github.com/ruanmartinelli/video-kit into ~/.claude/skills/video-kit
 ```
 
 Then ask for a video:
