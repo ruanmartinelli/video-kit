@@ -62,7 +62,7 @@ A review video shows what the reviewer has to look at and leaves the rest of the
 
 `src/videos/pr-endpoint/`.
 
-- A route is the `label` on a pipe that leaves the router. The new one is `tone="added"`, to a controller with `change: "added"`.
+- A route is the `label` on a pipe that leaves the router, set through `Graph3D`'s `edges`. The new one is `tone: "added"`, to a controller with `change: "added"`.
 - Whatever the existing routes pass on the way (auth, rate limiting) is a node in the graph, so a new route that skips it shows as a pipe that goes around.
 - Follow one request down the new route to what it reads or writes.
 
@@ -71,7 +71,7 @@ A review video shows what the reviewer has to look at and leaves the rest of the
 `src/videos/pr-graphql/`.
 
 - The schema is `Tables` in `overlay`: one panel per type, named `type Mutation`, with `change: "added"` on each new field.
-- A resolver is a `file` node between the GraphQL server and the database. Follow one query and let the viewer count the database packets it causes.
+- A resolver is a `file` node between the GraphQL server and the database. Follow one query and let the viewer count the database packets it causes; a `Chip` in the top-right corner keeps the total.
 
 ### Jobs and schedules
 
