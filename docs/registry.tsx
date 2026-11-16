@@ -1,6 +1,15 @@
 import type { ComponentType } from "react";
 import type { z } from "zod";
 import {
+  eventTimelineSchema,
+  lifecycleSchema,
+  lifecycleStateSchema,
+  meterSchema,
+  phasesSchema,
+  recordCardSchema,
+  recordFieldSchema,
+  timelineEventSchema,
+  timelineTickSchema,
   calloutSchema,
   fanSchema,
   gateSchema,
@@ -52,6 +61,7 @@ import {
   WorldDemo,
 } from "./demos";
 import { CalloutDemo, FanDemo, GateDemo } from "./demos-actors";
+import { EventTimelineDemo, LifecycleDemo, MeterDemo, PhasesDemo, RecordCardDemo } from "./demos-panels";
 import { ShapeGallery, shapeGalleryMeta } from "../src/gallery/ShapeGallery";
 
 export type Control =
@@ -308,6 +318,94 @@ const hit = (start) => start + 14;
     { label: "before", everyMinutes: 60, progress: ease(frame, t.at("schedule", "hour") - 20, t.at("schedule", "hour") + 20) },
     { label: "after", everyMinutes: 5, tone: "changed", progress: ease(frame, t.at("schedule", "five"), t.at("schedule", "five") + 50) },
   ]}
+/>`,
+  },
+  {
+    id: "lifecycle",
+    group: "Overlay",
+    name: "Lifecycle",
+    summary:
+      "The states a record moves through, in a row, with the current one lit and a marker that travels between them. Use it when the story is about one record changing state: an order, a job, a sync. It is a straight line; a flow that branches is a graph.",
+    demo: { component: LifecycleDemo, durationInFrames: 180, controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }] },
+    schemas: [
+      { title: "Lifecycle", schema: lifecycleSchema },
+      { title: "State", schema: lifecycleStateSchema },
+    ],
+    code: `<Lifecycle
+  title="order 1042"
+  states={[{ name: "Pending" }, { name: "Paid" }, { name: "Shipped" }, { name: "Canceled", tone: "danger" }]}
+  current={ease(frame, t.at("paid"), t.at("paid") + 18) + ease(frame, t.at("shipped"), t.at("shipped") + 18)}
+/>`,
+  },
+  {
+    id: "meter",
+    group: "Overlay",
+    name: "Meter",
+    summary:
+      "A value moving against a limit: stock crossing its minimum, a transaction filling toward its time cap, a queue backing up. Drive `value` from the frame. The bar and the number turn red on the wrong side of `limit`.",
+    demo: {
+      component: MeterDemo,
+      durationInFrames: 150,
+      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }, { key: "breach", kind: "select", options: ["below", "above"], initial: "below" }],
+    },
+    schemas: [{ title: "Meter", schema: meterSchema }],
+    code: `<Meter label="available" value={12 - 9 * ease(frame, t.at("sold"), t.at("sold") + 40)} max={20} limit={5} limitLabel="minimum" unit="units" />
+
+<Meter label="transaction open" value={9 * ease(frame, start, start + 90)} max={10} limit={8} limitLabel="time limit" breach="above" unit="s" decimals={1} />`,
+  },
+  {
+    id: "event-timeline",
+    group: "Overlay",
+    name: "EventTimeline",
+    summary:
+      "What happened to one thing over a stretch of time: irregular events on an axis, with a playhead. Each event is plain, useful or failed, and a count line keeps score as the playhead passes them. Schedule is for a fixed interval; this is for a real day.",
+    demo: { component: EventTimelineDemo, durationInFrames: 200, controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }] },
+    schemas: [
+      { title: "EventTimeline", schema: eventTimelineSchema },
+      { title: "Event", schema: timelineEventSchema },
+      { title: "Tick", schema: timelineTickSchema },
+    ],
+    code: `<EventTimeline
+  title="sync_stock, order 1042"
+  window={[8 * 60, 18 * 60]}
+  ticks={[{ at: 9 * 60, label: "09:00" }, { at: 13 * 60, label: "13:00" }, { at: 17 * 60, label: "17:00" }]}
+  events={[...hourly.map((hour) => ({ at: hour * 60 })), { at: 790, label: "stock changed", tone: "added" }]}
+  playhead={ease(frame, t.at("day"), t.at("day") + 150)}
+  legend={{ neutral: "wasted", added: "useful", danger: "failed" }}
+/>`,
+  },
+  {
+    id: "record-card",
+    group: "Overlay",
+    name: "RecordCard",
+    summary:
+      "One record as a card whose field flips from its old value to its new one. Also the payload an event carries. Flip the field on the frame the packet that writes it lands. Tables is for schema and many rows; this is for the one row the story follows.",
+    demo: { component: RecordCardDemo, durationInFrames: 150, controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }] },
+    schemas: [
+      { title: "RecordCard", schema: recordCardSchema },
+      { title: "Field", schema: recordFieldSchema },
+    ],
+    code: `<RecordCard
+  caption="record"
+  title="order 1042"
+  fields={[
+    { name: "id", value: "1042" },
+    { name: "status", value: "reserved", was: "pending", flip: ease(frame, lands, lands + 16), lit: pulse(frame, lands, 40) },
+  ]}
+/>`,
+  },
+  {
+    id: "phases",
+    group: "Overlay",
+    name: "Phases",
+    summary:
+      "A rollout as a strip of steps: the ones done are checked, the current one is lit. For a plan or a migration, where the viewer needs to know where in the sequence the video is.",
+    demo: { component: PhasesDemo, durationInFrames: 180, controls: [{ key: "steps", kind: "range", min: 2, max: 6, step: 1, initial: 4 }] },
+    schemas: [{ title: "Phases", schema: phasesSchema }],
+    code: `<Phases
+  steps={["shadow", "compare", "move one", "migrate"]}
+  current={ease(frame, t.at("compare"), t.at("compare") + 12) + ease(frame, t.at("move"), t.at("move") + 12)}
+  note="the old path keeps running"
 />`,
   },
   {
