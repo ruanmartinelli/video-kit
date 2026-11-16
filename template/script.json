@@ -1,0 +1,8 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    { "id": "ask", "text": "A request comes in from the app." },
+    { "id": "read", "text": "The service reads one row to answer it." },
+    { "id": "code", "text": "That is this one line." }
+  ]
+}

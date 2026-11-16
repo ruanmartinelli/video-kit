@@ -1,0 +1,132 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    {
+      "id": "ask",
+      "text": "A request comes in from the app.",
+      "hash": "2e63efd8b955",
+      "audio": "narration/template/ask.mp3",
+      "durationMs": 1900,
+      "words": [
+        {
+          "text": "A",
+          "startMs": 100,
+          "endMs": 150
+        },
+        {
+          "text": "request",
+          "startMs": 162,
+          "endMs": 638
+        },
+        {
+          "text": "comes",
+          "startMs": 650,
+          "endMs": 925
+        },
+        {
+          "text": "in",
+          "startMs": 938,
+          "endMs": 1012
+        },
+        {
+          "text": "from",
+          "startMs": 1025,
+          "endMs": 1188
+        },
+        {
+          "text": "the",
+          "startMs": 1200,
+          "endMs": 1300
+        },
+        {
+          "text": "app.",
+          "startMs": 1312,
+          "endMs": 1650
+        }
+      ]
+    },
+    {
+      "id": "read",
+      "text": "The service reads one row to answer it.",
+      "hash": "a4d3ef2444c8",
+      "audio": "narration/template/read.mp3",
+      "durationMs": 2412,
+      "words": [
+        {
+          "text": "The",
+          "startMs": 112,
+          "endMs": 162
+        },
+        {
+          "text": "service",
+          "startMs": 175,
+          "endMs": 612
+        },
+        {
+          "text": "reads",
+          "startMs": 625,
+          "endMs": 925
+        },
+        {
+          "text": "one",
+          "startMs": 938,
+          "endMs": 1238
+        },
+        {
+          "text": "row",
+          "startMs": 1250,
+          "endMs": 1450
+        },
+        {
+          "text": "to",
+          "startMs": 1462,
+          "endMs": 1575
+        },
+        {
+          "text": "answer",
+          "startMs": 1588,
+          "endMs": 1988
+        },
+        {
+          "text": "it",
+          "startMs": 2000,
+          "endMs": 2162
+        }
+      ]
+    },
+    {
+      "id": "code",
+      "text": "That is this one line.",
+      "hash": "30af6ca056bd",
+      "audio": "narration/template/code.mp3",
+      "durationMs": 1262,
+      "words": [
+        {
+          "text": "That",
+          "startMs": 112,
+          "endMs": 200
+        },
+        {
+          "text": "is",
+          "startMs": 212,
+          "endMs": 312
+        },
+        {
+          "text": "this",
+          "startMs": 325,
+          "endMs": 475
+        },
+        {
+          "text": "one",
+          "startMs": 488,
+          "endMs": 688
+        },
+        {
+          "text": "line",
+          "startMs": 700,
+          "endMs": 1012
+        }
+      ]
+    }
+  ]
+}

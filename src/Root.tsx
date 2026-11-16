@@ -7,23 +7,28 @@ import { ShapeGallery, shapeGalleryMeta } from "./gallery/ShapeGallery";
 import { cueFrames, Storyboard, storyboardMeta, type Video } from "./kit";
 import { Sheet, sheetMeta } from "./tools/Sheet";
 
-// Every `src/videos/<name>/video.ts` is a video. Nothing here changes when one is added.
-const found = import.meta.webpackContext("./videos", { recursive: true, regExp: /^\.\/[^/]+\/video\.ts$/ });
-const videos = found
-  .keys()
-  .sort()
-  .map((key) => (found(key) as { video: Video }).video);
-
 /** Carries each video's cue frames to `pnpm stills`, which cannot import a timeline itself. */
 const Cues = (_: { cues: Record<string, number[]> }) => null;
 
-export const Root = () => (
+/**
+ * Everything a bundle can render: the videos it was given, their storyboards,
+ * and the kit's own galleries and tools. The scripts write an entry file that
+ * calls this with one video; the kit's own entry calls it with none.
+ */
+export const makeRoot = (videos: Video[]) => () => (
   <>
     {videos.map(({ component, meta }) => (
       <Composition key={meta.id} component={component} {...meta} />
     ))}
     {videos.map(({ meta, board }) =>
-      board ? <Composition key={meta.id} component={Storyboard} {...storyboardMeta(`${meta.id}Board`, board)} defaultProps={board} /> : null,
+      board ? (
+        <Composition
+          key={meta.id}
+          component={Storyboard}
+          {...storyboardMeta(`${meta.id}Board`, { ...board, video: meta.id })}
+          defaultProps={{ ...board, video: meta.id }}
+        />
+      ) : null,
     )}
     <Composition component={ShapeGallery} {...shapeGalleryMeta} />
     <Composition component={ActorGallery} {...actorGalleryMeta} />

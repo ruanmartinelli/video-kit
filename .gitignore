@@ -1,7 +1,5 @@
 node_modules
 out
 dist
+.cache
 .DS_Store
-# Videos about private code are built here and never committed.
-src/videos/private-*/
-public/narration/private-*/

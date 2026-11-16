@@ -1,22 +1,22 @@
-"""Turn src/videos/<name>/script.json into per-beat audio plus word timestamps.
+"""Turn a video folder's script.json into per-beat audio plus word timestamps.
 
-Usage: pnpm narrate <name>
+Usage: pnpm narrate <video folder>
 
 script.json: {"voice": "en-US-AndrewNeural", "beats": [{"id": "problem", "text": "..."}]}
 
-Writes public/narration/<name>/<beat id>.mp3 and src/videos/<name>/narration.json.
+Writes <video folder>/audio/<beat id>.mp3 and <video folder>/narration.json.
 A beat whose text and voice are unchanged is not synthesized again.
 """
 
 import asyncio
 import hashlib
 import json
+import os
 import pathlib
 import sys
 
 import edge_tts
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
 TICKS_PER_MS = 10_000
 # Room after the last word so the voice is not cut mid-breath.
 BEAT_TAIL_MS = 250
@@ -65,8 +65,12 @@ async def synthesize_once(text: str, voice: str, audio_path: pathlib.Path) -> li
     return words
 
 
-async def narrate(name: str) -> None:
-    video_dir = ROOT / "src" / "videos" / name
+async def narrate(folder: str) -> None:
+    # Paths are given from where the command was typed, not from the kit.
+    video_dir = (pathlib.Path(os.environ.get("INIT_CWD", ".")) / folder).resolve()
+    if not (video_dir / "script.json").exists():
+        raise SystemExit(f"No script.json in {video_dir}")
+    name = video_dir.name
     script = json.loads((video_dir / "script.json").read_text())
     voice = script["voice"]
 
@@ -74,7 +78,7 @@ async def narrate(name: str) -> None:
     if len(ids) != len(set(ids)):
         raise SystemExit("Beat ids must be unique")
 
-    audio_dir = ROOT / "public" / "narration" / name
+    audio_dir = video_dir / "audio"
     audio_dir.mkdir(parents=True, exist_ok=True)
 
     narration_path = video_dir / "narration.json"

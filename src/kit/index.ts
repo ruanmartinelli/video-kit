@@ -30,7 +30,7 @@ export { Label, labelSchema } from "./Label";
 export { Lifecycle, lifecycleSchema, lifecycleStateSchema } from "./Lifecycle";
 export { Manifest, manifestItemSchema, manifestSchema } from "./Manifest";
 export { Meter, meterSchema } from "./Meter";
-export { ease, lerp, lerp3, pop, pulse, type Vec3 } from "./motion";
+export { between, ease, hop, lerp, lerp3, pop, pulse, type Vec3 } from "./motion";
 export { Narration } from "./Narration";
 export { Node, nodeSchema, type NodeState } from "./Node";
 export { outcomeSchema, Outcomes, outcomesSchema } from "./Outcomes";

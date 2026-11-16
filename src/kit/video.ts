@@ -8,6 +8,6 @@ export type Video = {
   meta: { id: string; fps: number; width: number; height: number; durationInFrames: number };
   /** Where the cue frames come from. */
   timeline: Timeline;
-  /** A storyboard, registered as `<id>Board`. */
-  board?: StoryboardProps;
+  /** A storyboard: the frames worth presenting, and what to say over each. `pnpm storyboard` renders it. */
+  board?: Omit<StoryboardProps, "video" | "images">;
 };

@@ -5,8 +5,11 @@ import { Chat } from "../kit/Chat";
 import { Proportion } from "../kit/Proportion";
 import { Screenshot } from "../kit/Screenshot";
 import { Term } from "../kit/Term";
-import { CameraRig, Caption, ease, Focus, Graph3D, layoutGraph, World } from "../kit";
-import { timeline } from "../videos/load-balancer/LoadBalancer";
+import { CameraRig, Caption, createTimeline, ease, Focus, Graph3D, layoutGraph, World } from "../kit";
+import narration from "../../template/narration.json";
+
+// Any narration will do for the caption: the template's is the one the kit always has.
+const timeline = createTimeline(narration, { fps: 30 });
 
 export const overlayGalleryMeta = { id: "OverlayGallery", fps: 30, width: 1920, height: 1080, durationInFrames: 800 };
 

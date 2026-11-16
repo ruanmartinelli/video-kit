@@ -8,7 +8,7 @@ export const storyboardPanelSchema = z.object({
 });
 
 export const storyboardSchema = z.object({
-  video: z.string().describe("Id of the composition the panels are taken from."),
+  video: z.string().describe("Id of the composition the panels are taken from. The kit fills this in."),
   panels: z.array(storyboardPanelSchema).min(1).max(6).describe("The moments worth talking over, in order. Three or four is a storyboard; six is the limit."),
   size: z.tuple([z.number().positive(), z.number().positive()]).default([1920, 1080]).describe("Width and height of that video."),
   images: z.array(z.string()).default([]).describe("One rendered frame per panel. `pnpm storyboard` fills this in; leave it out."),
@@ -31,9 +31,8 @@ export const storyboardMeta = (id: string, board: StoryboardProps) => {
 
 /**
  * A few frames of a video side by side on one sheet, for presenting it
- * yourself. Register it as a composition of its own, with the board as
- * `defaultProps`; `pnpm storyboard <Id>` then writes the clean sheet and the
- * one with notes.
+ * yourself. A video asks for one with `board` in its `video.ts`;
+ * `pnpm storyboard <folder>` writes the clean sheet and the one with notes.
  */
 export const Storyboard = (props: StoryboardProps) => {
   const { panels, size, images } = storyboardSchema.parse(props);

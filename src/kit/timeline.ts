@@ -84,7 +84,7 @@ export const createTimeline = (narration: Narration, { fps = 30, leadMs = 500, g
 
 /**
  * The frames worth looking at: for each beat, just after it starts, its middle
- * and just before it ends, plus the last frame. `pnpm stills <Id> cues` renders these.
+ * and just before it ends, plus the last frame. `pnpm stills <folder> cues` renders these.
  */
 export const cueFrames = (timeline: Timeline) => {
   const last = timeline.durationInFrames - 1;

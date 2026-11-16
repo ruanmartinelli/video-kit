@@ -9,7 +9,22 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "paths": {
+      "video-kit": [
+        "./src/kit/index.ts"
+      ]
+    }
   },
-  "include": ["src", "docs", "remotion.config.ts"]
+  "include": [
+    "src",
+    "template"
+  ],
+  "exclude": [
+    "template/out"
+  ]
 }

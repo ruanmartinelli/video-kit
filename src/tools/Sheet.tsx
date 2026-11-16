@@ -23,7 +23,7 @@ export const sheetMeta = {
   calculateMetadata: ({ props }: { props: SheetProps }) => ({ height: heightFor(props.images.length) }),
 };
 
-/** A contact sheet: up to twelve stills on one image, each under its frame number. `pnpm stills <Id> cues --sheet` fills it in. */
+/** A contact sheet: up to twelve stills on one image, each under its frame number. `pnpm stills <folder> cues --sheet` fills it in. */
 export const Sheet = ({ images, labels }: SheetProps) => (
   <AbsoluteFill style={{ background: theme.text, padding: GAP, display: "flex", flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", gap: GAP }}>
     {images.map((image, index) => (
