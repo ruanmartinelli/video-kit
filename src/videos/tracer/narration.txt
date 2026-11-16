@@ -1,0 +1,1 @@
+A request leaves the client, hits the load balancer, and gets routed to a server.

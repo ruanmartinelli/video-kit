@@ -1,0 +1,82 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "text": "A request leaves the client, hits the load balancer, and gets routed to a server.",
+  "durationMs": 5350,
+  "words": [
+    {
+      "text": "A",
+      "startMs": 100,
+      "endMs": 150
+    },
+    {
+      "text": "request",
+      "startMs": 162,
+      "endMs": 750
+    },
+    {
+      "text": "leaves",
+      "startMs": 762,
+      "endMs": 1000
+    },
+    {
+      "text": "the",
+      "startMs": 1012,
+      "endMs": 1100
+    },
+    {
+      "text": "client",
+      "startMs": 1112,
+      "endMs": 1562
+    },
+    {
+      "text": "hits",
+      "startMs": 1925,
+      "endMs": 2100
+    },
+    {
+      "text": "the",
+      "startMs": 2112,
+      "endMs": 2212
+    },
+    {
+      "text": "load",
+      "startMs": 2225,
+      "endMs": 2488
+    },
+    {
+      "text": "balancer",
+      "startMs": 2500,
+      "endMs": 3050
+    },
+    {
+      "text": "and",
+      "startMs": 3325,
+      "endMs": 3375
+    },
+    {
+      "text": "gets",
+      "startMs": 3388,
+      "endMs": 3625
+    },
+    {
+      "text": "routed",
+      "startMs": 3638,
+      "endMs": 4050
+    },
+    {
+      "text": "to",
+      "startMs": 4062,
+      "endMs": 4162
+    },
+    {
+      "text": "a",
+      "startMs": 4175,
+      "endMs": 4250
+    },
+    {
+      "text": "server",
+      "startMs": 4262,
+      "endMs": 4750
+    }
+  ]
+}

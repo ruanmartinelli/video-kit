@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  src: url("/fonts/inter-600.woff") format("woff");
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #070b16;
+  --panel: #0e1530;
+  --border: #1c2750;
+  --text: #f1f5ff;
+  --dim: #8b96bd;
+  --accent: #5eead4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 34px;
+}
+
+h2 {
+  margin: 56px 0 4px;
+  font-size: 22px;
+}
+
+p {
+  margin: 0 0 16px;
+  color: var(--dim);
+  font-family: system-ui, sans-serif;
+}
+
+.player {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+pre {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: auto;
+  font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--text);
+}
+
+.tag {
+  font: 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
