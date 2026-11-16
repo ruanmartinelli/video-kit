@@ -6,12 +6,12 @@
 
 :root {
   color-scheme: dark;
-  --bg: #070b16;
-  --panel: #0e1530;
-  --border: #1c2750;
-  --text: #f1f5ff;
-  --dim: #8b96bd;
-  --accent: #5eead4;
+  --bg: #000000;
+  --panel: #0a0a0a;
+  --border: #2e2e2e;
+  --text: #ededed;
+  --dim: #8f8f8f;
+  --accent: #52a8ff;
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --body: system-ui, -apple-system, sans-serif;
 }
@@ -119,7 +119,7 @@ section {
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
-  background: #0a0f1e;
+  background: #000000;
 }
 
 .overlay-note {
@@ -127,9 +127,9 @@ section {
   top: 60px;
   right: 70px;
   padding: 14px 26px;
-  border: 2px dashed #5eead4;
+  border: 2px dashed #52a8ff;
   border-radius: 14px;
-  color: #5eead4;
+  color: #52a8ff;
   font: 600 34px Inter, sans-serif;
 }
 

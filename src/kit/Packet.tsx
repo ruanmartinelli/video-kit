@@ -7,7 +7,7 @@ export const packetSchema = z.object({
   from: vec3Schema.describe("Center of the node it leaves."),
   to: vec3Schema.describe("Center of the node it reaches."),
   progress: unitSchema.describe("0 = leaving `from`, 1 = arriving at `to`. Hidden at exactly 0 and 1."),
-  tone: z.enum(["accent", "danger"]).default("accent"),
+  tone: z.enum(["neutral", "accent", "danger"]).default("neutral").describe("White unless the story needs it to stand out or fail."),
 });
 
 type PacketProps = z.input<typeof packetSchema>;

@@ -1,3 +1,4 @@
+import { Outlines } from "@react-three/drei";
 import type { ReactNode } from "react";
 import { Color } from "three";
 import { z } from "zod";
@@ -30,6 +31,8 @@ export type NodeState = z.input<typeof nodeStateSchema> & {
 type NodeProps = z.input<typeof nodeSchema> & Pick<NodeState, "children">;
 
 const GLASS_OPACITY = 0.16;
+/** In pixels of the rendered frame. */
+const OUTLINE_THICKNESS = 3;
 
 /** A service, process or machine. Can light up, enter the scene, and open to show what's inside. */
 export const Node = ({ children, ...props }: NodeProps) => {
@@ -50,13 +53,33 @@ export const Node = ({ children, ...props }: NodeProps) => {
   };
   const dimmed = (color: string) => new Color(color).lerp(new Color(theme.dimmed), dim);
 
+  // Idle shapes are grey on black: the outline is what separates them. Lit, it takes the tone.
+  const outline = (
+    <Outlines
+      thickness={OUTLINE_THICKNESS}
+      color={dimmed(theme.edge).lerp(new Color(theme[tone]), active * lit)}
+      transparent={open > 0}
+      opacity={1 - 0.88 * open}
+    />
+  );
+
   return (
     <group position={position} scale={appear}>
       <group scale={1 + 0.06 * active}>
         <Shape
-          body={<meshStandardMaterial {...glass} color={dimmed(theme.surface)} emissive={theme[tone]} emissiveIntensity={0.45 * active * lit} />}
-          trim={<meshStandardMaterial {...glass} color={dimmed(theme.pipe)} emissive={theme[tone]} emissiveIntensity={0.45 * active * lit} />}
-          inset={<meshStandardMaterial {...glass} color={theme.dimmed} emissive={theme[tone]} emissiveIntensity={0.2 * active * lit} />}
+          body={
+            <>
+              <meshStandardMaterial {...glass} color={dimmed(theme.surface)} emissive={theme[tone]} emissiveIntensity={0.14 * active * lit} />
+              {outline}
+            </>
+          }
+          trim={
+            <>
+              <meshStandardMaterial {...glass} color={dimmed(theme.pipe)} emissive={theme[tone]} emissiveIntensity={0.14 * active * lit} />
+              {outline}
+            </>
+          }
+          inset={<meshStandardMaterial {...glass} color={theme.dimmed} />}
           glow={<meshStandardMaterial {...glass} color={dimmed(theme[tone])} emissive={theme[tone]} emissiveIntensity={0.9 * lit} />}
         />
       </group>

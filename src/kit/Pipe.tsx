@@ -29,7 +29,7 @@ export const Pipe = (props: PipeProps) => {
     <Line
       points={[start, lerp3(start, end, progress)]}
       color={theme.pipe}
-      lineWidth={3}
+      lineWidth={2.5}
       transparent
       opacity={1 - 0.75 * dim}
     />
