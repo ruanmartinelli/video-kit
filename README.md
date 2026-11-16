@@ -37,3 +37,7 @@ One job, run once without the skill and once with it: a 28-file pull request, as
 | Estimated cost | | | −35% |
 
 <sub>One run each. Cost is estimated from token counts. Times are rough.</sub>
+
+## License
+
+[MIT](LICENSE)
