@@ -27,15 +27,15 @@ const dark = {
   sun: 2.6,
 };
 
-/** Black shapes on a light stage. */
+/** Charcoal shapes on a light stage. */
 const light: typeof dark = {
   background: "#f4f4f4",
   floor: "#f4f4f4",
   grid: "#e2e2e2",
-  surface: "#1c1c1c",
+  surface: "#4d4d4d",
   dimmed: "#d2d2d2",
-  inset: "#000000",
-  edge: "#000000",
+  inset: "#1f1f1f",
+  edge: "#2a2a2a",
   neutral: "#171717",
   accent: "#14b8a6",
   danger: "#f43f5e",
