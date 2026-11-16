@@ -1,6 +1,6 @@
 import { RoundedBox } from "@react-three/drei";
 import type { ReactNode } from "react";
-import { LatheGeometry, Vector2 } from "three";
+import { ExtrudeGeometry, LatheGeometry, Shape, Vector2 } from "three";
 import { z } from "zod";
 import { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
 
@@ -17,6 +17,8 @@ export const nodeShapeSchema = z.enum([
   "controller",
   "router",
   "worker",
+  "clock",
+  "shield",
 ]);
 
 export type NodeShape = z.infer<typeof nodeShapeSchema>;
@@ -362,6 +364,80 @@ const Worker = ({ body, inset, glow }: ShapeProps) => (
   </group>
 );
 
+const CLOCK_RADIUS = 0.58;
+const HOURS = [0, 1, 2, 3];
+
+/** A clock: something that fires on a schedule. */
+const Clock = ({ body, trim, inset, glow }: ShapeProps) => (
+  <group rotation={[-0.12, 0, 0]}>
+    <mesh rotation={[Math.PI / 2, 0, 0]}>
+      <cylinderGeometry args={[CLOCK_RADIUS, CLOCK_RADIUS, 0.24, 64]} />
+      {body}
+    </mesh>
+    <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.115]}>
+      <cylinderGeometry args={[CLOCK_RADIUS - 0.09, CLOCK_RADIUS - 0.09, 0.02, 64]} />
+      {inset}
+    </mesh>
+    {HOURS.map((hour) => {
+      const angle = (hour / HOURS.length) * Math.PI * 2;
+      return (
+        <mesh key={hour} position={[Math.cos(angle) * 0.39, Math.sin(angle) * 0.39, 0.13]} rotation={[0, 0, angle]}>
+          <boxGeometry args={[0.1, 0.035, 0.01]} />
+          {trim}
+        </mesh>
+      );
+    })}
+    <mesh position={[0, 0.17, 0.135]}>
+      <boxGeometry args={[0.05, 0.34, 0.012]} />
+      {glow}
+    </mesh>
+    <mesh position={[0.11, 0, 0.135]}>
+      <boxGeometry args={[0.22, 0.05, 0.012]} />
+      {glow}
+    </mesh>
+    <Led position={[0, 0, 0.13]} glow={glow} />
+  </group>
+);
+
+const shieldOutline = (halfWidth: number, top: number, shoulder: number, tip: number) => {
+  const outline = new Shape();
+  outline.moveTo(-halfWidth, top);
+  outline.lineTo(halfWidth, top);
+  outline.lineTo(halfWidth, shoulder);
+  outline.quadraticCurveTo(halfWidth, tip * 0.45, 0, tip);
+  outline.quadraticCurveTo(-halfWidth, tip * 0.45, -halfWidth, shoulder);
+  outline.closePath();
+  return outline;
+};
+const SHIELD_DEPTH = 0.28;
+const SHIELD = new ExtrudeGeometry(shieldOutline(0.5, 0.54, 0.05, -0.54), {
+  depth: SHIELD_DEPTH,
+  bevelEnabled: true,
+  bevelSize: 0.05,
+  bevelThickness: 0.05,
+  bevelSegments: 4,
+  curveSegments: 24,
+}).translate(0, 0, -SHIELD_DEPTH / 2);
+const SHIELD_FACE = new ExtrudeGeometry(shieldOutline(0.36, 0.4, 0.06, -0.36), { depth: 0.02, bevelEnabled: false, curveSegments: 24 });
+
+/** A shield: a check every request has to pass. A policy, a guard, a middleware. */
+const Shield = ({ body, inset, glow }: ShapeProps) => (
+  <group rotation={[-0.12, 0, 0]}>
+    <mesh geometry={SHIELD}>{body}</mesh>
+    <mesh geometry={SHIELD_FACE} position={[0, 0, SHIELD_DEPTH / 2 + 0.045]}>
+      {inset}
+    </mesh>
+    <mesh position={[0, 0.1, SHIELD_DEPTH / 2 + 0.07]} rotation={[Math.PI / 2, 0, 0]}>
+      <cylinderGeometry args={[0.1, 0.1, 0.02, 24]} />
+      {glow}
+    </mesh>
+    <mesh position={[0, -0.07, SHIELD_DEPTH / 2 + 0.075]}>
+      <boxGeometry args={[0.07, 0.22, 0.012]} />
+      {glow}
+    </mesh>
+  </group>
+);
+
 /** Every shape fits the node's 2 x 1.2 x 2 box and stands on its floor. */
 export const shapes: Record<NodeShape, (props: ShapeProps) => ReactNode> = {
   service: Service,
@@ -376,4 +452,6 @@ export const shapes: Record<NodeShape, (props: ShapeProps) => ReactNode> = {
   controller: Controller,
   router: Router,
   worker: Worker,
+  clock: Clock,
+  shield: Shield,
 };
