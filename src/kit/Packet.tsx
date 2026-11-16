@@ -14,13 +14,15 @@ export const packetSchema = z.object({
     .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge."),
   progress: unitSchema.describe("0 = leaving `from`, 1 = arriving at `to`. Hidden at exactly 0 and 1."),
   tone: z.enum(["neutral", "accent", "danger"]).default("neutral").describe("White unless the story needs it to stand out or fail."),
-  label: z.string().optional().describe("Who or what this one is, riding above it: `admin`, `order 42`. Use it when several packets take the same path and the story depends on telling them apart."),
+  label: z.string().optional().describe("Who or what this one is, riding above it: `admin`, `order 42`. A word or two. Use it when several packets take the same path and the story depends on telling them apart."),
 });
 
 type PacketProps = z.input<typeof packetSchema>;
 
 const ARC_HEIGHT = 0.45;
 const RADIUS = 0.22;
+/** Share of the trip, at each end, over which the label fades: beside a node it would sit on that node's own label. */
+const LABEL_FADE = 0.25;
 
 /** A request, message or row: the thing the viewer follows from node to node. */
 export const Packet = (props: PacketProps) => {
@@ -41,7 +43,7 @@ export const Packet = (props: PacketProps) => {
       </mesh>
       {label ? (
         <Billboard position={[0, RADIUS + 0.14, 0]}>
-          <Type size={0.3} color={tone === "danger" ? theme.danger : theme.text}>
+          <Type size={0.3} color={tone === "danger" ? theme.danger : theme.text} opacity={Math.min(1, progress / LABEL_FADE, (1 - progress) / LABEL_FADE)} onTop>
             {label}
           </Type>
         </Billboard>

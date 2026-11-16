@@ -23,7 +23,7 @@ export const outcomesSchema = z.object({
 
 type OutcomesProps = z.input<typeof outcomesSchema>;
 
-const WIDTH = 680;
+const WIDTH = 760;
 const ANSWER = 150;
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
