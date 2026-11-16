@@ -49,7 +49,9 @@ const heightOf = (table: Table) => HEADER + rowsHeight(table.columns);
 /**
  * Database tables as flat panels over the scene: a name, then one row per
  * column. Flat because column names and types have to be read, and text in the
- * 3D world is skewed and small. Goes in World's `overlay`.
+ * 3D world is skewed and small. Anything shaped like a schema fits: a GraphQL
+ * type is a table named `type User` whose columns are its fields. Goes in
+ * World's `overlay`.
  */
 export const Tables = (props: TablesProps) => {
   const { tables, links, direction, side, appear } = tablesSchema.parse(props);

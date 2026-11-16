@@ -8,6 +8,9 @@ import {
   codePanelSchema,
   focusSchema,
   graphSpecSchema,
+  hubSpecSchema,
+  manifestItemSchema,
+  manifestSchema,
   labelSchema,
   nodeSchema,
   nodeShapeSchema,
@@ -15,6 +18,9 @@ import {
   outcomesSchema,
   packetSchema,
   pipeSchema,
+  rippleSchema,
+  scheduleRowSchema,
+  scheduleSchema,
   linkSchema,
   shotSchema,
   tableSchema,
@@ -28,10 +34,13 @@ import {
   CodePanelDemo,
   FocusDemo,
   GraphDemo,
+  HubDemo,
   LabelDemo,
+  ManifestDemo,
   NodeDemo,
   OutcomesDemo,
   PacketDemo,
+  ScheduleDemo,
   TablesDemo,
   WorldDemo,
 } from "./demos";
@@ -247,6 +256,53 @@ const hit = (start) => start + 14;
 </World>`,
   },
   {
+    id: "schedule",
+    group: "Overlay",
+    name: "Schedule",
+    summary:
+      "When a job runs, as ticks on a strip of time. Put the old and the new interval on the same clock and a schedule change stops being two numbers: it is six runs against seventy-two.",
+    demo: {
+      component: ScheduleDemo,
+      durationInFrames: 190,
+      controls: [{ key: "side", kind: "select", options: ["right", "left"], initial: "right" }],
+    },
+    schemas: [
+      { title: "Schedule", schema: scheduleSchema },
+      { title: "Row", schema: scheduleRowSchema },
+    ],
+    code: `<Schedule
+  title="sync_usage"
+  rows={[
+    { label: "before", everyMinutes: 60, progress: ease(frame, t.at("schedule", "hour") - 20, t.at("schedule", "hour") + 20) },
+    { label: "after", everyMinutes: 5, tone: "changed", progress: ease(frame, t.at("schedule", "five"), t.at("schedule", "five") + 50) },
+  ]}
+/>`,
+  },
+  {
+    id: "manifest",
+    group: "Overlay",
+    name: "Manifest",
+    summary:
+      "The opening card of a PR review that covers more than one thing: every item, in the order the video covers them, and a line for what it leaves out. Bring it back between sections with `current` set, so the viewer knows where they are.",
+    demo: {
+      component: ManifestDemo,
+      durationInFrames: 120,
+      controls: [{ key: "current", kind: "select", options: ["none", "0", "1", "2", "3"], initial: "none" }],
+    },
+    schemas: [
+      { title: "Manifest", schema: manifestSchema },
+      { title: "Item", schema: manifestItemSchema },
+    ],
+    code: `<Manifest
+  items={[
+    { kind: "Auth", name: "requireAdmin", change: "changed", note: "existing policy changed" },
+    { kind: "New endpoint", name: "GET /invoices/export", change: "added" },
+  ]}
+  footer="31 other files: ordinary changes, not shown"
+  appear={1 - ease(frame, t.at("auth") - 12, t.at("auth"))}
+/>`,
+  },
+  {
     id: "change",
     group: "Actors",
     name: "Change marks",
@@ -276,14 +332,42 @@ const hit = (start) => start + 14;
       controls: [
         { key: "tone", kind: "select", options: ["accent", "danger"], initial: "accent" },
         { key: "label", kind: "text", initial: "" },
+        { key: "pipeLabel", kind: "text", initial: "" },
       ],
     },
     schemas: [
       { title: "Packet", schema: packetSchema },
       { title: "Pipe", schema: pipeSchema },
     ],
-    code: `<Pipe from={a} to={b} progress={ease(frame, 5, 30)} />
-<Packet from={a} to={b} progress={ease(frame, 40, 85)} />`,
+    code: `<Pipe from={a} to={b} progress={ease(frame, 5, 30)} label="POST /orders" />
+<Packet from={a} to={b} progress={ease(frame, 40, 85)} label="order 42" />`,
+  },
+  {
+    id: "hub",
+    group: "Actors",
+    name: "layoutHub + Ripple",
+    summary:
+      "For something many things depend on: a shared helper, a table, a core service. `layoutHub` puts it in the middle with its dependents around it and returns the same Graph as `layoutGraph`. `Ripple` spreads from it across the floor; light each dependent as the front reaches it.",
+    demo: {
+      component: HubDemo,
+      durationInFrames: 150,
+      controls: [{ key: "callers", kind: "range", min: 4, max: 10, step: 1, initial: 8 }],
+    },
+    schemas: [
+      { title: "layoutHub(spec)", schema: hubSpecSchema },
+      { title: "Ripple", schema: rippleSchema },
+    ],
+    code: `const graph = layoutHub({
+  hub: { id: "helper", label: "formatMoney()", shape: "file", change: "changed" },
+  spokes: callers.map((name) => ({ id: name, label: name, shape: "file" })),
+});
+
+// The front moves at a steady pace: it is at a spoke 85% of the way through.
+const start = t.at("outside");
+const progress = Math.min(1, Math.max(0, (frame - start) / 60));
+
+<Ripple at={graph.position("helper")} progress={progress} />
+<Graph3D graph={graph} nodes={{ PayoutExport: { active: ease(frame, start + 47, start + 59), tone: "danger" } }} />`,
   },
   {
     id: "graph",

@@ -9,6 +9,8 @@ import {
   Graph3D,
   Label,
   layoutGraph,
+  layoutHub,
+  Manifest,
   Node,
   NODE_HEIGHT,
   Outcomes,
@@ -16,6 +18,8 @@ import {
   Pipe,
   pop,
   pulse,
+  Ripple,
+  Schedule,
   Tables,
   theme,
   World,
@@ -90,12 +94,12 @@ export const NodeDemo = ({ label, shape, tone }: { label: string; shape: NodeSha
   );
 };
 
-export const PacketDemo = ({ tone, label }: { tone: "accent" | "danger"; label: string }) => {
+export const PacketDemo = ({ tone, label, pipeLabel }: { tone: "accent" | "danger"; label: string; pipeLabel: string }) => {
   const frame = useCurrentFrame();
   return (
     <World>
       <CameraRig shots={[{ at: 0, targets: [left, right], padding: 1.3 }]} />
-      <Pipe from={left} to={right} progress={ease(frame, 5, 30)} />
+      <Pipe from={left} to={right} progress={ease(frame, 5, 30)} label={pipeLabel || undefined} />
       <Node position={left} label="From" />
       <Node position={right} label="To" active={pulse(frame, 85)} tone={tone} />
       <Packet from={left} to={right} progress={ease(frame, 40, 85)} tone={tone} label={label || undefined} />
@@ -288,6 +292,85 @@ export const OutcomesDemo = ({ side }: { side: "left" | "right" }) => {
       <Graph3D graph={graph} nodes={{ guard: { active: ease(frame, flipped - 2, flipped + 8), tone: "danger" } }} />
       {callers.map((caller) => trip(caller.name, caller.before, caller.was, false))}
       {callers.map((caller) => trip(caller.name, caller.after, caller.now, caller.now !== caller.was))}
+    </World>
+  );
+};
+
+export const HubDemo = ({ callers }: { callers: number }) => {
+  const frame = useCurrentFrame();
+  const names = ["Checkout", "Invoices", "Cart", "Refunds", "Reports", "Payouts", "Receipts", "Taxes", "Search", "Emails"];
+  const graph = layoutHub({
+    hub: { id: "helper", label: "formatMoney()", shape: "file", change: "changed" },
+    spokes: names.slice(0, callers).map((name, index) => ({ id: name, label: name, shape: "file", change: index < 2 ? ("changed" as const) : undefined })),
+  });
+  // The front moves at a steady pace, so the frame it reaches a spoke is known.
+  const start = 40;
+  const travel = 60;
+  const progress = Math.min(1, Math.max(0, (frame - start) / travel));
+  const reached = start + travel * 0.85;
+  return (
+    <World>
+      <CameraRig shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), elevation: 44, padding: 0.95 }]} />
+      <Ripple at={graph.position("helper")} progress={progress} />
+      <Graph3D
+        graph={graph}
+        nodes={Object.fromEntries(names.slice(2, callers).map((name) => [name, { active: ease(frame, reached - 4, reached + 8), tone: "danger" as const }]))}
+      />
+    </World>
+  );
+};
+
+export const ScheduleDemo = ({ side }: { side: "left" | "right" }) => {
+  const frame = useCurrentFrame();
+  const clock = layoutGraph({
+    nodes: [
+      { id: "clock", label: "Scheduler", shape: "clock", change: "changed" },
+      { id: "job", label: "SyncUsageJob", shape: "worker" },
+    ],
+    edges: [["clock", "job"]],
+  });
+  return (
+    <World
+      overlay={
+        <Schedule
+          side={side}
+          title="sync_usage"
+          appear={ease(frame, 4, 16)}
+          rows={[
+            { label: "before", everyMinutes: 60, progress: ease(frame, 20, 70) },
+            { label: "after", everyMinutes: 5, tone: "changed", progress: ease(frame, 80, 150) },
+          ]}
+        />
+      }
+    >
+      <CameraRig shots={[{ at: 0, targets: clock.nodes.map((node) => node.position), padding: 1.5, shift: [0, -0.2] }]} />
+      <Graph3D graph={clock} nodes={{ clock: { active: pulse(frame, 80, 40) } }} />
+    </World>
+  );
+};
+
+export const ManifestDemo = ({ current }: { current: string }) => {
+  const frame = useCurrentFrame();
+  const items = [
+    { kind: "Auth", name: "requireAdmin", change: "changed" as const, note: "existing policy changed" },
+    { kind: "Shared code", name: "formatMoney()", change: "changed" as const, note: "8 callers, 5 outside this PR" },
+    { kind: "New endpoint", name: "GET /invoices/export", change: "added" as const },
+    { kind: "New cron", name: "ExpireKeysJob", change: "added" as const, note: "every 5 min" },
+  ];
+  return (
+    <World
+      overlay={
+        <Manifest
+          items={items.map((item, index) => ({ ...item, appear: ease(frame, 10 + index * 8, 22 + index * 8) }))}
+          footer="31 other files: ordinary changes, not shown"
+          current={current === "none" ? undefined : Number(current)}
+        />
+      }
+    >
+      <CameraRig shots={[{ at: 0, targets: pipelineTargets, azimuth: 10, padding: 0.9 }]} />
+      <Focus on={[]} amount={0.82}>
+        <Graph3D graph={pipeline} />
+      </Focus>
     </World>
   );
 };

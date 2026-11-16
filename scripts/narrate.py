@@ -25,6 +25,8 @@ BEAT_TAIL_MS = 250
 ATTEMPTS = 3
 BACKOFF_SECONDS = 5
 PAUSE_SECONDS = 1.5
+# A sentence the endpoint accepts, to tell throttling from a rejected beat.
+PROBE = "This is a test."
 
 
 async def synthesize(text: str, voice: str, audio_path: pathlib.Path) -> list[dict]:
@@ -33,12 +35,19 @@ async def synthesize(text: str, voice: str, audio_path: pathlib.Path) -> list[di
             return await synthesize_once(text, voice, audio_path)
         except edge_tts.exceptions.NoAudioReceived:
             if attempt == ATTEMPTS:
-                raise SystemExit(
-                    f"edge-tts returned no audio for: {text}\n"
-                    "It rejects some sentences every time. Shorten the beat or split it in two."
-                )
+                raise SystemExit(f"edge-tts returned no audio for: {text}\n{await diagnose(voice)}")
             await asyncio.sleep(BACKOFF_SECONDS * attempt)
     raise AssertionError("unreachable")
+
+
+async def diagnose(voice: str) -> str:
+    """Why a beat got no audio: ask for a sentence that is known to work."""
+    try:
+        async for _ in edge_tts.Communicate(PROBE, voice).stream():
+            pass
+    except edge_tts.exceptions.NoAudioReceived:
+        return "It is throttling: a plain test sentence got no audio either. Run it again in a few minutes; finished beats are kept."
+    return "It rejects this sentence: a plain test sentence went through. Shorten the beat or split it in two."
 
 
 async def synthesize_once(text: str, voice: str, audio_path: pathlib.Path) -> list[dict]:
