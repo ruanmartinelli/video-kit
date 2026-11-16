@@ -12,7 +12,7 @@ export const pipeSchema = z.object({
   clear: z
     .tuple([z.number().min(0), z.number().min(0)])
     .optional()
-    .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge; use TABLE_CLEAR for an end that is a table row."),
+    .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge."),
   tone: z.enum(["neutral", "added", "changed", "removed"]).default("neutral").describe("neutral is a plain connection; the rest mark what a PR did to it."),
   progress: unitSchema.default(1).describe("How much of the pipe is drawn, growing out of `from`. 0 hides it."),
 });

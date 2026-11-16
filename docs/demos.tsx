@@ -15,10 +15,7 @@ import {
   Pipe,
   pop,
   pulse,
-  Table,
-  TABLE_CLEAR,
-  tableFrame,
-  tableRow,
+  Tables,
   theme,
   World,
   type NodeShape,
@@ -194,34 +191,45 @@ export const CaptionDemo = ({ wordsPerLine }: { wordsPerLine: number }) => (
   </World>
 );
 
-const ordersAt: Vec3 = [-3.4, 0, 0];
-const refundsAt: Vec3 = [3.4, 0, 0];
-
-export const TableDemo = ({ change }: { change: "added" | "changed" | "removed" }) => {
+export const TablesDemo = ({ direction, side }: { direction: "column" | "row"; side: "left" | "right" }) => {
   const frame = useCurrentFrame();
-  const orders = [
-    { name: "id", type: "bigint pk" },
-    { name: "total_cents", type: "int not null" },
-    { name: "refunded_at", type: "timestamptz", change, appear: ease(frame, 40, 58), lit: pulse(frame, 150, 30) },
-  ];
-  const refunds = [
-    { name: "id", type: "bigint pk" },
-    { name: "order_id", type: "bigint → orders.id", lit: pulse(frame, 95, 30) },
-    { name: "reason", type: "text" },
-  ];
+  const landed = 150;
   return (
-    <World>
-      <CameraRig shots={[{ at: 0, targets: [...tableFrame(ordersAt, orders), ...tableFrame(refundsAt, refunds)], elevation: 30, padding: 0.8, shift: [0, 0] }]} />
-      <Table position={ordersAt} name="orders" columns={orders} />
-      <Table position={refundsAt} name="refunds" change="added" columns={refunds} appear={pop(frame, 10)} />
-      <Pipe
-        from={tableRow(refundsAt, refunds, "order_id")}
-        to={tableRow(ordersAt, orders, "id")}
-        clear={[TABLE_CLEAR, TABLE_CLEAR]}
-        tone="added"
-        progress={ease(frame, 80, 100)}
-      />
-      <Packet from={[0, 0.6, 6]} to={tableRow(ordersAt, orders, "refunded_at")} clear={[0, 0.35]} progress={ease(frame, 125, 150)} tone="accent" />
+    <World
+      overlay={
+        <Tables
+          direction={direction}
+          side={side}
+          appear={ease(frame, 4, 18)}
+          tables={[
+            {
+              name: "orders",
+              columns: [
+                { name: "id", type: "bigint pk" },
+                { name: "total_cents", type: "int not null" },
+                { name: "refunded_at", type: "timestamptz", change: "added", appear: ease(frame, 40, 58), lit: pulse(frame, landed, 30) },
+              ],
+            },
+            {
+              name: "refunds",
+              change: "added",
+              appear: pop(frame, 70),
+              columns: [
+                { name: "id", type: "bigint pk" },
+                { name: "order_id", type: "bigint → orders.id" },
+                { name: "reason", type: "text" },
+              ],
+            },
+          ]}
+          links={[{ from: "refunds.order_id", to: "orders.id", tone: "added", progress: ease(frame, 95, 115) }]}
+        />
+      }
+    >
+      <CameraRig shots={[{ at: 0, targets: [left, right], padding: 1.5, shift: [side === "right" ? -0.2 : 0.2, 0] }]} />
+      <Pipe from={left} to={right} />
+      <Node position={left} label="Service" />
+      <Node position={right} label="Postgres" shape="database" active={pulse(frame, landed, 24)} />
+      <Packet from={left} to={right} progress={ease(frame, landed - 20, landed)} tone="accent" />
     </World>
   );
 };

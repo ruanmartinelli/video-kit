@@ -13,7 +13,7 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 3. **Compose.** One file, `src/videos/<name>/<Name>.tsx`, registered in `src/Root.tsx`:
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `layoutGraph(...)` gives positions. Give each node the `shape` that names what it is (`database`, `server`, `queue`, `client`, `user`, `cloud`, `storage` for systems; `router`, `controller`, `worker`, `file` for code); `service` is the plain box. Packets, extra pipes and camera targets all read `graph.position(id)`.
-   - One `<World>`, one `<CameraRig>`, actors as children; `Narration`, `Caption` and `CodePanel` in `overlay`.
+   - One `<World>`, one `<CameraRig>`, actors as children; `Narration`, `Caption`, `CodePanel`, `Tables` and `Chip` in `overlay`.
 
 4. **Look at it.** `pnpm stills <CompositionId>` renders one frame per second to `out/stills/<CompositionId>/`; pass `120,340,515` to render chosen frames. Read the PNGs. Done when every still passes all of these:
    - the subject of the current beat is in frame and nothing stands in front of it
@@ -28,10 +28,10 @@ Narrated 3D explainer videos built from React components (Remotion + React Three
 `src/videos/pr-api-keys/` is the reference. Schema first, then one request followed from the client to the table rows it reads and writes, ending on the thing the reviewer should check.
 
 - Set `change` (`added`, `changed`, `removed`) on every node, table and column the PR touched, and on nothing else: color means this PR.
-- One beat per migration, with a `Chip` naming its file. Columns enter with `appear`.
-- A query is two packets, service to database and database to `tableRow(...)`, and the row's `lit` pulses when the second one lands.
+- Tables are flat: `Tables` in `overlay`, with the database node beside it in the world. One beat per migration, with a `Chip` naming its file. Columns enter with `appear`.
+- A query is a packet from the service to the database. The row it reads or writes pulses its `lit` on the frame the packet lands.
 - Name the file on screen with a `Chip` for every hop whose code the narration talks about, so the viewer can check it against the diff.
-- Stand tables beside the request path, staggered in depth. Behind it, the path's nodes end up in front of them in every table shot.
+- `Tables`, `CodePanel` and a wide shot of the whole path each want the frame: show one at a time.
 
 ## How the kit works
 

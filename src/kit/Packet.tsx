@@ -9,7 +9,7 @@ export const packetSchema = z.object({
   clear: z
     .tuple([z.number().min(0), z.number().min(0)])
     .optional()
-    .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge; use TABLE_CLEAR for an end that is a table row."),
+    .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge."),
   progress: unitSchema.describe("0 = leaving `from`, 1 = arriving at `to`. Hidden at exactly 0 and 1."),
   tone: z.enum(["neutral", "accent", "danger"]).default("neutral").describe("White unless the story needs it to stand out or fail."),
 });

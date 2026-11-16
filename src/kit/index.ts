@@ -14,7 +14,7 @@ export { Node, nodeSchema, type NodeState } from "./Node";
 export { Packet, packetSchema } from "./Packet";
 export { Pipe, pipeSchema } from "./Pipe";
 export { nodeShapeSchema, type NodeShape } from "./shapes";
-export { columnSchema, Table, TABLE_CLEAR, TABLE_WIDTH, tableFrame, tableRow, tableSchema } from "./Table";
+export { columnSchema, linkSchema, Tables, tableSchema, tablesSchema } from "./Tables";
 export { theme } from "./theme";
 export { createTimeline, type Narration as NarrationData, type Timeline } from "./timeline";
 export { World } from "./World";

@@ -13,8 +13,10 @@ import {
   nodeShapeSchema,
   packetSchema,
   pipeSchema,
+  linkSchema,
   shotSchema,
   tableSchema,
+  tablesSchema,
 } from "../src/kit";
 import {
   CameraDemo,
@@ -27,7 +29,7 @@ import {
   LabelDemo,
   NodeDemo,
   PacketDemo,
-  TableDemo,
+  TablesDemo,
   WorldDemo,
 } from "./demos";
 import { ShapeGallery, shapeGalleryMeta } from "../src/gallery/ShapeGallery";
@@ -166,33 +168,43 @@ const graph = layoutGraph({
 });`,
   },
   {
-    id: "table",
-    group: "Actors",
-    name: "Table",
+    id: "tables",
+    group: "Overlay",
+    name: "Tables",
     summary:
-      "A database table as a board standing on the floor: its name, then one row per column. Columns can slide in, carry what a PR did to them, and light up when a query touches them. `tableRow` gives a row's position, so pipes and packets can land on one column.",
+      "Database tables as flat panels over the scene: a name, then one row per column. Flat for the same reason as code: column names and types have to be read. Columns can slide in, carry what a PR did to them, and light up when a query touches them. In the 3D world the query is a packet reaching the database; pulse the row's `lit` on the frame it lands.",
     demo: {
-      component: TableDemo,
+      component: TablesDemo,
       durationInFrames: 200,
-      controls: [{ key: "change", kind: "select", options: ["added", "changed", "removed"], initial: "added" }],
+      controls: [
+        { key: "direction", kind: "select", options: ["column", "row"], initial: "column" },
+        { key: "side", kind: "select", options: ["right", "left"], initial: "right" },
+      ],
     },
     schemas: [
+      { title: "Tables", schema: tablesSchema },
       { title: "Table", schema: tableSchema },
       { title: "Column", schema: columnSchema },
+      { title: "Link", schema: linkSchema },
     ],
-    otherProps: [
-      { name: "tableRow(position, columns, name)", type: "Vec3", description: "Center of that column's row. Throws if there is no such column." },
-      { name: "tableFrame(position, columns)", type: "Vec3[]", description: "The four corners. Spread into a shot's targets to keep the whole table in frame." },
-      { name: "TABLE_CLEAR", type: "number", description: "Pass as `clear` on the end of a Pipe or Packet that reaches a row from the side." },
-    ],
-    code: `const columns = [
-  { name: "id", type: "bigint pk" },
-  { name: "refunded_at", type: "timestamptz", change: "added", appear: ease(frame, 40, 58) },
-];
+    code: `const landed = t.at("read", "reads");
 
-<Table position={at} name="orders" columns={columns} />
-<Packet from={db} to={tableRow(at, columns, "refunded_at")} clear={[1.1, 0.35]} progress={p} />
-<CameraRig shots={[{ at: 0, targets: tableFrame(at, columns), elevation: 30 }]} />`,
+<World
+  overlay={
+    <Tables
+      tables={[
+        { name: "orders", columns: [
+          { name: "id", type: "bigint pk" },
+          { name: "refunded_at", type: "timestamptz", change: "added", lit: pulse(frame, landed) },
+        ] },
+        { name: "refunds", change: "added", appear: pop(frame, t.at("create")), columns: [...] },
+      ]}
+      links={[{ from: "refunds.order_id", to: "orders.id", tone: "added" }]}
+    />
+  }
+>
+  <Packet from={service} to={db} progress={ease(frame, landed - 14, landed)} />
+</World>`,
   },
   {
     id: "change",
