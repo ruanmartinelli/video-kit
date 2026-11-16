@@ -1,0 +1,547 @@
+{
+  "voice": "en-US-AndrewNeural",
+  "beats": [
+    {
+      "id": "problem",
+      "text": "One server can only take so much traffic. Send it too many requests, and it falls over.",
+      "hash": "74cd699517a6",
+      "audio": "narration/load-balancer/problem.mp3",
+      "durationMs": 5388,
+      "words": [
+        {
+          "text": "One",
+          "startMs": 100,
+          "endMs": 262
+        },
+        {
+          "text": "server",
+          "startMs": 275,
+          "endMs": 588
+        },
+        {
+          "text": "can",
+          "startMs": 600,
+          "endMs": 725
+        },
+        {
+          "text": "only",
+          "startMs": 738,
+          "endMs": 975
+        },
+        {
+          "text": "take",
+          "startMs": 988,
+          "endMs": 1225
+        },
+        {
+          "text": "so",
+          "startMs": 1238,
+          "endMs": 1462
+        },
+        {
+          "text": "much",
+          "startMs": 1475,
+          "endMs": 1650
+        },
+        {
+          "text": "traffic",
+          "startMs": 1662,
+          "endMs": 2175
+        },
+        {
+          "text": "Send",
+          "startMs": 2588,
+          "endMs": 2762
+        },
+        {
+          "text": "it",
+          "startMs": 2775,
+          "endMs": 2875
+        },
+        {
+          "text": "too",
+          "startMs": 2888,
+          "endMs": 3088
+        },
+        {
+          "text": "many",
+          "startMs": 3100,
+          "endMs": 3350
+        },
+        {
+          "text": "requests",
+          "startMs": 3362,
+          "endMs": 4088
+        },
+        {
+          "text": "and",
+          "startMs": 4312,
+          "endMs": 4400
+        },
+        {
+          "text": "it",
+          "startMs": 4412,
+          "endMs": 4488
+        },
+        {
+          "text": "falls",
+          "startMs": 4500,
+          "endMs": 4800
+        },
+        {
+          "text": "over",
+          "startMs": 4812,
+          "endMs": 5138
+        }
+      ]
+    },
+    {
+      "id": "idea",
+      "text": "The fix is more servers, with a load balancer in front.",
+      "hash": "45067c0ace4f",
+      "audio": "narration/load-balancer/idea.mp3",
+      "durationMs": 3562,
+      "words": [
+        {
+          "text": "The",
+          "startMs": 112,
+          "endMs": 162
+        },
+        {
+          "text": "fix",
+          "startMs": 175,
+          "endMs": 512
+        },
+        {
+          "text": "is",
+          "startMs": 638,
+          "endMs": 775
+        },
+        {
+          "text": "more",
+          "startMs": 788,
+          "endMs": 1025
+        },
+        {
+          "text": "servers",
+          "startMs": 1038,
+          "endMs": 1650
+        },
+        {
+          "text": "with",
+          "startMs": 1862,
+          "endMs": 2000
+        },
+        {
+          "text": "a",
+          "startMs": 2012,
+          "endMs": 2050
+        },
+        {
+          "text": "load",
+          "startMs": 2062,
+          "endMs": 2375
+        },
+        {
+          "text": "balancer",
+          "startMs": 2388,
+          "endMs": 2825
+        },
+        {
+          "text": "in",
+          "startMs": 2838,
+          "endMs": 2912
+        },
+        {
+          "text": "front",
+          "startMs": 2925,
+          "endMs": 3312
+        }
+      ]
+    },
+    {
+      "id": "route",
+      "text": "Every request hits the balancer first, and the balancer picks a server.",
+      "hash": "bb97800291c8",
+      "audio": "narration/load-balancer/route.mp3",
+      "durationMs": 4362,
+      "words": [
+        {
+          "text": "Every",
+          "startMs": 100,
+          "endMs": 338
+        },
+        {
+          "text": "request",
+          "startMs": 350,
+          "endMs": 925
+        },
+        {
+          "text": "hits",
+          "startMs": 938,
+          "endMs": 1212
+        },
+        {
+          "text": "the",
+          "startMs": 1225,
+          "endMs": 1325
+        },
+        {
+          "text": "balancer",
+          "startMs": 1338,
+          "endMs": 1825
+        },
+        {
+          "text": "first",
+          "startMs": 1838,
+          "endMs": 2350
+        },
+        {
+          "text": "and",
+          "startMs": 2638,
+          "endMs": 2700
+        },
+        {
+          "text": "the",
+          "startMs": 2712,
+          "endMs": 2788
+        },
+        {
+          "text": "balancer",
+          "startMs": 2800,
+          "endMs": 3288
+        },
+        {
+          "text": "picks",
+          "startMs": 3300,
+          "endMs": 3550
+        },
+        {
+          "text": "a",
+          "startMs": 3562,
+          "endMs": 3612
+        },
+        {
+          "text": "server",
+          "startMs": 3625,
+          "endMs": 4112
+        }
+      ]
+    },
+    {
+      "id": "inside",
+      "text": "Inside, it's tiny: a list of servers, and a pointer to whose turn is next.",
+      "hash": "a207b370a585",
+      "audio": "narration/load-balancer/inside.mp3",
+      "durationMs": 5188,
+      "words": [
+        {
+          "text": "Inside",
+          "startMs": 100,
+          "endMs": 700
+        },
+        {
+          "text": "it's",
+          "startMs": 925,
+          "endMs": 1062
+        },
+        {
+          "text": "tiny",
+          "startMs": 1075,
+          "endMs": 1512
+        },
+        {
+          "text": "a",
+          "startMs": 1912,
+          "endMs": 1950
+        },
+        {
+          "text": "list",
+          "startMs": 1962,
+          "endMs": 2200
+        },
+        {
+          "text": "of",
+          "startMs": 2212,
+          "endMs": 2288
+        },
+        {
+          "text": "servers",
+          "startMs": 2300,
+          "endMs": 2875
+        },
+        {
+          "text": "and",
+          "startMs": 3050,
+          "endMs": 3162
+        },
+        {
+          "text": "a",
+          "startMs": 3175,
+          "endMs": 3225
+        },
+        {
+          "text": "pointer",
+          "startMs": 3238,
+          "endMs": 3675
+        },
+        {
+          "text": "to",
+          "startMs": 3688,
+          "endMs": 3762
+        },
+        {
+          "text": "whose",
+          "startMs": 3775,
+          "endMs": 4038
+        },
+        {
+          "text": "turn",
+          "startMs": 4050,
+          "endMs": 4300
+        },
+        {
+          "text": "is",
+          "startMs": 4312,
+          "endMs": 4412
+        },
+        {
+          "text": "next",
+          "startMs": 4425,
+          "endMs": 4938
+        }
+      ]
+    },
+    {
+      "id": "roundrobin",
+      "text": "One, two, three, and back around. That's round robin.",
+      "hash": "dd8c16bace94",
+      "audio": "narration/load-balancer/roundrobin.mp3",
+      "durationMs": 4138,
+      "words": [
+        {
+          "text": "One",
+          "startMs": 112,
+          "endMs": 350
+        },
+        {
+          "text": "two",
+          "startMs": 738,
+          "endMs": 1112
+        },
+        {
+          "text": "three",
+          "startMs": 1338,
+          "endMs": 1750
+        },
+        {
+          "text": "and",
+          "startMs": 1962,
+          "endMs": 2062
+        },
+        {
+          "text": "back",
+          "startMs": 2075,
+          "endMs": 2325
+        },
+        {
+          "text": "around",
+          "startMs": 2338,
+          "endMs": 2738
+        },
+        {
+          "text": "That's",
+          "startMs": 3162,
+          "endMs": 3312
+        },
+        {
+          "text": "round",
+          "startMs": 3325,
+          "endMs": 3538
+        },
+        {
+          "text": "robin",
+          "startMs": 3550,
+          "endMs": 3888
+        }
+      ]
+    },
+    {
+      "id": "failure",
+      "text": "If a server dies, a health check pulls it from the list.",
+      "hash": "0822d567dd24",
+      "audio": "narration/load-balancer/failure.mp3",
+      "durationMs": 3262,
+      "words": [
+        {
+          "text": "If",
+          "startMs": 100,
+          "endMs": 188
+        },
+        {
+          "text": "a",
+          "startMs": 200,
+          "endMs": 250
+        },
+        {
+          "text": "server",
+          "startMs": 262,
+          "endMs": 612
+        },
+        {
+          "text": "dies",
+          "startMs": 625,
+          "endMs": 1112
+        },
+        {
+          "text": "a",
+          "startMs": 1288,
+          "endMs": 1325
+        },
+        {
+          "text": "health",
+          "startMs": 1338,
+          "endMs": 1625
+        },
+        {
+          "text": "check",
+          "startMs": 1638,
+          "endMs": 1938
+        },
+        {
+          "text": "pulls",
+          "startMs": 1950,
+          "endMs": 2262
+        },
+        {
+          "text": "it",
+          "startMs": 2275,
+          "endMs": 2350
+        },
+        {
+          "text": "from",
+          "startMs": 2362,
+          "endMs": 2512
+        },
+        {
+          "text": "the",
+          "startMs": 2525,
+          "endMs": 2600
+        },
+        {
+          "text": "list",
+          "startMs": 2612,
+          "endMs": 3012
+        }
+      ]
+    },
+    {
+      "id": "around",
+      "text": "And traffic flows around it.",
+      "hash": "04a26a6c5ad8",
+      "audio": "narration/load-balancer/around.mp3",
+      "durationMs": 1600,
+      "words": [
+        {
+          "text": "And",
+          "startMs": 100,
+          "endMs": 162
+        },
+        {
+          "text": "traffic",
+          "startMs": 175,
+          "endMs": 575
+        },
+        {
+          "text": "flows",
+          "startMs": 588,
+          "endMs": 825
+        },
+        {
+          "text": "around",
+          "startMs": 838,
+          "endMs": 1175
+        },
+        {
+          "text": "it",
+          "startMs": 1188,
+          "endMs": 1350
+        }
+      ]
+    },
+    {
+      "id": "cost",
+      "text": "The catch? Now the balancer is the one thing that can't go down.",
+      "hash": "a9ec1ed3f010",
+      "audio": "narration/load-balancer/cost.mp3",
+      "durationMs": 3900,
+      "words": [
+        {
+          "text": "The",
+          "startMs": 112,
+          "endMs": 175
+        },
+        {
+          "text": "catch",
+          "startMs": 188,
+          "endMs": 612
+        },
+        {
+          "text": "Now",
+          "startMs": 1025,
+          "endMs": 1138
+        },
+        {
+          "text": "the",
+          "startMs": 1150,
+          "endMs": 1238
+        },
+        {
+          "text": "balancer",
+          "startMs": 1250,
+          "endMs": 1762
+        },
+        {
+          "text": "is",
+          "startMs": 1825,
+          "endMs": 1938
+        },
+        {
+          "text": "the",
+          "startMs": 1950,
+          "endMs": 2062
+        },
+        {
+          "text": "one",
+          "startMs": 2075,
+          "endMs": 2388
+        },
+        {
+          "text": "thing",
+          "startMs": 2400,
+          "endMs": 2738
+        },
+        {
+          "text": "that",
+          "startMs": 2750,
+          "endMs": 2862
+        },
+        {
+          "text": "can't",
+          "startMs": 2875,
+          "endMs": 3125
+        },
+        {
+          "text": "go",
+          "startMs": 3138,
+          "endMs": 3262
+        },
+        {
+          "text": "down",
+          "startMs": 3275,
+          "endMs": 3650
+        }
+      ]
+    }
+  ]
+}

@@ -1,30 +1,34 @@
 import { ThreeCanvas } from "@remotion/three";
 import type { ReactNode } from "react";
 import { AbsoluteFill, useVideoConfig } from "remotion";
+import "./fonts";
 import { theme } from "./theme";
+
+export const CAMERA_FOV = 40;
 
 type WorldProps = {
   /** 3D content: actors and a CameraRig. */
   children: ReactNode;
-  /** Flat 2D content drawn on top of the scene, e.g. captions. */
+  /** Flat 2D content drawn on top of the scene: Narration, Caption, CodePanel. */
   overlay?: ReactNode;
 };
 
+/** The one 3D space a video happens in. */
 export const World = ({ children, overlay }: WorldProps) => {
   const { width, height } = useVideoConfig();
 
   return (
     <AbsoluteFill style={{ backgroundColor: theme.background }}>
-      <ThreeCanvas width={width} height={height} camera={{ fov: 40, position: [0, 7, 15] }}>
+      <ThreeCanvas width={width} height={height} camera={{ fov: CAMERA_FOV, position: [0, 7, 15] }}>
         <color attach="background" args={[theme.background]} />
-        <fog attach="fog" args={[theme.background, 16, 42]} />
+        <fog attach="fog" args={[theme.background, 18, 55]} />
         <ambientLight intensity={0.9} />
         <directionalLight position={[6, 10, 8]} intensity={2.2} />
         <mesh rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[120, 120]} />
+          <planeGeometry args={[160, 160]} />
           <meshStandardMaterial color={theme.floor} />
         </mesh>
-        <gridHelper args={[120, 120, theme.grid, theme.grid]} position={[0, 0.01, 0]} />
+        <gridHelper args={[160, 160, theme.grid, theme.grid]} position={[0, 0.01, 0]} />
         {children}
       </ThreeCanvas>
       <AbsoluteFill>{overlay}</AbsoluteFill>

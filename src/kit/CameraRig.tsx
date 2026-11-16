@@ -1,33 +1,34 @@
 import { useThree } from "@react-three/fiber";
 import { useLayoutEffect } from "react";
-import { useCurrentFrame } from "remotion";
-import { ease, lerp3, type Vec3 } from "./motion";
+import { useCurrentFrame, useVideoConfig } from "remotion";
+import { z } from "zod";
+import { resolveCamera, shotSchema } from "./camera";
+import { CAMERA_FOV } from "./World";
 
-export type Shot = {
-  /** Frame at which the camera starts moving to this shot. */
-  at: number;
-  position: Vec3;
-  lookAt: Vec3;
-};
+export const cameraRigSchema = z.object({
+  shots: z.array(shotSchema).min(1).describe("Ordered by `at`. The first shot is where the camera starts."),
+  moveFrames: z.number().default(45).describe("Frames each move between shots takes."),
+  sway: z.number().default(3).describe("Degrees of slow side-to-side drift. 0 locks the camera off."),
+});
 
-type CameraRigProps = {
-  /** Ordered by `at`. The first shot is where the camera starts. */
-  shots: [Shot, ...Shot[]];
-  /** Frames each move takes. */
-  moveFrames?: number;
-};
+type CameraRigProps = z.input<typeof cameraRigSchema>;
 
-export const CameraRig = ({ shots, moveFrames = 40 }: CameraRigProps) => {
+/** Directs the camera: give it what to frame and from which angle, it works out where to stand. */
+export const CameraRig = (props: CameraRigProps) => {
+  const { shots, moveFrames, sway } = cameraRigSchema.parse(props);
   const frame = useCurrentFrame();
+  const { fps, width, height } = useVideoConfig();
   const camera = useThree((state) => state.camera);
 
-  let position = shots[0].position;
-  let lookAt = shots[0].lookAt;
-  for (const shot of shots.slice(1)) {
-    const t = ease(frame, shot.at, shot.at + moveFrames);
-    position = lerp3(position, shot.position, t);
-    lookAt = lerp3(lookAt, shot.lookAt, t);
-  }
+  const { position, lookAt } = resolveCamera({
+    shots,
+    frame,
+    fps,
+    fov: CAMERA_FOV,
+    aspect: width / height,
+    moveFrames,
+    sway,
+  });
 
   const [px, py, pz] = position;
   const [lx, ly, lz] = lookAt;

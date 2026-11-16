@@ -1,6 +1,10 @@
-import { Easing, interpolate } from "remotion";
+import { Easing, interpolate, spring } from "remotion";
+import { z } from "zod";
 
-export type Vec3 = [number, number, number];
+export const vec3Schema = z.tuple([z.number(), z.number(), z.number()]);
+export type Vec3 = z.infer<typeof vec3Schema>;
+
+export const unitSchema = z.number().min(0).max(1);
 
 /** 0 before `from`, 1 after `to`, eased in between. */
 export const ease = (frame: number, from: number, to: number) =>
@@ -17,8 +21,14 @@ export const pulse = (frame: number, at: number, decay = 20) =>
     extrapolateRight: "clamp",
   });
 
+/** 0 before `at`, then springs to 1 with a little overshoot. For things entering the scene. */
+export const pop = (frame: number, at: number, fps = 30) =>
+  spring({ frame: frame - at, fps, config: { damping: 12, stiffness: 140 } });
+
+export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
 export const lerp3 = (a: Vec3, b: Vec3, t: number): Vec3 => [
-  a[0] + (b[0] - a[0]) * t,
-  a[1] + (b[1] - a[1]) * t,
-  a[2] + (b[2] - a[2]) * t,
+  lerp(a[0], b[0], t),
+  lerp(a[1], b[1], t),
+  lerp(a[2], b[2], t),
 ];

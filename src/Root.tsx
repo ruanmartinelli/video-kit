@@ -1,4 +1,4 @@
 import { Composition } from "remotion";
-import { Tracer, tracerMeta } from "./videos/tracer/Tracer";
+import { LoadBalancer, loadBalancerMeta } from "./videos/load-balancer/LoadBalancer";
 
-export const Root = () => <Composition component={Tracer} {...tracerMeta} />;
+export const Root = () => <Composition component={LoadBalancer} {...loadBalancerMeta} />;
