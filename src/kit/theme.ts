@@ -49,11 +49,50 @@ const light: typeof dark = {
   sun: 1.9,
 };
 
-export const themes = { dark, light };
+/** The dark shapes on a charcoal stage instead of a black one. */
+const charcoal: typeof dark = {
+  ...dark,
+  background: "#1b1b1b",
+  floor: "#1b1b1b",
+  grid: "#292929",
+  surface: "#3d3d3d",
+  dimmed: "#222222",
+  inset: "#0a0a0a",
+  edge: "#808080",
+  pipe: "#6a6a6a",
+  panel: "rgba(14, 14, 14, 0.94)",
+  panelBorder: "#3a3a3a",
+};
+
+/** The dark shapes on a light stage. */
+const contrast: typeof dark = {
+  ...light,
+  surface: "#2e2e2e",
+  dimmed: "#c9c9c9",
+  inset: "#0d0d0d",
+  edge: "#111111",
+  pipe: "#8a8a8a",
+  glow: 1,
+};
+
+/** Colored shapes on a light stage. */
+const daylight: typeof dark = {
+  ...light,
+  surface: "#3b4a8c",
+  dimmed: "#cfd3e0",
+  inset: "#141a36",
+  edge: "#232c5c",
+  pipe: "#6f7fc4",
+  accent: "#14b8a6",
+  danger: "#f43f5e",
+  glow: 1,
+};
+
+export const themes = { dark, light, charcoal, contrast, daylight };
 
 /** The palette every component reads. Swap the key to change the look of every video. */
 export const theme = {
-  ...themes.light,
+  ...themes.daylight,
   sans: "Inter",
   mono: "JetBrains Mono",
   sansFile: () => staticFile("fonts/inter-600.woff"),
