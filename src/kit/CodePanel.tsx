@@ -22,6 +22,11 @@ export const codePanelSchema = z.object({
   lang: z.enum(["typescript", "python", "bash", "json", "sql"]).default("typescript"),
   title: z.string().optional(),
   highlight: z.array(z.number().int()).default([]).describe("1-based lines to spotlight. The rest dim."),
+  removed: z
+    .array(z.number().int())
+    .default([])
+    .describe("1-based lines a change took out: red, struck through, marked `-`. Show the old and new line one above the other."),
+  added: z.array(z.number().int()).default([]).describe("1-based lines a change put in: green, marked `+`."),
   side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject to the other side."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
@@ -30,7 +35,7 @@ type CodePanelProps = z.input<typeof codePanelSchema>;
 
 /** Highlighted code on a flat card over the scene. Goes in World's `overlay`. */
 export const CodePanel = (props: CodePanelProps) => {
-  const { code, lang, title, highlight, side, appear } = codePanelSchema.parse(props);
+  const { code, lang, title, highlight, removed, added, side, appear } = codePanelSchema.parse(props);
 
   if (appear <= 0) {
     return null;
@@ -38,6 +43,7 @@ export const CodePanel = (props: CodePanelProps) => {
 
   const lines = highlighter.codeToTokensBase(code.trim(), { lang, theme: theme.code });
   const slide = (1 - appear) * (side === "right" ? 60 : -60);
+  const isDiff = removed.length + added.length > 0;
 
   return (
     <div
@@ -57,11 +63,12 @@ export const CodePanel = (props: CodePanelProps) => {
         lineHeight: 1.65,
       }}
     >
-      {title ? (
-        <div style={{ padding: "0 38px 16px", fontFamily: theme.sans, fontSize: 24, color: theme.textDim }}>{title}</div>
-      ) : null}
+      {title ? <div style={{ padding: "0 38px 16px", fontFamily: theme.sans, fontSize: 24, color: theme.textDim }}>{title}</div> : null}
       {lines.map((tokens, index) => {
         const lit = highlight.includes(index + 1);
+        const change = removed.includes(index + 1) ? "removed" : added.includes(index + 1) ? "added" : null;
+        // A changed line carries its own color, so it never dims and never takes the spotlight's.
+        const mark = change ? theme[change] : lit ? theme.accent : null;
         return (
           <div
             key={index}
@@ -69,16 +76,19 @@ export const CodePanel = (props: CodePanelProps) => {
               padding: "0 38px",
               whiteSpace: "pre",
               minHeight: "1.65em",
-              opacity: highlight.length === 0 || lit ? 1 : 0.32,
-              background: lit ? `color-mix(in srgb, ${theme.accent} 12%, transparent)` : "transparent",
-              boxShadow: lit ? `inset 4px 0 0 ${theme.accent}` : "none",
+              opacity: highlight.length === 0 || lit || change ? 1 : 0.32,
+              background: mark ? `color-mix(in srgb, ${mark} ${change ? 16 : 12}%, transparent)` : "transparent",
+              boxShadow: mark ? `inset 4px 0 0 ${mark}` : "none",
             }}
           >
-            {tokens.map((token) => (
-              <span key={token.offset} style={{ color: token.color }}>
-                {token.content}
-              </span>
-            ))}
+            {isDiff ? <span style={{ display: "inline-block", width: "1.4em", color: mark ?? "transparent" }}>{change === "removed" ? "-" : "+"}</span> : null}
+            <span style={change === "removed" ? { textDecoration: "line-through", textDecorationColor: theme.removed, opacity: 0.7 } : undefined}>
+              {tokens.map((token) => (
+                <span key={token.offset} style={{ color: token.color }}>
+                  {token.content}
+                </span>
+              ))}
+            </span>
           </div>
         );
       })}

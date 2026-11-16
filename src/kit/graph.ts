@@ -3,7 +3,12 @@ import { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
 import type { Vec3 } from "./motion";
 import { nodeShapeSchema, type NodeShape } from "./shapes";
 
-const nodeSpecSchema = z.object({ id: z.string(), label: z.string(), shape: nodeShapeSchema.optional(), change: z.enum(["added", "changed", "removed"]).optional() });
+const nodeSpecSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  shape: nodeShapeSchema.optional(),
+  change: z.enum(["added", "changed", "removed"]).optional(),
+});
 
 export const graphSpecSchema = z.object({
   nodes: z.array(nodeSpecSchema).describe("Order within a column follows this order."),
@@ -100,11 +105,7 @@ export const layoutGraph = (input: GraphSpec): Graph => {
     const col = column.get(node.id) ?? 0;
     const siblings = spec.nodes.filter((n) => column.get(n.id) === col);
     const row = siblings.indexOf(node);
-    const position: Vec3 = [
-      (col - (columnCount - 1) / 2) * spec.columnGap,
-      NODE_HEIGHT / 2,
-      (row - (siblings.length - 1) / 2) * spec.rowGap,
-    ];
+    const position: Vec3 = [(col - (columnCount - 1) / 2) * spec.columnGap, NODE_HEIGHT / 2, (row - (siblings.length - 1) / 2) * spec.rowGap];
     return { ...node, position };
   });
 
@@ -132,8 +133,13 @@ export const radii = (radius: z.infer<typeof radiusSchema>): [number, number] =>
 export const hubSpecSchema = z.object({
   hub: nodeSpecSchema.describe("The one in the middle: the shared helper, the table, the service everything calls."),
   spokes: z.array(nodeSpecSchema).min(1).describe("What surrounds it, clockwise from the front right. Eight is comfortable; past twelve the labels crowd."),
-  radius: radiusSchema.default([8.5, 6]).describe("Distance from the hub to each spoke: one number for a circle, or [across, deep] for an ellipse that fills a wide frame."),
-  direction: z.enum(["in", "out"]).default("in").describe("in: the spokes call the hub. out: the hub calls the spokes. Sets which way the edges and their ids run."),
+  radius: radiusSchema
+    .default([8.5, 6])
+    .describe("Distance from the hub to each spoke: one number for a circle, or [across, deep] for an ellipse that fills a wide frame."),
+  direction: z
+    .enum(["in", "out"])
+    .default("in")
+    .describe("in: the spokes call the hub. out: the hub calls the spokes. Sets which way the edges and their ids run."),
 });
 
 export type HubSpec = z.input<typeof hubSpecSchema>;
@@ -155,4 +161,42 @@ export const layoutHub = (input: HubSpec): Graph => {
   });
   const edges = spec.spokes.map((spoke): [string, string] => (spec.direction === "in" ? [spoke.id, spec.hub.id] : [spec.hub.id, spoke.id]));
   return toGraph([{ ...spec.hub, position: [0, y, 0] }, ...spokes], edges);
+};
+
+export const lanesSchema = z.object({
+  lanes: z.array(z.string()).min(2).max(3).default(["before", "after"]).describe("One name per copy, back to front. The first is furthest from the camera."),
+  gap: z.number().positive().optional().describe("Distance from one lane's middle to the next. Defaults to the graph's own depth plus room for labels."),
+});
+
+export type Lane = Graph & {
+  /** Where a Label naming the lane goes: left of its first column. */
+  labelAt: Vec3;
+};
+
+/**
+ * The same graph once per lane, one behind the other, so two versions of a
+ * system can run side by side in one shot: before and after, v1 and v2. Each
+ * copy is a Graph of its own. Its node ids are `lane/id`, so
+ * `lanes.after.position("after/api")` and Focus tell the copies apart.
+ */
+export const layoutLanes = <Name extends string = "before" | "after">(
+  graph: Graph,
+  input: { lanes?: readonly Name[]; gap?: number } = {},
+): Record<Name, Lane> => {
+  const spec = lanesSchema.parse(input);
+  const depths = graph.nodes.map((node) => node.position[2]);
+  const lefts = graph.nodes.map((node) => node.position[0]);
+  const gap = spec.gap ?? Math.max(...depths) - Math.min(...depths) + 6.5;
+  const entries = spec.lanes.map((name, index): [string, Lane] => {
+    const shift = (index - (spec.lanes.length - 1) / 2) * gap;
+    const nodes = graph.nodes.map((node) => ({
+      ...node,
+      id: `${name}/${node.id}`,
+      position: [node.position[0], node.position[1], node.position[2] + shift] as Vec3,
+    }));
+    const edges = graph.edges.map((edge): [string, string] => [`${name}/${edge.from}`, `${name}/${edge.to}`]);
+    const middle = (Math.max(...depths) + Math.min(...depths)) / 2;
+    return [name, { ...toGraph(nodes, edges), labelAt: [Math.min(...lefts) - NODE_WIDTH * 1.6, NODE_HEIGHT / 2, middle + shift] }];
+  });
+  return Object.fromEntries(entries) as Record<Name, Lane>;
 };

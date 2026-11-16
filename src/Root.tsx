@@ -1,5 +1,7 @@
 import { Composition } from "remotion";
+import { Storyboard } from "./kit";
 import { ActorGallery, actorGalleryMeta } from "./gallery/ActorGallery";
+import { CompareGallery, compareGalleryMeta } from "./gallery/CompareGallery";
 import { OverlayGallery, overlayGalleryMeta } from "./gallery/OverlayGallery";
 import { PanelGallery, panelGalleryMeta } from "./gallery/PanelGallery";
 import { ShapeGallery, shapeGalleryMeta } from "./gallery/ShapeGallery";
@@ -10,10 +12,12 @@ import { PrEndpoint, prEndpointMeta } from "./videos/pr-endpoint/PrEndpoint";
 import { PrGraphql, prGraphqlMeta } from "./videos/pr-graphql/PrGraphql";
 import { PrShared, prSharedMeta } from "./videos/pr-shared/PrShared";
 import { LoadBalancer, loadBalancerMeta } from "./videos/load-balancer/LoadBalancer";
+import { loadBalancerBoard, loadBalancerBoardMeta } from "./videos/load-balancer/board";
 
 export const Root = () => (
   <>
     <Composition component={LoadBalancer} {...loadBalancerMeta} />
+    <Composition component={Storyboard} {...loadBalancerBoardMeta} defaultProps={loadBalancerBoard} />
     <Composition component={PrApiKeys} {...prApiKeysMeta} />
     <Composition component={PrAuth} {...prAuthMeta} />
     <Composition component={PrShared} {...prSharedMeta} />
@@ -22,6 +26,7 @@ export const Root = () => (
     <Composition component={PrCron} {...prCronMeta} />
     <Composition component={ShapeGallery} {...shapeGalleryMeta} />
     <Composition component={ActorGallery} {...actorGalleryMeta} />
+    <Composition component={CompareGallery} {...compareGalleryMeta} />
     <Composition component={PanelGallery} {...panelGalleryMeta} />
     <Composition component={OverlayGallery} {...overlayGalleryMeta} />
   </>
