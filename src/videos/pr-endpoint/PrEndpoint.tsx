@@ -126,6 +126,7 @@ export const PrEndpoint = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: everything, azimuth: 8, padding: 1, shift: [0, 0.08] },
           { at: cue.added - 8, targets: [at("router"), at("users"), at("export")], azimuth: -6, padding: 1.12 },

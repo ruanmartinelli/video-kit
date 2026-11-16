@@ -125,7 +125,7 @@ export const PrGraphql = () => {
         </>
       }
     >
-      <CameraRig shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), azimuth: -8, padding: 1.34, shift: [0.18, 0] }]} />
+      <CameraRig graph={graph} shots={[{ at: 0, targets: graph.nodes.map((node) => node.position), azimuth: -8, padding: 1.34, shift: [0.18, 0] }]} />
 
       <Graph3D
         graph={graph}

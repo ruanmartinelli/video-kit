@@ -49,6 +49,28 @@ const assertClearEdges = (nodes: Graph["nodes"], edges: [string, string][]) => {
   }
 };
 
+/** Width of a node's label in world units: 0.36 tall, about 0.6 of that per character. */
+const labelWidth = (label: string) => label.length * 0.36 * 0.6;
+
+/** Two labels side by side in the same row touch whatever the camera does: say so, and how wide the columns have to be. */
+const assertClearLabels = (nodes: Graph["nodes"], columnGap: number) => {
+  for (const a of nodes) {
+    for (const b of nodes) {
+      const apart = b.position[0] - a.position[0];
+      if (a.position[2] !== b.position[2] || apart <= 0) {
+        continue;
+      }
+      const needed = (labelWidth(a.label) + labelWidth(b.label)) / 2 + 0.3;
+      if (needed > apart) {
+        const columns = Math.round(apart / columnGap);
+        throw new Error(
+          `The labels "${a.label}" and "${b.label}" would touch. Shorten one, or set \`columnGap\` to ${Math.ceil((needed / columns) * 10) / 10} or more.`,
+        );
+      }
+    }
+  }
+};
+
 /**
  * Places nodes so edges flow left to right: each node sits one column past its
  * furthest upstream node, then moves right until it is one column before its
@@ -110,6 +132,7 @@ export const layoutGraph = (input: GraphSpec): Graph => {
   });
 
   assertClearEdges(nodes, spec.edges);
+  assertClearLabels(nodes, spec.columnGap);
   return toGraph(nodes, spec.edges);
 };
 

@@ -1,20 +1,5 @@
 import { useCurrentFrame } from "remotion";
-import {
-  CameraRig,
-  Caption,
-  Chip,
-  CodePanel,
-  createTimeline,
-  ease,
-  Graph3D,
-  layoutGraph,
-  Narration,
-  Packet,
-  pop,
-  pulse,
-  Tables,
-  World,
-} from "../../kit";
+import { CameraRig, Caption, Chip, CodePanel, createTimeline, ease, Graph3D, layoutGraph, Narration, Packet, pop, pulse, Tables, World } from "../../kit";
 import narration from "./narration.json";
 
 const FPS = 30;
@@ -171,6 +156,7 @@ export const PrApiKeys = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: path, azimuth: 8 },
           { at: cue.schema - 8, targets: [service, db], azimuth: -14, padding: 1.75, shift: [-0.16, 0] },

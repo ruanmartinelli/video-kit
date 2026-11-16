@@ -171,6 +171,7 @@ export const PrAuth = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: path, azimuth: 8 },
           {
@@ -194,7 +195,7 @@ export const PrAuth = () => {
             view: "close",
             azimuth: -16,
             padding: 1.6,
-            shift: [-0.27, 0.04],
+            panel: "right",
           },
         ]}
       />

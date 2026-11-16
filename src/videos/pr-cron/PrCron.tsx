@@ -96,6 +96,7 @@ export const PrCron = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: everything, azimuth: 10, padding: 1.05 },
           { at: cue.newJob - 6, targets: [at("service"), at("queue"), at("expire"), at("db")], azimuth: -8, padding: 1.05 },

@@ -1,6 +1,7 @@
 import { Billboard, Outlines } from "@react-three/drei";
-import type { ReactNode } from "react";
-import { Color } from "three";
+import { useFrame } from "@react-three/fiber";
+import { useRef, type ReactNode } from "react";
+import { Color, Vector3, type Group } from "three";
 import { z } from "zod";
 import { useDim } from "./Focus";
 import { Type } from "./Label";
@@ -44,6 +45,9 @@ const OUTLINE_THICKNESS = 3;
 const CHANGE_OUTLINE_THICKNESS = 7;
 /** From the node's center to the bottom of its label: clears the box's outline from any camera angle. */
 const LABEL_LIFT = 1.2;
+const LABEL_SIZE = 0.36;
+/** Average width of a character, as a share of the text size. On the wide side, so a label hides a little early. */
+const LABEL_CHARACTER = 0.6;
 
 const BADGE_RADIUS = 0.27;
 const BADGE_AT: [number, number, number] = [0.98, 0.66, 0];
@@ -107,6 +111,26 @@ const Badge = ({ kind, opacity }: { kind: NonNullable<z.infer<typeof nodeStateSc
 export const Node = ({ children, ...props }: NodeProps) => {
   const { id, position, label, shape, change, active, tone, appear, open, badge } = nodeSchema.parse(props);
   const dim = useDim(id);
+  const text = useRef<Group>(null);
+
+  // A label the frame edge cuts reads as a mistake, while a node half out of frame with no label reads as background.
+  // So the label shows only while all of it is on screen. Like a Billboard, this reads the camera, not a clock.
+  useFrame(({ camera }) => {
+    if (!text.current) {
+      return;
+    }
+    camera.updateMatrixWorld();
+    const across = new Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+    const upward = new Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
+    const half = (label.length * LABEL_SIZE * LABEL_CHARACTER * appear) / 2;
+    const corner = (side: number, lift: number) =>
+      new Vector3(...position)
+        .addScaledVector(upward, lift * appear)
+        .addScaledVector(across, side * half)
+        .project(camera);
+    const [low, high] = [corner(-1, LABEL_LIFT), corner(1, LABEL_LIFT + LABEL_SIZE)];
+    text.current.visible = low.x >= -1 && high.x <= 1 && low.y >= -1 && high.y <= 1;
+  });
 
   if (appear <= 0) {
     return null;
@@ -158,9 +182,11 @@ export const Node = ({ children, ...props }: NodeProps) => {
       {badge ? <Badge kind={badge} opacity={1 - 0.75 * dim} /> : null}
       {/* Lifted toward the top of the screen, not the top of the world: from above, a label over the box's roof would sit on the roof. */}
       <Billboard>
-        <Type position={[0, LABEL_LIFT, 0]} size={0.36} opacity={1 - 0.75 * dim}>
-          {label}
-        </Type>
+        <group ref={text}>
+          <Type position={[0, LABEL_LIFT, 0]} size={LABEL_SIZE} opacity={1 - 0.75 * dim}>
+            {label}
+          </Type>
+        </group>
       </Billboard>
     </group>
   );

@@ -64,12 +64,7 @@ const cue = {
   inside: t.at("inside"),
   list: t.at("inside", "list"),
   pointer: t.at("inside", "pointer"),
-  turns: [
-    t.at("roundrobin", "one"),
-    t.at("roundrobin", "two"),
-    t.at("roundrobin", "three"),
-    t.at("roundrobin", "back"),
-  ] as const,
+  turns: [t.at("roundrobin", "one"), t.at("roundrobin", "two"), t.at("roundrobin", "three"), t.at("roundrobin", "back")] as const,
   closes: t.at("failure") - 20,
   dies: t.at("failure", "dies"),
   pulls: t.at("failure", "pulls"),
@@ -78,8 +73,7 @@ const cue = {
   down: t.at("cost", "down"),
 };
 
-const every = (from: number, to: number, step: number) =>
-  Array.from({ length: Math.max(0, Math.ceil((to - from) / step)) }, (_, i) => from + i * step);
+const every = (from: number, to: number, step: number) => Array.from({ length: Math.max(0, Math.ceil((to - from) / step)) }, (_, i) => from + i * step);
 
 // Before the balancer exists: requests go straight to Server B, slowly at first, then a flood.
 const DIRECT_TRAVEL = 26;
@@ -110,8 +104,7 @@ const SLOTS = [-0.6, 0, 0.6] as const;
 /** What is inside the balancer: one slot per server, and a pointer to whose turn it is. */
 const Rotation = ({ frame }: { frame: number }) => {
   const [one, two, three, back] = cue.turns;
-  const turn =
-    ease(frame, two - 8, two) + ease(frame, three - 8, three) - 2 * ease(frame, back - 10, back);
+  const turn = ease(frame, two - 8, two) + ease(frame, three - 8, three) - 2 * ease(frame, back - 10, back);
   const pointerX = SLOTS[0] + turn * (SLOTS[1] - SLOTS[0]);
   const lit = [pulse(frame, one, 14) + pulse(frame, back, 14), pulse(frame, two, 14), pulse(frame, three, 14)];
 
@@ -121,11 +114,7 @@ const Rotation = ({ frame }: { frame: number }) => {
         <group key={x} position={[x, -0.3, 0]}>
           <mesh>
             <boxGeometry args={[0.44, 0.14, 0.44]} />
-            <meshStandardMaterial
-              color={theme.surface}
-              emissive={theme.accent}
-              emissiveIntensity={(0.12 + 1.1 * (lit[index] ?? 0)) * theme.glow}
-            />
+            <meshStandardMaterial color={theme.surface} emissive={theme.accent} emissiveIntensity={(0.12 + 1.1 * (lit[index] ?? 0)) * theme.glow} />
           </mesh>
           <Label position={[0, 0.12, 0]} size={0.17}>
             {["A", "B", "C"][index] ?? ""}
@@ -172,6 +161,7 @@ export const LoadBalancer = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: [client, serverB], azimuth: -12 },
           { at: cue.flood - 12, targets: [serverB], view: "close", azimuth: -30, padding: 1.35 },
@@ -220,12 +210,7 @@ export const LoadBalancer = () => {
       {routed.map(({ start, server, lost }) => (
         <group key={start}>
           <Packet from={client} to={lb} progress={ease(frame, start, start + LEG)} />
-          <Packet
-            from={lb}
-            to={graph.position(server)}
-            progress={ease(frame, start + LEG, start + 2 * LEG)}
-            tone={lost ? "danger" : "accent"}
-          />
+          <Packet from={lb} to={graph.position(server)} progress={ease(frame, start + LEG, start + 2 * LEG)} tone={lost ? "danger" : "accent"} />
         </group>
       ))}
     </World>

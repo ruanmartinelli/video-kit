@@ -199,13 +199,14 @@ export const BugLowStock = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: everything, azimuth: 6, padding: 1, shift: [0, -0.02] },
-          { at: cue.stock - 8, targets: [at("app"), at("api"), at("db")], azimuth: -6, padding: 1.7, shift: [-0.2, -0.14] },
-          { at: cue.trigger - 8, targets: everything, azimuth: 12, padding: 1, shift: [0, -0.1] },
-          { at: cue.day - 8, targets: [at("trigger"), at("job"), at("mail")], azimuth: 10, padding: 1.25, shift: [-0.12, -0.1] },
-          { at: cue.fix - 8, targets: [at("trigger")], view: "close", azimuth: 16, padding: 2.2, shift: [-0.26, 0.02] },
-          { at: cue.replay - 8, targets: everything, azimuth: 12, padding: 1, shift: [0, -0.1] },
+          { at: cue.stock - 8, targets: [at("app"), at("api"), at("db")], azimuth: -6, panel: "right" },
+          { at: cue.trigger - 8, targets: [at("db"), at("trigger"), at("job"), at("mail")], azimuth: 12, panel: "right" },
+          { at: cue.day - 8, targets: [at("trigger"), at("job"), at("mail")], azimuth: 10, panel: "right" },
+          { at: cue.fix - 8, targets: [at("trigger")], view: "close", azimuth: 16, padding: 2.2, panel: "right" },
+          { at: cue.replay - 8, targets: [at("db"), at("trigger"), at("job"), at("mail")], azimuth: 12, panel: "right" },
           { at: cue.cost - 8, targets: everything, azimuth: 2, padding: 1, shift: [0, -0.04] },
         ]}
       />

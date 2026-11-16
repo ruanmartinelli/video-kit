@@ -125,6 +125,7 @@ export const PrShared = () => {
       }
     >
       <CameraRig
+        graph={graph}
         shots={[
           { at: 0, targets: [cart, helper], azimuth: -12, padding: 1.25 },
           { at: cue.helper - 6, targets: [helper], view: "close", azimuth: 14, padding: 2.2 },

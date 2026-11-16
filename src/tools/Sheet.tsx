@@ -9,15 +9,19 @@ const LABEL = 26;
 
 export const SHEET_TILES = COLUMNS * ROWS;
 
+export type SheetProps = { images: string[]; labels: string[] };
+
+const heightFor = (tiles: number) => Math.max(1, Math.ceil(tiles / COLUMNS)) * (TILE[1] + LABEL + GAP) + GAP;
+
 export const sheetMeta = {
   id: "Sheet",
   fps: 30,
   width: COLUMNS * TILE[0] + (COLUMNS + 1) * GAP,
-  height: ROWS * (TILE[1] + LABEL) + (ROWS + 1) * GAP,
+  height: heightFor(SHEET_TILES),
   durationInFrames: 1,
+  // A sheet that is not full is only as tall as its rows.
+  calculateMetadata: ({ props }: { props: SheetProps }) => ({ height: heightFor(props.images.length) }),
 };
-
-export type SheetProps = { images: string[]; labels: string[] };
 
 /** A contact sheet: up to twelve stills on one image, each under its frame number. `pnpm stills <Id> cues --sheet` fills it in. */
 export const Sheet = ({ images, labels }: SheetProps) => (
