@@ -43,10 +43,7 @@ type TimelineOptions = {
 
 const normalize = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 
-export const createTimeline = (
-  narration: Narration,
-  { fps = 30, leadMs = 500, gapMs = 350, tailMs = 1200 }: TimelineOptions = {},
-): Timeline => {
+export const createTimeline = (narration: Narration, { fps = 30, leadMs = 500, gapMs = 350, tailMs = 1200 }: TimelineOptions = {}): Timeline => {
   const toFrames = (ms: number) => Math.round((ms / 1000) * fps);
 
   let cursorMs = leadMs;
@@ -83,4 +80,14 @@ export const createTimeline = (
     },
     end: (beatId) => find(beatId).to,
   };
+};
+
+/**
+ * The frames worth looking at: for each beat, just after it starts, its middle
+ * and just before it ends, plus the last frame. `pnpm stills <Id> cues` renders these.
+ */
+export const cueFrames = (timeline: Timeline) => {
+  const last = timeline.durationInFrames - 1;
+  const frames = timeline.beats.flatMap((beat) => [beat.from + 10, Math.round((beat.from + beat.to) / 2), beat.to - 2]);
+  return [...new Set([...frames, last].map((frame) => Math.min(last, Math.max(0, frame))))].sort((a, b) => a - b);
 };

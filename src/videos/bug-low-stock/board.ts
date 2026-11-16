@@ -1,4 +1,4 @@
-import { storyboardMeta, type StoryboardProps } from "../../kit";
+import type { StoryboardProps } from "../../kit";
 import { bugLowStockMeta, timeline as t } from "./BugLowStock";
 
 /** The low stock bug as one sheet to present from. `pnpm storyboard BugLowStockBoard`. */
@@ -11,5 +11,3 @@ export const bugLowStockBoard: StoryboardProps = {
     { frame: t.at("quiet", "crosses") + 4, note: "Replayed, 120 to 110 never crosses the minimum, so the same order sends nothing." },
   ],
 };
-
-export const bugLowStockBoardMeta = storyboardMeta("BugLowStockBoard", bugLowStockBoard);

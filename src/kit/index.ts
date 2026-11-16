@@ -47,5 +47,6 @@ export { Storyboard, storyboardMeta, storyboardPanelSchema, storyboardSchema, ty
 export { columnSchema, linkSchema, Tables, tableSchema, tablesSchema } from "./Tables";
 export { Term, termSchema } from "./Term";
 export { theme } from "./theme";
-export { createTimeline, type Narration as NarrationData, type Timeline } from "./timeline";
+export { createTimeline, cueFrames, type Narration as NarrationData, type Timeline } from "./timeline";
+export type { Video } from "./video";
 export { World } from "./World";

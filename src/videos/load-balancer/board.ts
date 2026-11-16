@@ -1,4 +1,4 @@
-import { storyboardMeta, type StoryboardProps } from "../../kit";
+import type { StoryboardProps } from "../../kit";
 import { loadBalancerMeta, timeline as t } from "./LoadBalancer";
 
 /** The load balancer video as one sheet to present from. `pnpm storyboard LoadBalancerBoard`. */
@@ -11,5 +11,3 @@ export const loadBalancerBoard: StoryboardProps = {
     { frame: t.at("around") + 40, note: "A server that fails its health check leaves the list, and traffic goes around it." },
   ],
 };
-
-export const loadBalancerBoardMeta = storyboardMeta("LoadBalancerBoard", loadBalancerBoard);
