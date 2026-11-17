@@ -60,7 +60,7 @@ export const Node = (props: NodeProps) => {
 
   // A label the frame edge would cut reads as a mistake, while a plate half out of frame with no label reads as background.
   const text = labelBox(label, [x, y], scale);
-  const labelWhole = text.left >= 0 && text.right <= camera.width && text.top >= 0 && text.bottom <= camera.height;
+  const labelWhole = text.left >= camera.left && text.right <= camera.right && text.top >= 0 && text.bottom <= camera.height;
 
   return (
     <g opacity={1 - 0.72 * dim}>

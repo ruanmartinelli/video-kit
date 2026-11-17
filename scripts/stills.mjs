@@ -22,7 +22,8 @@ if (!target) {
   process.exit(1);
 }
 
-const { serveUrl, id, out, dir: video } = await open(target);
+const { serveUrl, id, out, dir: video, bundleSeconds } = await open(target);
+const started = performance.now();
 const composition = await selectComposition({ serveUrl, id, chromiumOptions });
 
 const cueFrames = async () => {
@@ -76,3 +77,4 @@ if (sheet) {
   }
   console.log(`${frames.length} frames on the sheets. For one frame full size: pnpm stills ${target} <frame> 1`);
 }
+console.log(`bundled in ${bundleSeconds.toFixed(1)}s, ${frames.length} stills in ${((performance.now() - started) / 1000).toFixed(1)}s`);

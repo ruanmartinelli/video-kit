@@ -63,10 +63,12 @@ const withKit = (config) => ({
  * id, and the folder its output belongs in.
  */
 export const open = async (argument) => {
+  const started = performance.now();
+  const bundled = () => (performance.now() - started) / 1000;
   const dir = resolveVideo(argument);
   if (!dir) {
     const serveUrl = await bundle({ entryPoint: path.join(kit, "src/index.tsx"), publicDir: path.join(kit, "public"), webpackOverride: withKit });
-    return { serveUrl, id: argument, out: path.join(kit, "out"), dir: null };
+    return { serveUrl, id: argument, out: path.join(kit, "out"), dir: null, bundleSeconds: bundled() };
   }
 
   const name = path.basename(dir);
@@ -90,9 +92,10 @@ export const open = async (argument) => {
     await cp(path.join(dir, "audio"), path.join(serveUrl, "public/narration", name), { recursive: true });
   }
 
+  const bundleSeconds = bundled();
   const { props } = await selectComposition({ serveUrl, id: "Cues", chromiumOptions });
   const [id] = Object.keys(props.cues);
-  return { serveUrl, id, out: path.join(dir, "out"), dir };
+  return { serveUrl, id, out: path.join(dir, "out"), dir, bundleSeconds };
 };
 
 /** How a path reads to whoever ran the command. */

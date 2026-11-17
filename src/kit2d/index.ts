@@ -4,9 +4,14 @@
 // Stage and actors, drawn flat.
 export { CameraRig, World } from "./World";
 export { Graph, Graph as Graph3D } from "./Graph";
+export { Callout } from "./Callout";
+export { Fan } from "./Fan";
+export { Gate, gatePoint } from "./Gate";
+export { Label } from "./Label";
 export { Node } from "./Node";
 export { Packet } from "./Packet";
-export { Pipe } from "./Pipe";
+export { CLEAR as NODE_CLEAR, Pipe } from "./Pipe";
+export { Ripple } from "./Ripple";
 
 // Everything that was already flat or has nothing to draw is the 3D kit's own.
 export { Bars, barSchema, barsSchema } from "../kit/Bars";

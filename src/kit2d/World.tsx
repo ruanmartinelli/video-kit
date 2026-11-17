@@ -20,6 +20,9 @@ type CameraRigProps = z.input<typeof cameraRigSchema> & {
  */
 export const CameraRig = (_: CameraRigProps) => null;
 
+/** Half the width, in pixels, over which the scene fades out beside a docked panel. */
+const FADE = 50;
+
 const CameraContext = createContext<Camera | null>(null);
 
 /** The camera for the frame being drawn. Every flat actor places itself with it. */
@@ -74,6 +77,7 @@ export const World = ({ children, overlay }: WorldProps) => {
   }
   const camera = resolveCamera(shots, frame, moveFrames, width, height);
   const [originX, originY] = camera.point([0, 0, 0]);
+  const docked = camera.left > 0 || camera.right < width;
 
   return (
     <AbsoluteFill style={{ backgroundColor: theme.background }}>
@@ -85,7 +89,23 @@ export const World = ({ children, overlay }: WorldProps) => {
           </pattern>
         </defs>
         <rect width={width} height={height} fill="url(#floor)" />
-        <CameraContext.Provider value={camera}>{children}</CameraContext.Provider>
+        {/* Beside a docked panel the scene fades out before it reaches the panel, so nothing sits half under it. */}
+        {docked ? (
+          <defs>
+            <linearGradient id="clear-fade" gradientUnits="userSpaceOnUse" x1={0} x2={width}>
+              <stop offset={(camera.left - FADE) / width} stopColor="black" />
+              <stop offset={(camera.left + FADE) / width} stopColor="white" />
+              <stop offset={(camera.right - FADE) / width} stopColor="white" />
+              <stop offset={(camera.right + FADE) / width} stopColor="black" />
+            </linearGradient>
+            <mask id="clear" maskUnits="userSpaceOnUse" x={0} y={0} width={width} height={height}>
+              <rect width={width} height={height} fill="url(#clear-fade)" />
+            </mask>
+          </defs>
+        ) : null}
+        <g mask={docked ? "url(#clear)" : undefined}>
+          <CameraContext.Provider value={camera}>{children}</CameraContext.Provider>
+        </g>
       </svg>
       <AbsoluteFill>{overlay}</AbsoluteFill>
     </AbsoluteFill>
