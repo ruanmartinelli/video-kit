@@ -11,7 +11,7 @@
     "storyboard": "node scripts/storyboard.mjs",
     "kit:api": "node scripts/kit-api.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "tsc --noEmit && node scripts/kit-api.mjs && git diff --exit-code references && node scripts/stills.mjs template cues --sheet"
+    "test": "tsc --noEmit && node scripts/kit-api.mjs && git diff --exit-code references && node scripts/stills.mjs template cues --sheet && node scripts/stills.mjs template-2d cues --sheet"
   },
   "devDependencies": {
     "@fontsource/inter": "^5.3.0",

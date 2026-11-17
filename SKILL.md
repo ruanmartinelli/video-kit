@@ -20,14 +20,14 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 
 1. **Read the reference for the kind of video.** A pull request: `references/pr-review.md`. A bug, a plan, a rollout or how a system works: `references/explaining.md`. Each says how that kind of video opens and ends and which pieces carry it.
 
-2. **Start from the template and write the beat sheet.** Copy `template/Template.tsx`, `template/video.ts` and `template/script.json` into the video's folder, and rename the component and its `id`. `script.json` is a voice and a list of beats, each `{ "id", "text" }`. A beat is one spoken sentence and one thing changing on screen. The video answers one question and follows one concrete example through the system. Done when you can say, for every beat, what moves on screen while it is spoken. A beat a still image could carry gets rewritten or cut.
+2. **Start from the template and write the beat sheet.** There are two, and they are the same video: `template/` is 3D and `template-2d/` is flat. Make it 3D unless the request asks for a flat or 2D video. Copy that template's `Template.tsx`, `video.ts` and `script.json` into the video's folder, and rename the component and its `id`. `script.json` is a voice and a list of beats, each `{ "id", "text" }`. A beat is one spoken sentence and one thing changing on screen. The video answers one question and follows one concrete example through the system. Done when you can say, for every beat, what moves on screen while it is spoken. A beat a still image could carry gets rewritten or cut.
 
 3. **Narrate.** `pnpm narrate <folder>` writes `narration.json` and one MP3 per beat. Unchanged beats are reused. The speech service throttles after a burst, and the script waits it out by itself, for minutes if it has to: let it run. If it still gives up, run it again later. Reword a beat only when it alone keeps failing while the beats after it go through.
 
 4. **Compose.** `Template.tsx` is a whole small video and the shape of every bigger one: a timeline, the cues named once, a graph, one `World` with one `CameraRig`, actors in the world and panels in `overlay`. Grow it into yours.
 
    `references/pieces.md` lists every piece in one line each. Read `references/pieces/<id>.md` for the pieces you are about to use, all in one go: props, defaults and an example. That is the whole API; the kit's source is for changing the kit.
-   - Everything is imported from `video-kit`.
+   - Everything is imported from `video-kit`, or from `video-kit/2d` in a flat video. The pieces, their props and the reference pages are the same for both; "Flat videos" below lists what differs.
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `between(frame, from, to)` is 1 while something is on screen, for a panel's `appear`. `hop(frame, start)` is a packet's `progress` for a trip that starts at a cue. `pulse(frame, at)` lights a node on the frame something reaches it.
    - `layoutGraph(...)` gives positions for a flow; `layoutHub(...)` for one thing with many dependents. Give each node the `shape` that names what it is; `pieces/shapes.md` lists them. Packets, extra pipes and camera targets all read `graph.position(id)`.
@@ -63,5 +63,13 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 **Text.** 3D text goes through `Label`, which holds the render until the text is typeset; raw drei `<Text>` is missing from rendered frames. Sentences and code go in `overlay`, flat.
 
 **Coordinates.** Node positions come from `layoutGraph`. Hand-written coordinates belong only inside a `Node`'s children, in its local 2 x 1.2 x 2 box.
+
+**Flat videos.** `video-kit/2d` draws the same pieces as plates on a flat grid, and the camera pans and zooms. What differs from the 3D kit:
+- A shot needs only `targets`, and `padding` to zoom. `azimuth`, `elevation` and `view` do nothing.
+- The camera keeps its targets clear of the chip row at the top, the caption at the bottom and a docked `panel` by itself, and beside a panel the scene fades out before it reaches it. A flat shot rarely needs `shift`.
+- Rows sit closer together than the layout's `rowGap` says, so a graph fills more of the frame.
+- `Graph3D` is also exported as `Graph`.
+- `Node`'s `open` is 3D only: it throws in a flat video. Show a node's internals in a panel.
+- The check for overlapping labels also catches a label that sits on another node.
 
 **Errors are instructions.** Every piece parses its props with a Zod schema, and the layout and the camera check what they are given. An error at render names the prop or the shot and says what to change: do that, then render again.
