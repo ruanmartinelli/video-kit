@@ -60,7 +60,7 @@ export const Template = () => {
         graph={graph}
         shots={[
           { at: 0, targets: everything },
-          { at: cue.code - 8, targets: [at("api")], view: "close", azimuth: -24, padding: 1.5, panel: "right" },
+          { at: cue.code - 8, targets: [at("api")], padding: 1.5, panel: "right" },
         ]}
       />
 

@@ -1,21 +1,16 @@
 import { shotSchema, type Shot } from "../kit/camera";
 import type { Vec3 } from "../kit/motion";
 import { settled } from "./camera";
+import { keyOf, LABEL, labelHalf, PLATE } from "./metrics";
 
 type Framed = { id: string; label: string; position: Vec3 };
-
-/** A node's plate and its label, in world units. Node draws with the same numbers. */
-export const PLATE = { width: 2.3, height: 1.7, radius: 0.22 };
-export const LABEL = { lift: 0.32, size: 0.4 };
-/** Average width of a character, as a share of the text size. On the wide side, so a near miss is caught. */
-const CHARACTER = 0.6;
 
 type Box = { left: number; right: number; top: number; bottom: number };
 const apart = (a: Box, b: Box) => a.right < b.left || b.right < a.left || a.bottom < b.top || b.bottom < a.top;
 
 /** Where a node's label is on the frame. */
 export const labelBox = (label: string, [x, y]: [number, number], scale: number): Box => {
-  const half = (label.length * LABEL.size * CHARACTER * scale) / 2;
+  const half = labelHalf(label) * scale;
   const bottom = y - (PLATE.height / 2 + LABEL.lift) * scale;
   return { left: x - half, right: x + half, top: bottom - LABEL.size * scale, bottom };
 };
@@ -26,9 +21,10 @@ export const labelBox = (label: string, [x, y]: [number, number], scale: number)
  * label or of another node throws, with what to change.
  */
 export const assertFraming = (shots: Shot[], nodes: Framed[], width: number, height: number) => {
+  const labels = new Map(nodes.map((node) => [keyOf(node.position), node.label]));
   for (const input of shots) {
     const shot = shotSchema.parse(input);
-    const camera = settled(input, width, height);
+    const camera = settled(input, width, height, labels);
     const seen = nodes
       .filter((node) => !shot.allow.includes(node.id))
       .map((node) => {

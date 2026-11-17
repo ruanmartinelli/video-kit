@@ -2,7 +2,8 @@ import type { z } from "zod";
 import { useDim } from "../kit/Focus";
 import { nodeSchema } from "../kit/schemas";
 import { theme } from "../kit/theme";
-import { LABEL, labelBox, PLATE } from "./framing";
+import { labelBox } from "./framing";
+import { LABEL, PLATE } from "./metrics";
 import { shapes } from "./shapes";
 import { useCamera } from "./World";
 

@@ -1,11 +1,11 @@
 ---
 name: video-kit
-description: Make a narrated 3D explainer video from React components. Use when asked for a video that explains a pull request, a bug and its fix, a plan or rollout, or how a system works.
+description: Make a narrated explainer video, 3D or flat, from React components. Use when asked for a video that explains a pull request, a bug and its fix, a plan or rollout, or how a system works.
 ---
 
 # Make a video with video-kit
 
-video-kit turns a beat sheet into a narrated 3D video: one sentence per beat, one thing changing on screen per sentence.
+video-kit turns a beat sheet into a narrated video, 3D or flat: one sentence per beat, one thing changing on screen per sentence.
 
 This folder is the kit. Run every command below from it (`cd` to this skill's directory). On first use, when it has no `node_modules`, run `pnpm install` once.
 
@@ -66,7 +66,7 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 
 **Flat videos.** `video-kit/2d` draws the same pieces as plates on a flat grid, and the camera pans and zooms. What differs from the 3D kit:
 - A shot needs only `targets`, and `padding` to zoom. `azimuth`, `elevation` and `view` do nothing.
-- The camera keeps its targets clear of the chip row at the top, the caption at the bottom and a docked `panel` by itself, and beside a panel the scene fades out before it reaches it. A flat shot rarely needs `shift`.
+- The camera keeps its targets, and their whole labels when it has the `graph`, clear of the chip row at the top, the caption at the bottom and a docked `panel` by itself. Toward a panel or the frame edge the scene fades out, so a node the shot does not target leaves softly. A flat shot rarely needs `shift`; the panel pages' advice to pair a panel with `shift` is for 3D.
 - Rows sit closer together than the layout's `rowGap` says, so a graph fills more of the frame.
 - `Graph3D` is also exported as `Graph`.
 - `Node`'s `open` is 3D only: it throws in a flat video. Show a node's internals in a panel.

@@ -1,5 +1,6 @@
 import { shotSchema, type Shot } from "../kit/camera";
 import { ease, lerp, type Vec3 } from "../kit/motion";
+import { keyOf, labelHalf } from "./metrics";
 
 /** Where the flat world sits on the frame: world units to pixels. */
 export type Camera = {
@@ -31,14 +32,21 @@ const MAX_SCALE = 150;
 
 type Pose = { centerX: number; centerY: number; screenX: number; screenY: number; scale: number; left: number; right: number };
 
-/** Where a shot puts the world: its targets fill the part of the frame nothing else is using. */
-export const poseOf = (input: Shot, width: number, height: number): Pose => {
+/** The label of the node at each position, when the rig was given the graph. */
+export type Labels = Map<string, string>;
+
+/**
+ * Where a shot puts the world: its targets fill the part of the frame nothing
+ * else is using. A target that is a node gets room for its whole label, so a
+ * long name is never the thing a panel or the frame edge cuts.
+ */
+export const poseOf = (input: Shot, width: number, height: number, labels: Labels = new Map()): Pose => {
   const shot = shotSchema.parse(input);
-  const xs = shot.targets.map((target) => target[0]);
+  const reach = (target: Vec3) => Math.max(ROOM.across, labelHalf(labels.get(keyOf(target)) ?? "") + 0.3);
   const ys = shot.targets.map((target) => target[2] * DEPTH);
   const box = {
-    left: Math.min(...xs) - ROOM.across,
-    right: Math.max(...xs) + ROOM.across,
+    left: Math.min(...shot.targets.map((target) => target[0] - reach(target))),
+    right: Math.max(...shot.targets.map((target) => target[0] + reach(target))),
     top: Math.min(...ys) - ROOM.above,
     bottom: Math.max(...ys) + ROOM.below,
   };
@@ -73,17 +81,17 @@ const cameraAt = (pose: Pose, width: number, height: number): Camera => ({
 });
 
 /** The camera once it has settled on a shot. */
-export const settled = (shot: Shot, width: number, height: number) => cameraAt(poseOf(shot, width, height), width, height);
+export const settled = (shot: Shot, width: number, height: number, labels?: Labels) => cameraAt(poseOf(shot, width, height, labels), width, height);
 
 /** The camera on a given frame: it eases from each shot to the next, panning and zooming. */
-export const resolveCamera = (shots: Shot[], frame: number, moveFrames: number, width: number, height: number): Camera => {
+export const resolveCamera = (shots: Shot[], frame: number, moveFrames: number, width: number, height: number, labels?: Labels): Camera => {
   const [first, ...rest] = shots;
   if (!first) {
     throw new Error("CameraRig needs at least one shot");
   }
-  let pose = poseOf(first, width, height);
+  let pose = poseOf(first, width, height, labels);
   for (const shot of rest) {
-    const next = poseOf(shot, width, height);
+    const next = poseOf(shot, width, height, labels);
     const t = ease(frame, shot.at, shot.at + moveFrames);
     pose = {
       centerX: lerp(pose.centerX, next.centerX, t),

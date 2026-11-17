@@ -7,6 +7,7 @@ import { cameraRigSchema } from "../kit/schemas";
 import { theme } from "../kit/theme";
 import { resolveCamera, type Camera } from "./camera";
 import { assertFraming } from "./framing";
+import { keyOf } from "./metrics";
 
 type CameraRigProps = z.input<typeof cameraRigSchema> & {
   /** The graph on stage, or several. With it every shot is checked once the camera has settled: labels that overlap throw, and the error says what to change. */
@@ -21,7 +22,9 @@ type CameraRigProps = z.input<typeof cameraRigSchema> & {
 export const CameraRig = (_: CameraRigProps) => null;
 
 /** Half the width, in pixels, over which the scene fades out beside a docked panel. */
-const FADE = 50;
+const PANEL_FADE = 50;
+/** Half the width over which it fades out at the edge of the frame. Targets sit further in than this. */
+const EDGE_FADE = 70;
 
 const CameraContext = createContext<Camera | null>(null);
 
@@ -67,17 +70,18 @@ export const World = ({ children, overlay }: WorldProps) => {
     throw new Error("World needs a <CameraRig> among its children. Write it directly inside World, not inside a component of your own.");
   }
   const { shots, moveFrames } = cameraRigSchema.parse({ shots: rig.shots, moveFrames: rig.moveFrames, sway: rig.sway });
+  const nodes = rig.graph ? [rig.graph].flat().flatMap((graph) => graph.nodes) : [];
   if (rig.graph) {
-    assertFraming(
-      rig.shots,
-      [rig.graph].flat().flatMap((graph) => graph.nodes),
-      width,
-      height,
-    );
+    assertFraming(rig.shots, nodes, width, height);
   }
-  const camera = resolveCamera(shots, frame, moveFrames, width, height);
+  const camera = resolveCamera(shots, frame, moveFrames, width, height, new Map(nodes.map((node) => [keyOf(node.position), node.label])));
   const [originX, originY] = camera.point([0, 0, 0]);
-  const docked = camera.left > 0 || camera.right < width;
+  // The scene fades out toward whatever bounds it: a docked panel, or the edge of the frame. A node the shot does not
+  // target then leaves softly, where a hard cut through its plate would read as a mistake.
+  const fade = (edge: number, inward: 1 | -1) =>
+    edge <= 0 || edge >= width ? [edge, edge + inward * 2 * EDGE_FADE] : [edge - inward * PANEL_FADE, edge + inward * PANEL_FADE];
+  const [leftOut, leftIn] = fade(camera.left, 1) as [number, number];
+  const [rightOut, rightIn] = fade(camera.right, -1) as [number, number];
 
   return (
     <AbsoluteFill style={{ backgroundColor: theme.background }}>
@@ -89,21 +93,18 @@ export const World = ({ children, overlay }: WorldProps) => {
           </pattern>
         </defs>
         <rect width={width} height={height} fill="url(#floor)" />
-        {/* Beside a docked panel the scene fades out before it reaches the panel, so nothing sits half under it. */}
-        {docked ? (
-          <defs>
-            <linearGradient id="clear-fade" gradientUnits="userSpaceOnUse" x1={0} x2={width}>
-              <stop offset={(camera.left - FADE) / width} stopColor="black" />
-              <stop offset={(camera.left + FADE) / width} stopColor="white" />
-              <stop offset={(camera.right - FADE) / width} stopColor="white" />
-              <stop offset={(camera.right + FADE) / width} stopColor="black" />
-            </linearGradient>
-            <mask id="clear" maskUnits="userSpaceOnUse" x={0} y={0} width={width} height={height}>
-              <rect width={width} height={height} fill="url(#clear-fade)" />
-            </mask>
-          </defs>
-        ) : null}
-        <g mask={docked ? "url(#clear)" : undefined}>
+        <defs>
+          <linearGradient id="clear-fade" gradientUnits="userSpaceOnUse" x1={0} x2={width}>
+            <stop offset={leftOut / width} stopColor="black" />
+            <stop offset={leftIn / width} stopColor="white" />
+            <stop offset={rightIn / width} stopColor="white" />
+            <stop offset={rightOut / width} stopColor="black" />
+          </linearGradient>
+          <mask id="clear" maskUnits="userSpaceOnUse" x={0} y={0} width={width} height={height}>
+            <rect width={width} height={height} fill="url(#clear-fade)" />
+          </mask>
+        </defs>
+        <g mask="url(#clear)">
           <CameraContext.Provider value={camera}>{children}</CameraContext.Provider>
         </g>
       </svg>
