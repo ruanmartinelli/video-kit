@@ -17,14 +17,19 @@
     "paths": {
       "video-kit": [
         "./src/kit/index.ts"
+      ],
+      "video-kit/2d": [
+        "./src/kit2d/index.ts"
       ]
     }
   },
   "include": [
     "src",
-    "template"
+    "template",
+    "template-2d"
   ],
   "exclude": [
-    "template/out"
+    "template/out",
+    "template-2d/out"
   ]
 }

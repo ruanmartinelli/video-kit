@@ -1,5 +1,6 @@
 import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
 import { z } from "zod";
+import "./fonts";
 import { theme } from "./theme";
 
 export const storyboardPanelSchema = z.object({

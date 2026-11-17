@@ -8,17 +8,9 @@ import { span } from "./geometry";
 import { Type } from "./Label";
 import { lerp3, unitSchema, vec3Schema, type Vec3 } from "./motion";
 import { theme } from "./theme";
+import { gateSchema } from "./schemas";
 
-export const gateSchema = z.object({
-  id: z.string().optional().describe("Name used by Focus to keep this gate lit."),
-  from: vec3Schema.describe("Center of the node the pipe leaves."),
-  to: vec3Schema.describe("Center of the node the pipe reaches."),
-  at: unitSchema.default(0.5).describe("Where along the visible pipe it stands: 0 = at `from`'s edge, 1 = at `to`'s edge."),
-  rule: z.string().optional().describe("The condition it checks, in mono above the ring: `qty < minimum`, `role == admin`. A few words."),
-  active: unitSchema.default(0).describe("0 = idle grey, 1 = fully lit in `tone`. Pulse it on the frame a packet reaches the ring."),
-  tone: z.enum(["accent", "danger"]).default("accent").describe("What it lights up in: accent when a packet passes, danger when one bounces."),
-  appear: z.number().min(0).default(1).describe("0 = not in the scene, 1 = fully there. Drive with pop(), which overshoots a little."),
-});
+export { gateSchema };
 
 type GateProps = z.input<typeof gateSchema>;
 

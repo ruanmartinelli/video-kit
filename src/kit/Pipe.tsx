@@ -5,19 +5,9 @@ import { span } from "./geometry";
 import { Type } from "./Label";
 import { lerp3, unitSchema, vec3Schema } from "./motion";
 import { theme } from "./theme";
+import { pipeSchema } from "./schemas";
 
-export const pipeSchema = z.object({
-  id: z.string().optional().describe("Name used by Focus to keep this pipe lit."),
-  from: vec3Schema.describe("Center of the node it leaves."),
-  to: vec3Schema.describe("Center of the node it reaches."),
-  clear: z
-    .tuple([z.number().min(0), z.number().min(0)])
-    .optional()
-    .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge."),
-  tone: z.enum(["neutral", "added", "changed", "removed"]).default("neutral").describe("neutral is a plain connection; the rest mark what the change being shown did to it."),
-  progress: unitSchema.default(1).describe("How much of the pipe is drawn, growing out of `from`. 0 hides it."),
-  label: z.string().optional().describe("What travels on it, under its middle: a route, a topic, a query name. Comes in with `progress`."),
-});
+export { pipeSchema };
 
 type PipeProps = z.input<typeof pipeSchema>;
 
@@ -54,7 +44,14 @@ export const Pipe = (props: PipeProps) => {
       {label ? (
         // Under the line: packets and their labels own the space above it.
         <Billboard position={[x, y - LABEL_DROP, z]}>
-          <Type size={0.38} font="mono" anchorX={anchorX} color={tone === "neutral" ? theme.textDim : theme[tone]} opacity={Math.max(0, 2 * progress - 1) * (1 - 0.75 * dim)} onTop>
+          <Type
+            size={0.38}
+            font="mono"
+            anchorX={anchorX}
+            color={tone === "neutral" ? theme.textDim : theme[tone]}
+            opacity={Math.max(0, 2 * progress - 1) * (1 - 0.75 * dim)}
+            onTop
+          >
             {label}
           </Type>
         </Billboard>

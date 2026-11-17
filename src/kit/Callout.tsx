@@ -4,18 +4,9 @@ import { useDim } from "./Focus";
 import { Type } from "./Label";
 import { unitSchema, vec3Schema } from "./motion";
 import { theme } from "./theme";
+import { calloutSchema } from "./schemas";
 
-export const calloutSchema = z.object({
-  id: z.string().optional().describe("Name used by Focus to keep this callout lit."),
-  at: vec3Schema.describe("The point it is about. A small dot marks it."),
-  children: z.string().describe("The note. A few words."),
-  offset: z
-    .tuple([z.number(), z.number()])
-    .default([1.6, 1.8])
-    .describe("Where the note sits from `at`, in world units on screen: [right, up]. A negative right puts it on the left."),
-  tone: z.enum(["neutral", "accent", "danger"]).default("neutral").describe("neutral for a remark; accent or danger to tie it to what is lit."),
-  appear: unitSchema.default(1).describe("0 = hidden. The line grows out of `at` over the first half, then the note comes in. Drive with ease()."),
-});
+export { calloutSchema };
 
 type CalloutProps = z.input<typeof calloutSchema>;
 

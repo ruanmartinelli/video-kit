@@ -2,19 +2,9 @@ import { z } from "zod";
 import { span } from "./geometry";
 import { lerp3, unitSchema, vec3Schema } from "./motion";
 import { theme } from "./theme";
+import { fanSchema } from "./schemas";
 
-export const fanSchema = z.object({
-  from: vec3Schema.describe("Center of the one: the node that fans out, or that the many collapse into."),
-  to: z.array(vec3Schema).min(2).max(12).describe("Centers of the many, one small packet each."),
-  direction: z.enum(["split", "merge"]).default("split").describe("split travels from `from` to each of `to`; merge from each of `to` into `from`."),
-  progress: unitSchema.describe("0 = all waiting, 1 = all arrived. Hidden at exactly 0 and 1."),
-  tone: z.enum(["neutral", "accent", "danger"]).default("neutral").describe("White unless the story needs it to stand out or fail."),
-  stagger: unitSchema.default(0).describe("0 = all leave together; 1 = each leaves as the one before arrives. In the order of `to`."),
-  clear: z
-    .tuple([z.number().min(0), z.number().min(0)])
-    .optional()
-    .describe("Distance to stay clear of [`from`, each of `to`], whichever way they travel. Defaults to a node's edge."),
-});
+export { fanSchema };
 
 type FanProps = z.input<typeof fanSchema>;
 

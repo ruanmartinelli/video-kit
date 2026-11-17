@@ -1,5 +1,6 @@
 import { AbsoluteFill, Img, staticFile } from "remotion";
-import { theme } from "../kit";
+import "../kit/fonts";
+import { theme } from "../kit/theme";
 
 const COLUMNS = 4;
 const ROWS = 3;

@@ -24,7 +24,10 @@ export const shotSchema = z.object({
     .tuple([z.number(), z.number()])
     .optional()
     .describe("Slide the subject on screen, as a fraction of the frame: [right, up]. Defaults to a little above center, or clear of `panel` when that is set."),
-  allow: z.array(z.string()).default([]).describe("Ids of nodes left out of the label check: ones that are not in the scene during this shot. Only read when the rig is given a `graph`."),
+  allow: z
+    .array(z.string())
+    .default([])
+    .describe("Ids of nodes left out of the label check: ones that are not in the scene during this shot. Only read when the rig is given a `graph`."),
 });
 
 export type Shot = z.input<typeof shotSchema>;

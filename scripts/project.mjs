@@ -39,7 +39,7 @@ export const tsconfigFor = async (dir) => {
       {
         extends: path.join(kit, "tsconfig.json"),
         compilerOptions: {
-          paths: { "video-kit": [path.join(kit, "src/kit/index.ts")], "*": [path.join(modules, "@types/*"), path.join(modules, "*")] },
+          paths: { "video-kit": [path.join(kit, "src/kit/index.ts")], "video-kit/2d": [path.join(kit, "src/kit2d/index.ts")], "*": [path.join(modules, "@types/*"), path.join(modules, "*")] },
           typeRoots: [path.join(modules, "@types")],
         },
         include: [dir],
@@ -54,7 +54,7 @@ export const tsconfigFor = async (dir) => {
 
 const withKit = (config) => ({
   ...config,
-  resolve: { ...config.resolve, alias: { ...config.resolve?.alias, "video-kit": path.join(kit, "src/kit/index.ts") }, modules: [path.join(kit, "node_modules"), "node_modules"] },
+  resolve: { ...config.resolve, alias: { ...config.resolve?.alias, "video-kit$": path.join(kit, "src/kit/index.ts"), "video-kit/2d$": path.join(kit, "src/kit2d/index.ts") }, modules: [path.join(kit, "node_modules"), "node_modules"] },
 });
 
 /**
@@ -65,7 +65,7 @@ const withKit = (config) => ({
 export const open = async (argument) => {
   const dir = resolveVideo(argument);
   if (!dir) {
-    const serveUrl = await bundle({ entryPoint: path.join(kit, "src/index.ts"), publicDir: path.join(kit, "public"), webpackOverride: withKit });
+    const serveUrl = await bundle({ entryPoint: path.join(kit, "src/index.tsx"), publicDir: path.join(kit, "public"), webpackOverride: withKit });
     return { serveUrl, id: argument, out: path.join(kit, "out"), dir: null };
   }
 

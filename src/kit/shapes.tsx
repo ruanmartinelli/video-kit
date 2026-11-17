@@ -3,33 +3,9 @@ import type { ReactNode } from "react";
 import { ExtrudeGeometry, LatheGeometry, Shape, Vector2 } from "three";
 import { z } from "zod";
 import { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
+import { nodeShapeSchema, type NodeShape } from "./shapeNames";
 
-export const nodeShapeSchema = z.enum([
-  "service",
-  "database",
-  "server",
-  "queue",
-  "client",
-  "user",
-  "cloud",
-  "storage",
-  "file",
-  "controller",
-  "router",
-  "worker",
-  "clock",
-  "shield",
-  "trigger",
-  "agent",
-  "model",
-  "external",
-  "phone",
-  "notification",
-  "key",
-  "log",
-]);
-
-export type NodeShape = z.infer<typeof nodeShapeSchema>;
+export { nodeShapeSchema, type NodeShape };
 
 /**
  * The materials a shape is built from. Each is a material element, so a shape

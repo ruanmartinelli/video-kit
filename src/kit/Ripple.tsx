@@ -2,14 +2,9 @@ import { z } from "zod";
 import { radii, radiusSchema } from "./graph";
 import { unitSchema, vec3Schema } from "./motion";
 import { theme } from "./theme";
+import { rippleSchema } from "./schemas";
 
-export const rippleSchema = z.object({
-  at: vec3Schema.describe("Where it starts: the center of the node that changed. Drawn on the floor under it."),
-  radius: radiusSchema.default([10, 7.2]).describe("Where the front is at progress 1, and gone. Set it a little past what it should reach; give layoutHub's radius shape to match its spokes."),
-  progress: unitSchema.describe("0 = nothing yet, 1 = the front is at `radius`. The front travels at a steady pace, so it reaches halfway at 0.5."),
-  tone: z.enum(["accent", "danger", "added", "changed", "removed"]).default("changed").describe("changed for how far a change reaches; danger for a failure spreading."),
-  rings: z.number().int().min(1).max(5).default(3).describe("The front plus the echoes that trail it."),
-});
+export { rippleSchema };
 
 type RippleProps = z.input<typeof rippleSchema>;
 

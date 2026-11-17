@@ -4,18 +4,9 @@ import { span } from "./geometry";
 import { Type } from "./Label";
 import { lerp3, unitSchema, vec3Schema } from "./motion";
 import { theme } from "./theme";
+import { packetSchema } from "./schemas";
 
-export const packetSchema = z.object({
-  from: vec3Schema.describe("Center of the node it leaves."),
-  to: vec3Schema.describe("Center of the node it reaches."),
-  clear: z
-    .tuple([z.number().min(0), z.number().min(0)])
-    .optional()
-    .describe("Distance to stay clear of `from` and `to`. Defaults to a node's edge."),
-  progress: unitSchema.describe("0 = leaving `from`, 1 = arriving at `to`. Hidden at exactly 0 and 1."),
-  tone: z.enum(["neutral", "accent", "danger"]).default("neutral").describe("White unless the story needs it to stand out or fail."),
-  label: z.string().optional().describe("Who or what this one is, riding above it: `admin`, `order 42`. A word or two. Use it when several packets take the same path and the story depends on telling them apart."),
-});
+export { packetSchema };
 
 type PacketProps = z.input<typeof packetSchema>;
 
@@ -43,7 +34,12 @@ export const Packet = (props: PacketProps) => {
       </mesh>
       {label ? (
         <Billboard position={[0, RADIUS + 0.14, 0]}>
-          <Type size={0.3} color={tone === "danger" ? theme.danger : theme.text} opacity={Math.min(1, progress / LABEL_FADE, (1 - progress) / LABEL_FADE)} onTop>
+          <Type
+            size={0.3}
+            color={tone === "danger" ? theme.danger : theme.text}
+            opacity={Math.min(1, progress / LABEL_FADE, (1 - progress) / LABEL_FADE)}
+            onTop
+          >
             {label}
           </Type>
         </Billboard>

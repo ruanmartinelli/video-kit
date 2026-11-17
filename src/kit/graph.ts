@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { NODE_HEIGHT, NODE_WIDTH } from "./geometry";
 import type { Vec3 } from "./motion";
-import { nodeShapeSchema, type NodeShape } from "./shapes";
+import { nodeShapeSchema, type NodeShape } from "./shapeNames";
 
 const nodeSpecSchema = z.object({
   id: z.string(),

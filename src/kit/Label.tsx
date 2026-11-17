@@ -5,13 +5,9 @@ import { continueRender, delayRender } from "remotion";
 import { z } from "zod";
 import { unitSchema, vec3Schema, type Vec3 } from "./motion";
 import { theme } from "./theme";
+import { labelSchema } from "./schemas";
 
-export const labelSchema = z.object({
-  position: vec3Schema.describe("Bottom-center of the text."),
-  children: z.string().describe("The text. Keep it to a few words."),
-  size: z.number().default(0.36).describe("Text height in world units."),
-  opacity: unitSchema.default(1),
-});
+export { labelSchema };
 
 type LabelProps = z.input<typeof labelSchema>;
 
@@ -32,7 +28,17 @@ type TypeProps = {
  * Text in the 3D world, lying in its parent's plane. Kit components build on
  * this; videos use Label. It holds the render until the text is typeset.
  */
-export const Type = ({ children, position, size, color = theme.text, opacity = 1, font = "sans", anchorX = "center", anchorY = "bottom", onTop = false }: TypeProps) => {
+export const Type = ({
+  children,
+  position,
+  size,
+  color = theme.text,
+  opacity = 1,
+  font = "sans",
+  anchorX = "center",
+  anchorY = "bottom",
+  onTop = false,
+}: TypeProps) => {
   const advance = useThree((state) => state.advance);
   // Text is typeset off-thread, after the frame was already drawn. Hold the
   // render until it lands, then draw the frame again. The hold starts in an
