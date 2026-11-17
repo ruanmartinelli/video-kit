@@ -1,11 +1,14 @@
 import type { z } from "zod";
 import { useDim } from "../kit/Focus";
-import { nodeSchema } from "../kit/schemas";
+import { nodeSchema, type nodeStateSchema } from "../kit/schemas";
 import { theme } from "../kit/theme";
 import { labelBox } from "./framing";
 import { LABEL, PLATE } from "./metrics";
 import { shapes } from "./shapes";
 import { useCamera } from "./World";
+
+/** What a video sets on a node a Graph draws. */
+export type NodeState = z.input<typeof nodeStateSchema>;
 
 type NodeProps = z.input<typeof nodeSchema> & { children?: unknown };
 

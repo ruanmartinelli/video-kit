@@ -78,8 +78,12 @@ export const World = ({ children, overlay }: WorldProps) => {
   const [originX, originY] = camera.point([0, 0, 0]);
   // The scene fades out toward whatever bounds it: a docked panel, or the edge of the frame. A node the shot does not
   // target then leaves softly, where a hard cut through its plate would read as a mistake.
-  const fade = (edge: number, inward: 1 | -1) =>
-    edge <= 0 || edge >= width ? [edge, edge + inward * 2 * EDGE_FADE] : [edge - inward * PANEL_FADE, edge + inward * PANEL_FADE];
+  // At the frame edge the band lies inside the frame; beside a panel it straddles the panel's edge. Between the two it
+  // slides from one to the other, so a camera move into a panel shot has no jump.
+  const fade = (edge: number, inward: 1 | -1) => {
+    const docked = Math.min(1, (inward === 1 ? edge : width - edge) / (4 * PANEL_FADE));
+    return [edge - inward * PANEL_FADE * docked, edge + inward * (2 * EDGE_FADE + (PANEL_FADE - 2 * EDGE_FADE) * docked)];
+  };
   const [leftOut, leftIn] = fade(camera.left, 1) as [number, number];
   const [rightOut, rightIn] = fade(camera.right, -1) as [number, number];
 

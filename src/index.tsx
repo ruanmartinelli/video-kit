@@ -3,6 +3,7 @@ import { ActorGallery, actorGalleryMeta } from "./gallery/ActorGallery";
 import { ActorGallery2D, actorGallery2DMeta } from "./gallery/ActorGallery2D";
 import { CompareGallery, compareGalleryMeta } from "./gallery/CompareGallery";
 import { CompareGallery2D, compareGallery2DMeta } from "./gallery/CompareGallery2D";
+import { HubGallery2D, hubGallery2DMeta } from "./gallery/HubGallery2D";
 import { OverlayGallery, overlayGalleryMeta } from "./gallery/OverlayGallery";
 import { PanelGallery, panelGalleryMeta } from "./gallery/PanelGallery";
 import { ShapeGallery, shapeGalleryMeta } from "./gallery/ShapeGallery";
@@ -21,6 +22,7 @@ registerRoot(
       <Composition component={CompareGallery} {...compareGalleryMeta} />
       <Composition component={CompareGallery2D} {...compareGallery2DMeta} />
       <Composition component={PanelGallery} {...panelGalleryMeta} />
+      <Composition component={HubGallery2D} {...hubGallery2DMeta} />
       <Composition component={OverlayGallery} {...overlayGalleryMeta} />
     </>,
   ),

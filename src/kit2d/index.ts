@@ -8,14 +8,14 @@ export { Callout } from "./Callout";
 export { Fan } from "./Fan";
 export { Gate, gatePoint } from "./Gate";
 export { Label } from "./Label";
-export { Node } from "./Node";
+export { Node, type NodeState } from "./Node";
 export { Packet } from "./Packet";
 export { CLEAR as NODE_CLEAR, Pipe } from "./Pipe";
 export { Ripple } from "./Ripple";
 
 // Everything that was already flat or has nothing to draw is the 3D kit's own.
 export { Bars, barSchema, barsSchema } from "../kit/Bars";
-export { shotSchema, type Shot } from "../kit/camera";
+export { shotSchema, views, type Shot } from "../kit/camera";
 export { Caption, captionSchema } from "../kit/Caption";
 export { Chapter, chapterSchema } from "../kit/Chapter";
 export { Chat, chatMessageSchema, chatSchema } from "../kit/Chat";
@@ -32,7 +32,6 @@ export {
   layoutGraph,
   layoutHub,
   layoutLanes,
-  type Graph as Laid,
   type GraphSpec,
   type HubSpec,
   type Lane,

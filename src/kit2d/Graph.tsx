@@ -1,10 +1,9 @@
 import type { z } from "zod";
 import type { Graph as Laid } from "../kit/graph";
-import type { nodeStateSchema, pipeSchema } from "../kit/schemas";
-import { Node } from "./Node";
+import type { pipeSchema } from "../kit/schemas";
+import { Node, type NodeState } from "./Node";
 import { Pipe } from "./Pipe";
 
-type NodeState = z.input<typeof nodeStateSchema>;
 type PipeState = Pick<z.input<typeof pipeSchema>, "progress" | "tone" | "label">;
 
 type GraphProps = {
@@ -15,6 +14,9 @@ type GraphProps = {
   /** Per-edge state by edge id ("from->to"): its draw progress, or { progress, tone, label }. */
   edges?: Record<string, number | PipeState>;
 };
+
+/** A laid-out graph, as layoutGraph() returns it. The same name as the component that draws one, as a type. */
+export type Graph = Laid;
 
 /** Draws a laid-out graph as Nodes and Pipes. Node and edge ids double as Focus ids. */
 export const Graph = ({ graph, nodes = {}, edges = {} }: GraphProps) => (
