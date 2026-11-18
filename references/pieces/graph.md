@@ -12,7 +12,7 @@ Lays out nodes and pipes so nobody places coordinates by hand. `layoutGraph` run
 ## Also
 
 - `graph` Graph. What layoutGraph() returned.
-- `nodes` Record<id, NodeState>. Per-node active, tone, appear, open, children.
+- `nodes` Record<id, NodeState>. Per-node active, tone, appear, open, badge, children.
 - `edges` Record<"from->to", number | { progress, tone, label }>. Per-edge draw progress, 0 to 1, or the pipe's progress, tone and label.
 
 ## Example

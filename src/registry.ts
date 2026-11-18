@@ -618,7 +618,7 @@ const hit = start + 51;
     schemas: [{ title: "layoutGraph(spec)", schema: graphSpecSchema }],
     otherProps: [
       { name: "graph", type: "Graph", description: "What layoutGraph() returned." },
-      { name: "nodes", type: "Record<id, NodeState>", description: "Per-node active, tone, appear, open, children." },
+      { name: "nodes", type: "Record<id, NodeState>", description: "Per-node active, tone, appear, open, badge, children." },
       {
         name: "edges",
         type: 'Record<"from->to", number | { progress, tone, label }>',
