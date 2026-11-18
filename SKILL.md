@@ -30,8 +30,6 @@ The kit supplies pieces, a camera and checks. What the video says, in what order
 
    `references/pieces.md` lists every piece in one line each. Read `references/pieces/<id>.md` for the pieces you are about to use, all in one go: props, defaults and an example. That is the whole API; the kit's source is for changing the kit.
 
-   `references/showing.md` goes the other way, from what a beat is about (a rule, a limit, a schema, a route, a rollout) to the piece that draws it. Look there when you know the idea and not the piece.
-
    - Everything is imported from `video-kit`.
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `between(frame, from, to)` is 1 while something is on screen, for a panel's `appear`. `hop(frame, start)` is a packet's `progress` for a trip that starts at a cue. `pulse(frame, at)` lights a node on the frame something reaches it.
@@ -55,7 +53,7 @@ The kit supplies pieces, a camera and checks. What the video says, in what order
 
 5. **Render.** `pnpm render <folder>` writes `<folder>/out/<name>.mp4`. Report the path, the length, and that the video was checked on stills: say plainly that it was not watched in motion or listened to.
 
-Asked for a storyboard, a few frames of the finished video on one sheet: `references/storyboard.md`.
+Asked for a storyboard, a few frames of the finished video on one sheet: `references/pieces/storyboard.md`.
 
 ## How the kit works
 
