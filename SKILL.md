@@ -20,8 +20,6 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 
 The kit supplies pieces, a camera and checks. What the video says, in what order, and which pieces carry it are your call: choose the structure that explains this subject best to this viewer.
 
-When no structure comes to mind, `references/patterns.md` has a few that worked.
-
 ## Steps
 
 1. **Start from the template and write the beat sheet.** Copy `template/Template.tsx`, `template/video.ts` and `template/script.json` into the video's folder, and rename the component and its `id`. `script.json` is a voice and a list of beats, each `{ "id", "text" }`. A beat is one spoken sentence and one thing changing on screen. Done when you can say, for every beat, what moves on screen while it is spoken. A beat a still image could carry gets rewritten or cut.

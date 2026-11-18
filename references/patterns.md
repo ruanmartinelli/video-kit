@@ -1,6 +1,6 @@
 # Structures that worked
 
-Starting points, for when no structure comes to mind. Each is one way a video of that kind held together. Take one, bend it, or build your own.
+Read this when the request points you here. Each is one way a video of that kind held together: take one, bend it, or build your own.
 
 ## Any explainer
 
