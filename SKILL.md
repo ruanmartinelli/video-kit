@@ -16,17 +16,24 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 - The video belongs to that project. Commit it only when the user asks.
 - `pnpm narrate` sends each sentence to an outside text-to-speech service. The narration names no customer and no person and holds no credential. Table, function and file names go on screen, where they stay local.
 
+## The explanation is yours
+
+The kit supplies pieces, a camera and checks. What the video says, in what order, and which pieces carry it are your call: choose the structure that explains this subject best to this viewer.
+
+When no structure comes to mind, `references/patterns.md` has a few that worked.
+
 ## Steps
 
-1. **Read the reference for the kind of video.** A pull request: `references/pr-review.md`. A bug, a plan, a rollout or how a system works: `references/explaining.md`. Each says how that kind of video opens and ends and which pieces carry it.
+1. **Start from the template and write the beat sheet.** Copy `template/Template.tsx`, `template/video.ts` and `template/script.json` into the video's folder, and rename the component and its `id`. `script.json` is a voice and a list of beats, each `{ "id", "text" }`. A beat is one spoken sentence and one thing changing on screen. Done when you can say, for every beat, what moves on screen while it is spoken. A beat a still image could carry gets rewritten or cut.
 
-2. **Start from the template and write the beat sheet.** Copy `template/Template.tsx`, `template/video.ts` and `template/script.json` into the video's folder, and rename the component and its `id`. `script.json` is a voice and a list of beats, each `{ "id", "text" }`. A beat is one spoken sentence and one thing changing on screen. The video answers one question and follows one concrete example through the system. Done when you can say, for every beat, what moves on screen while it is spoken. A beat a still image could carry gets rewritten or cut.
+2. **Narrate.** `pnpm narrate <folder>` writes `narration.json` and one MP3 per beat. Unchanged beats are reused. The speech service throttles after a burst, and the script waits it out by itself, for minutes if it has to: let it run. If it still gives up, run it again later. Reword a beat only when it alone keeps failing while the beats after it go through.
 
-3. **Narrate.** `pnpm narrate <folder>` writes `narration.json` and one MP3 per beat. Unchanged beats are reused. The speech service throttles after a burst, and the script waits it out by itself, for minutes if it has to: let it run. If it still gives up, run it again later. Reword a beat only when it alone keeps failing while the beats after it go through.
-
-4. **Compose.** `Template.tsx` is a whole small video and the shape of every bigger one: a timeline, the cues named once, a graph, one `World` with one `CameraRig`, actors in the world and panels in `overlay`. Grow it into yours.
+3. **Compose.** `Template.tsx` is a whole small video and the shape of every bigger one: a timeline, the cues named once, a graph, one `World` with one `CameraRig`, actors in the world and panels in `overlay`. Grow it into yours.
 
    `references/pieces.md` lists every piece in one line each. Read `references/pieces/<id>.md` for the pieces you are about to use, all in one go: props, defaults and an example. That is the whole API; the kit's source is for changing the kit.
+
+   `references/showing.md` goes the other way, from what a beat is about (a rule, a limit, a schema, a route, a rollout) to the piece that draws it. Look there when you know the idea and not the piece.
+
    - Everything is imported from `video-kit`.
    - `createTimeline(narration)` gives `t`. Every animation starts at a cue: `t.at(beat)` or `t.at(beat, word)`.
    - `between(frame, from, to)` is 1 while something is on screen, for a panel's `appear`. `hop(frame, start)` is a packet's `progress` for a trip that starts at a cue. `pulse(frame, at)` lights a node on the frame something reaches it.
@@ -34,7 +41,7 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
    - A `CodePanel` is as wide as its longest line, and `panel` leaves room for about 60 characters of code. Keep lines under that, or give the shot a `shift` of your own.
    - A shot with a docked panel on screen (`CodePanel`, `Outcomes`, `Tables`, `Meter`, ...) names the panel's side in `panel`, and the rig fits the targets into the rest of the frame. For a short panel over a wide path, the other way works too: leave `panel` out and `shift` the whole path down under it.
 
-5. **Check it.** `pnpm check <folder>` typechecks it. Then `pnpm stills <folder> cues --sheet` renders three frames per beat and tiles them twelve to an image, each under its frame number, in `<folder>/out/stills/`. Read every sheet.
+4. **Check it.** `pnpm check <folder>` typechecks it. Then `pnpm stills <folder> cues --sheet` renders three frames per beat and tiles them twelve to an image, each under its frame number, in `<folder>/out/stills/`. Read every sheet.
 
    The kit has already done part of the looking: a node label the frame edge would cut is hidden, and two node labels that would overlap stop the render with an error that says what to change. That covers node labels only. On the sheets you look for the rest:
    - the subject of the beat is in frame, and no panel covers it
@@ -48,7 +55,9 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 
    Done when every tile passes and every panel with code has been read at full size.
 
-6. **Render.** `pnpm render <folder>` writes `<folder>/out/<name>.mp4`. Report the path, the length, and that the video was checked on stills: say plainly that it was not watched in motion or listened to.
+5. **Render.** `pnpm render <folder>` writes `<folder>/out/<name>.mp4`. Report the path, the length, and that the video was checked on stills: say plainly that it was not watched in motion or listened to.
+
+Asked for a storyboard, a few frames of the finished video on one sheet: `references/storyboard.md`.
 
 ## How the kit works
 
@@ -58,7 +67,7 @@ A video is a folder of its own, outside the kit: by default `videos/<name>/` in 
 
 **The camera frames targets.** A shot is `targets` plus a `view` and `azimuth`; `CameraRig` works out where to stand. When something blocks the subject, change `azimuth` or `view`. A node the shot does not target may sit half out of frame: its label hides, and it reads as background.
 
-**One panel at a time.** Flat panels dock in the same place, on the side their `side` names. `Chip`, `Term` and the `Chapter` rail sit in the corners and can stay. While a panel is up, wrap the graph in `Focus` on its subject, so what is behind the panel dims.
+**One panel at a time.** Flat panels dock in the same place, on the side their `side` names. `Chip`, `Term` and the `Chapter` rail sit in the corners and can stay. While a panel is up, wrap the graph in `Focus` on its subject, so what is behind the panel dims. A wide shot of the whole path wants the frame as much as a panel does: show one or the other.
 
 **Text.** 3D text goes through `Label`, which holds the render until the text is typeset; raw drei `<Text>` is missing from rendered frames. Sentences and code go in `overlay`, flat.
 
