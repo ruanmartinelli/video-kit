@@ -7,7 +7,7 @@ Database tables as flat panels over the scene: a name, then one row per column. 
 - `tables` ({ name: string; columns: ({ name: string; type: string; change: "added" | "changed" | "removed"; appear: number 0–1; lit: number 0–1 })[]; change: "added" | "changed" | "removed"; appear: number })[], required. Up to 3 in a column, or 2 in a row, before they crowd the frame.
 - `links` ({ from: string; to: string; tone: "neutral" | "added" | "changed" | "removed"; progress: number 0–1 })[] = []
 - `direction` "column" | "row" = "column". column stacks them and leaves most of the frame to the 3D scene; row reads more like a diagram.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject to the other side.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Table

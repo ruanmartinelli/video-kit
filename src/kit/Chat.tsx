@@ -13,7 +13,7 @@ export const chatMessageSchema = z.object({
 
 export const chatSchema = z.object({
   messages: z.array(chatMessageSchema).min(1).max(4).describe("The conversation, oldest first. One to four messages."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

@@ -18,7 +18,7 @@ const highlighter = createHighlighterCoreSync({
 });
 
 export const codePanelSchema = z.object({
-  code: z.string().describe("Keep it under ~10 short lines; it has to be read in seconds."),
+  code: z.string().describe("About 10 lines of under 60 characters. It has to be read in seconds, the card is as wide as its longest line, and a shot's `panel` leaves room for about 60 characters."),
   lang: z.enum(["typescript", "python", "bash", "json", "sql"]).default("typescript"),
   title: z.string().optional(),
   highlight: z.array(z.number().int()).default([]).describe("1-based lines to spotlight. The rest dim."),
@@ -27,7 +27,7 @@ export const codePanelSchema = z.object({
     .default([])
     .describe("1-based lines a change took out: red, struck through, marked `-`. Show the old and new line one above the other."),
   added: z.array(z.number().int()).default([]).describe("1-based lines a change put in: green, marked `+`."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject to the other side."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

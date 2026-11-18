@@ -21,7 +21,7 @@ export const meterSchema = z.object({
     .max(3)
     .default(0)
     .describe("Decimal places shown. The value is rounded, so an eased value reads as whole numbers by default."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

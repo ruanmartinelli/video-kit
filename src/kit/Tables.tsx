@@ -30,7 +30,7 @@ export const tablesSchema = z.object({
   tables: z.array(tableSchema).min(1).describe("Up to 3 in a column, or 2 in a row, before they crowd the frame."),
   links: z.array(linkSchema).default([]),
   direction: z.enum(["column", "row"]).default("column").describe("column stacks them and leaves most of the frame to the 3D scene; row reads more like a diagram."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject to the other side."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

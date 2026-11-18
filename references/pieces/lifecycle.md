@@ -7,7 +7,7 @@ The states a record moves through, in a row, with the current one lit and a mark
 - `states` ({ name: string; tone: "neutral" | "danger" })[], required. The states in the order a record moves through them, left to right.
 - `current` number, required. Index of the state the record is in. A fractional value puts the marker between two states, so ease() from one index to the next moves it; the state nearest the marker is lit.
 - `title` string. Which record this is: `order 1042`.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## State

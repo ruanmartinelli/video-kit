@@ -1,6 +1,6 @@
 # layoutLanes
 
-The same graph once per lane, one behind the other, so two versions of a system run side by side in one shot: before and after, v1 beside v2. Each lane is a Graph of its own, with node ids prefixed by the lane's name. Send the same packet down both at the same frame and let the viewer see where they part.
+The same graph once per lane, one behind the other, so two versions of a system run side by side in one shot: before and after, v1 beside v2. Each lane is a Graph of its own, with node ids prefixed by the lane's name. Send the same packet down both at the same frame and let the viewer see where they part. Lanes are for two paths that differ; when the path is the same and only the answer differs, `Outcomes` shows it on one graph.
 
 ## layoutLanes(graph, options)
 

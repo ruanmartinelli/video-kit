@@ -1,10 +1,10 @@
 # Manifest
 
-The opening card of a video that covers more than one thing, like a review or a release: every item, in the order the video covers them, and a line for what it leaves out. Bring it back between sections with `current` set, so the viewer knows where they are.
+A card that lists what a video covers, like a review or a release: one row per item, and a line for what it leaves out. Shown again with `current` set, it marks where the viewer is.
 
 ## Manifest
 
-- `items` ({ kind: string; name: string; change: "added" | "changed" | "removed"; note: string; appear: number 0–1 })[], required. What the video covers, riskiest first: changed behaviour before new surface. Six or fewer.
+- `items` ({ kind: string; name: string; change: "added" | "changed" | "removed"; note: string; appear: number 0–1 })[], required. What the video covers. Six or fewer.
 - `title` string = "What to look at". The heading over the list. Say what is being covered: `What to look at in this PR`, `What changes in v2`.
 - `footer` string. What the video leaves out, so the viewer knows it was a choice: `31 other files: ordinary changes, not shown`.
 - `current` number. Index of the item the video covers next. The rest dim. Set it when the manifest comes back between sections.

@@ -5,7 +5,7 @@ Message bubbles that type, for anything where someone asks an assistant: a suppo
 ## Chat
 
 - `messages` ({ from: "user" | "assistant"; text: string; typed: number 0–1; pending: boolean })[], required. The conversation, oldest first. One to four messages.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Message

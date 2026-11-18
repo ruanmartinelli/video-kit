@@ -16,7 +16,7 @@ export const barsSchema = z.object({
   unit: z.string().optional().describe("Read after each value: `lines`, `ms`, `queries`."),
   title: z.string().optional().describe("What is measured, above the bars: `lines in checkout()`."),
   progress: unitSchema.default(1).describe("How far the bars have grown from zero. Drive with ease()."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

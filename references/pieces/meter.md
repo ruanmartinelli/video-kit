@@ -13,7 +13,7 @@ A value moving against a limit: stock crossing its minimum, a transaction fillin
 - `breach` "below" | "above" = "below". Which side of the limit is the bad one: below for stock under a minimum, above for a time cap. The bar and the number turn red there.
 - `unit` string. Written after every number: `s`, `units`.
 - `decimals` number = 0. Decimal places shown. The value is rounded, so an eased value reads as whole numbers by default.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Example

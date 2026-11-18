@@ -44,6 +44,6 @@ Each piece has its props and an example in `pieces/<id>.md`. Read the ones you a
 - `term` **Term**: A word and its one-line meaning, pinned in a corner while the thing it names is on screen.
 - `chapter` **Chapter**: For a video longer than a few minutes: a title card when a chapter starts, and a thin rail along the bottom that shows how far in the viewer is.
 - `screenshot` **Screenshot**: An app screen in a browser frame, for the part of a story that happens in the UI.
-- `manifest` **Manifest**: The opening card of a video that covers more than one thing, like a review or a release: every item, in the order the video covers them, and a line for what it leaves out.
+- `manifest` **Manifest**: A card that lists what a video covers, like a review or a release: one row per item, and a line for what it leaves out.
 - `code-panel` **CodePanel**: Highlighted code on a flat card, because code at an angle is unreadable.
 - `caption` **Caption + Narration**: Caption shows the words of the current beat and lights each one as it is spoken.

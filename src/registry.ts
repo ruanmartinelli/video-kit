@@ -492,7 +492,7 @@ const current = starts.findLastIndex((start) => start <= frame);
     group: "Overlay",
     name: "Manifest",
     summary:
-      "The opening card of a video that covers more than one thing, like a review or a release: every item, in the order the video covers them, and a line for what it leaves out. Bring it back between sections with `current` set, so the viewer knows where they are.",
+      "A card that lists what a video covers, like a review or a release: one row per item, and a line for what it leaves out. Shown again with `current` set, it marks where the viewer is.",
     schemas: [
       { title: "Manifest", schema: manifestSchema },
       { title: "Item", schema: manifestItemSchema },
@@ -638,7 +638,7 @@ const hit = start + 51;
     group: "Actors",
     name: "layoutLanes",
     summary:
-      "The same graph once per lane, one behind the other, so two versions of a system run side by side in one shot: before and after, v1 beside v2. Each lane is a Graph of its own, with node ids prefixed by the lane's name. Send the same packet down both at the same frame and let the viewer see where they part.",
+      "The same graph once per lane, one behind the other, so two versions of a system run side by side in one shot: before and after, v1 beside v2. Each lane is a Graph of its own, with node ids prefixed by the lane's name. Send the same packet down both at the same frame and let the viewer see where they part. Lanes are for two paths that differ; when the path is the same and only the answer differs, `Outcomes` shows it on one graph.",
     schemas: [{ title: "layoutLanes(graph, options)", schema: lanesSchema }],
     otherProps: [
       { name: "graph", type: "Graph", description: "What layoutGraph() or layoutHub() returned." },
@@ -681,7 +681,7 @@ const hit = start + 51;
     group: "Overlay",
     name: "CodePanel",
     summary:
-      "Highlighted code on a flat card, because code at an angle is unreadable. Spotlight lines as they are spoken, or mark the lines a change removed and added. Shift the camera so the 3D subject sits on the other side.",
+      "Highlighted code on a flat card, because code at an angle is unreadable. Spotlight lines as they are spoken, or mark the lines a change removed and added. Name its side in the shot's `panel` so the 3D subject sits beside it.",
     schemas: [{ title: "CodePanel", schema: codePanelSchema }],
     code: `<World overlay={<CodePanel code={code} highlight={[5, 6]} appear={ease(frame, 5, 20)} />}>
   <CameraRig shots={[{ at: 0, targets: [lb], view: "close", shift: [-0.2, 0.04] }]} />

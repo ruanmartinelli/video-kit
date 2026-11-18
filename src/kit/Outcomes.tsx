@@ -17,7 +17,7 @@ export const outcomeSchema = z.object({
 export const outcomesSchema = z.object({
   rows: z.array(outcomeSchema).min(1).describe("The same cases, tried before and after the change. Keep it to five or fewer."),
   heading: z.string().default("who asks").describe("What the names are: `who asks`, `input`, `caller`."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

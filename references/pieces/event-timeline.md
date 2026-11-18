@@ -10,7 +10,7 @@ What happened to one thing over a stretch of time: irregular events on an axis, 
 - `playhead` number 0–1 = 1. How much of the window has played, left to right. An event appears when the playhead reaches it. Drive with ease().
 - `legend` { neutral: string; added: string; danger: string }. What each tone is called in the count line: `{ neutral: "wasted", added: "useful" }`. A tone without a name is only in the total.
 - `title` string. Which record or job this is: `order 1042`, `sync_stock`.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Event

@@ -6,7 +6,7 @@ For a change to existing behaviour, like an auth check or a shared helper. The s
 
 - `rows` ({ name: string; before: string; after: string; filled: number 0–2 })[], required. The same cases, tried before and after the change. Keep it to five or fewer.
 - `heading` string = "who asks". What the names are: `who asks`, `input`, `caller`.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Row

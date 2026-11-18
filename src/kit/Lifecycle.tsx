@@ -16,7 +16,7 @@ export const lifecycleSchema = z.object({
       "Index of the state the record is in. A fractional value puts the marker between two states, so ease() from one index to the next moves it; the state nearest the marker is lit.",
     ),
   title: z.string().optional().describe("Which record this is: `order 1042`."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

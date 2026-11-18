@@ -7,7 +7,7 @@ One record as a card whose field flips from its old value to its new one. Also t
 - `title` string, required. Which record: `order 1042`.
 - `caption` string. Small text above the title that says what kind of thing it is: `record`, `event payload`.
 - `fields` ({ name: string; value: string; was: string; flip: number 0–1; lit: number 0–1 })[], required. The fields the narration talks about, not the whole row. Six or fewer.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Field

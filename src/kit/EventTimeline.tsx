@@ -31,7 +31,7 @@ export const eventTimelineSchema = z.object({
     .optional()
     .describe('What each tone is called in the count line: `{ neutral: "wasted", added: "useful" }`. A tone without a name is only in the total.'),
   title: z.string().optional().describe("Which record or job this is: `order 1042`, `sync_stock`."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

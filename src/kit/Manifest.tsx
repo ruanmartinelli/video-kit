@@ -11,7 +11,7 @@ export const manifestItemSchema = z.object({
 });
 
 export const manifestSchema = z.object({
-  items: z.array(manifestItemSchema).min(1).describe("What the video covers, riskiest first: changed behaviour before new surface. Six or fewer."),
+  items: z.array(manifestItemSchema).min(1).describe("What the video covers. Six or fewer."),
   title: z
     .string()
     .default("What to look at")
@@ -29,9 +29,8 @@ export const manifestSchema = z.object({
 type ManifestProps = z.input<typeof manifestSchema>;
 
 /**
- * The opening card of a video that covers more than one thing, like a review
- * or a release: every item the video covers, in the order it covers them. Goes in World's `overlay`,
- * over a wide shot of the system.
+ * A card that lists what a video covers, like a review or a release.
+ * Goes in World's `overlay`.
  */
 export const Manifest = (props: ManifestProps) => {
   const { items, title, footer, current, appear } = manifestSchema.parse(props);

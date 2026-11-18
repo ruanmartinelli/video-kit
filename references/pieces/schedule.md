@@ -7,7 +7,7 @@ When a job runs, as ticks on a strip of time. Put the old and the new interval o
 - `rows` ({ label: string; everyMinutes: number; tone: "neutral" | "added" | "changed" | "removed"; progress: number 0–1 })[], required. One strip per schedule, on the same clock. Two rows compare before and after.
 - `windowMinutes` number = 360. How much time the strips cover. Pick one where the sparsest row still shows a few runs: 6 hours for hourly against every five minutes.
 - `title` string. The schedule entry's name, as it is written in the code.
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Row

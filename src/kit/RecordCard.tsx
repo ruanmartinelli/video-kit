@@ -16,7 +16,7 @@ export const recordCardSchema = z.object({
   title: z.string().describe("Which record: `order 1042`."),
   caption: z.string().optional().describe("Small text above the title that says what kind of thing it is: `record`, `event payload`."),
   fields: z.array(recordFieldSchema).min(1).max(6).describe("The fields the narration talks about, not the whole row. Six or fewer."),
-  side: z.enum(["left", "right"]).default("right").describe("Pair with the CameraRig shot's `shift` to move the 3D subject clear of it."),
+  side: z.enum(["left", "right"]).default("right").describe("Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it."),
   appear: unitSchema.default(1).describe("0 = hidden, 1 = fully in. Drive with ease()."),
 });
 

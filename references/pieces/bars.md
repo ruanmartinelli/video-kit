@@ -8,7 +8,7 @@ A few values as bars drawn to scale from a shared zero: before and after, cold a
 - `unit` string. Read after each value: `lines`, `ms`, `queries`.
 - `title` string. What is measured, above the bars: `lines in checkout()`.
 - `progress` number 0–1 = 1. How far the bars have grown from zero. Drive with ease().
-- `side` "left" | "right" = "right". Pair with the CameraRig shot's `shift` to move the 3D subject clear of it.
+- `side` "left" | "right" = "right". Name this side in the CameraRig shot's `panel`, and the rig keeps the 3D subject clear of it.
 - `appear` number 0–1 = 1. 0 = hidden, 1 = fully in. Drive with ease().
 
 ## Bar
